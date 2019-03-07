@@ -25,7 +25,8 @@ export default class SignupForm extends Component{
     };
 
     onSubmit(event) {
-        console.log('hello');
+        console.log(event);
+        this.setState(event, () => console.log(this.state));
     };
 
     handleSubmit(event) {
@@ -35,7 +36,13 @@ export default class SignupForm extends Component{
 
     constructor(props) {
         super(props);
-        // this.onSubmit = this.onSubmit.bind(this);
+        this.state = {
+            'firstName' : '',
+            'lastName' : '',
+            'parentEmail' : '',
+            'activities' : ''
+        }
+        this.onSubmit = this.onSubmit.bind(this);
         // this.handleSubmit = this.handleSubmit.bind(this);
         // this.MyForm = this.MyForm.bind(this);
     };
@@ -143,7 +150,7 @@ export default class SignupForm extends Component{
                         options={ options }
                     />
                     <Form.Group>
-                        <Form.Button content="Submit" color="green"/>
+                        <Form.Button content="Submit" color="green" />
                         <Form.Button type="button" content="Reset" onClick={ () => this.form.reset() }/>
                     </Form.Group>
                 </Form>
