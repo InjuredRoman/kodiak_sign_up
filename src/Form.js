@@ -1,23 +1,11 @@
 import React, {Component} from 'react';
 import { Label, Container, Divider} from 'semantic-ui-react';
-// import {withFormsy} from 'formsy-react';
-// import PropTypes from 'prop-types';
-
-/* eslint-disable import/extensions, import/no-unresolved, import/no-extraneous-dependencies */
-// import {
-//   Checkbox,
-//   CheckboxGroup,
-//   Input,
-//   RadioGroup,
-//   Row,
-//   Select,
-//   File,
-//   Textarea,
-//   Form,
-// } from 'formsy-react-components';
 import {
-    Form, Input, TextArea, Checkbox, Radio, RadioGroup, Dropdown, Select, 
+    Form, Dropdown, 
   } from 'formsy-semantic-ui-react';
+
+import nodemailer from 'nodemailer';
+import * as emailjs from 'emailjs-com';
 
 export default class SignupForm extends Component{
     validate() {
@@ -26,7 +14,16 @@ export default class SignupForm extends Component{
 
     onSubmit(event) {
         console.log(event);
-        this.setState(event, () => console.log(this.state));
+        this.setState(event, this.sendEmail());
+    };
+
+    clearState() {
+        this.setState({
+            'firstName' : '',
+            'lastName' : '',
+            'parentEmail' : '',
+            'activities' : ''
+        });
     };
 
     handleSubmit(event) {
@@ -43,10 +40,41 @@ export default class SignupForm extends Component{
             'activities' : ''
         }
         this.onSubmit = this.onSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.different = this.different.bind(this);
         // this.handleSubmit = this.handleSubmit.bind(this);
         // this.MyForm = this.MyForm.bind(this);
     };
-    
+    print_state() {
+        console.log(this.state);
+    }
+    handleChange(e) {
+        const {value, name} = e.target;
+        this.setState({[name]:value}, this.print_state)
+        // console.log(e.target);
+        // console.log(value);
+    }
+    different(e) {
+        console.log(e);
+    }
+
+    sendEmail() {
+        var templateParams = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.parentEmail
+        };
+        var template_id = "confirmation";
+
+        emailjs.send('gmail', template_id, templateParams, 'user_KIEZofYHFznf8LEaasyPx')
+            .then(function(response) {
+               console.log('SUCCESS!', response.status, response.text);
+            }, function(err) {
+               console.log('FAILED...', err);
+        });
+        this.form.reset();
+    }
+
 
     render() {
         var opts = {
@@ -67,7 +95,8 @@ export default class SignupForm extends Component{
             { text: opts['d'] + " - " + opts['d3'], value: 'd3' },
         ];
         var layoutChoice = 'vertical';
-        var s = this.onSubmit;
+        // var s = this.onSubmit;
+        var h = this.handleChange;
         var styles = {
             root: {
               marginTop: 18,
@@ -83,12 +112,13 @@ export default class SignupForm extends Component{
             <Container>
                 <Form
                     ref={ ref => this.form = ref }
-                    onSubmit={s}
+                    onSubmit={this.onSubmit}
                     // layout={layoutChoice}
                 >
                     <Form.Group widths="equal">
                     {/* First name */}
                     <Form.Input
+                        onChange={h}
                         required
                         name="firstName"
                         label="Child's First name"
@@ -102,6 +132,7 @@ export default class SignupForm extends Component{
                     />
                     {/* Last name */}
                     <Form.Input
+                        onChange={h}
                         name="lastName"
                         placeholder="Last name"
                         label="Child's Last name"
@@ -119,6 +150,7 @@ export default class SignupForm extends Component{
 
                     {/* parent email */}
                     <Form.Input
+                        onChange={h}
                         name="parentEmail"
                         placeholder="Email"
                         icon="mail"
@@ -134,7 +166,8 @@ export default class SignupForm extends Component{
                     />
                     <Divider/>
                     <Dropdown
-                        name="dropdownMultiple"
+                        onChange={this.different}
+                        name="activities"
                         label="Activities For Enrollment"
                         placeholder="Select Activity"
                         multiple
@@ -150,7 +183,7 @@ export default class SignupForm extends Component{
                         options={ options }
                     />
                     <Form.Group>
-                        <Form.Button content="Submit" color="green" />
+                        <Form.Button content="Submit" color="green"/>
                         <Form.Button type="button" content="Reset" onClick={ () => this.form.reset() }/>
                     </Form.Group>
                 </Form>

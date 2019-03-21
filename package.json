@@ -4,11 +4,13 @@
   "homepage": "http://InjuredRoman.github.io/kodiak_sign_up",
   "private": true,
   "dependencies": {
+    "emailjs-com": "^2.3.2",
     "final-form": "^4.11.1",
     "formsy-react": "^1.1.5",
     "formsy-react-components": "^1.0.0",
     "formsy-semantic-ui-react": "^0.3.3",
     "materialize-css": "^1.0.0-rc.2",
+    "nodemailer": "^5.1.1",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-final-form": "^4.0.2",
