@@ -22,8 +22,8 @@ class App extends Component {
             style={{
               fontSize: '4em',
               fontWeight: 'normal',
-              marginBottom: '4em',
-              marginTop: '3em',
+              marginBottom: '3em',
+              marginTop: '2em',
             }}
           />
         </Container>
