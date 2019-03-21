@@ -17,15 +17,6 @@ export default class SignupForm extends Component{
         this.setState(event, this.sendEmail());
     };
 
-    clearState() {
-        this.setState({
-            'firstName' : '',
-            'lastName' : '',
-            'parentEmail' : '',
-            'activities' : ''
-        });
-    };
-
     handleSubmit(event) {
         console.log('hello');
         return;
