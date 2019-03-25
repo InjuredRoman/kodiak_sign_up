@@ -28,7 +28,7 @@ class App extends Component {
           />
         </Container>
       </Segment>
-        <SignupForm />
+        <SignupForm name="roman"/>
 
       </div>
     );

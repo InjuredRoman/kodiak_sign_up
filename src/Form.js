@@ -7,7 +7,7 @@ import {
 import nodemailer from 'nodemailer';
 import * as emailjs from 'emailjs-com';
 
-export default class SignupForm extends Component{
+export default class SignupForm extends Component {
     validate() {
         return true;
     };
@@ -42,8 +42,7 @@ export default class SignupForm extends Component{
     handleChange(e) {
         const {value, name} = e.target;
         this.setState({[name]:value}, this.print_state)
-        // console.log(e.target);
-        // console.log(value);
+
     }
     different(e) {
         console.log(e);
