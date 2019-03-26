@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 
-export default class Homepage extends Component {
+export default class Sessionpage extends Component {
     render() {
         return (
-            <div>Homepage!</div>
+            <div>Session page!</div>
         );
     }
 

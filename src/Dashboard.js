@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import ConfirmedTable from './ConfirmedTable.js';
 import Homepage from './Homepage.js';
-import SessionPage from './SessionPage.js';
+import Sessionpage from './Sessionpage.js';
 import Topbar from './Topbar.js';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -19,7 +19,7 @@ export default class Dashboard extends Component {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/about">Sessions</Link>
+              <Link to="/sessions">Sessions</Link>
             </li>
             {/* <li>
               <Link to="/topics">Topics</Link>
@@ -29,7 +29,7 @@ export default class Dashboard extends Component {
           <hr />
   
           <Route exact path="/" component={Homepage} />
-          <Route path="/sessions" component={SessionPage} />
+          <Route path="/sessions" component={Sessionpage} />
           {/* <Route path="/somethingelse" component={SomethingElsePage} /> */}
         </div>
       </Router>

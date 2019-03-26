@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SignupForm from './Form.js';
+import Dashboard from './Dashboard.js';
 import {Container, Header, Segment} from 'semantic-ui-react';
 import './App.css';
 import { Form, Field } from 'react-final-form';
@@ -28,7 +29,8 @@ class App extends Component {
           />
         </Container>
       </Segment>
-        <SignupForm name="roman"/>
+      <Dashboard />
+        {/* <SignupForm name="roman"/> */}
 
       </div>
     );
