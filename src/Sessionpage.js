@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 // import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
+import {Table} from 'semantic-ui-react';
 // import Block from '../components/Block';
 
 import {
@@ -19,11 +19,15 @@ export default class Sessionpage extends Component {
   
   }
 
-  componentDidMount() {
-    fetch_all_enrollments(
-      response => { this.setState({ enrollments: response, loaded: true }, () => console.log(this.state.enrollments)); },
-      error    => { this.setState({ placeholder: "Something went wrong." }); },
-    )
+  async componentDidMount() {
+    const res = await fetch('http://127.0.0.1:8000/api/enrollments/');
+    const todos = await res.json();
+    console.log(todos);
+    this.setState({ enrollments: todos, loaded: true });
+    // fetch_all_enrollments(
+    //   response => { this.setState({ enrollments: response, loaded: true }, () => console.log(this.state.enrollments)); },
+    //   error    => { this.setState({ placeholder: "Something went wrong." }); },
+    // )
   }
 
   renderEnrollment(p) {
@@ -34,15 +38,56 @@ export default class Sessionpage extends Component {
       width: '20em',
     };
     return (
-      <span key={p.id} style={ style }>
         {/* <Link to={ url }>
           <Block
             title={ "Project" + p.id }
             description="would be in a list"
            />
           </Link> */}
-      </span>
+          // <React.Fragment>
+          //   <Table.Row>
+          //     <Table.Cell>
+          //       {p.activity.title}
+          //     </Table.Cell>
+          //     <Table.Cell>
+          //       {p.child.last_name}
+          //     </Table.Cell>
+          //     <Table.Cell>
+          //       {p.confirmed ? "Enrolled" : "Pending Approval"}
+          //     </Table.Cell>
+          //   </Table.Row>
+          // </React.Fragment>
     )
+  }
+  createTable() {
+    let table = []
+
+    // Outer loop to create parent
+    console.log(this.state);
+    for (let i = 0; i < this.state['enrollments'].length; i++) {
+      let e = this.state['enrollments'][i];
+      console.log(e);
+      let row = [];
+      row.push(
+        <Table.Cell>
+          {e.activity.title}
+        </Table.Cell>
+      );
+      row.push(
+        <Table.Cell>
+          {e.child.last_name}
+        </Table.Cell>
+      );
+      row.push(
+        <Table.Cell>
+          {e.confirmed ? "Enrolled" : "Pending Approval"}
+        </Table.Cell>
+      );
+      //Create the parent and add the children
+      // table.push(<tr>{children}</tr>)
+      table.push(<Table.Row key={i} children={row} />)
+    }
+    return table
   }
 
   render() {
@@ -52,13 +97,19 @@ export default class Sessionpage extends Component {
       placeholder } = this.state;
 
       return ( 
-      <div>
-        {/* <Link to="/settings">Settings</Link> */}
-        <h2>Enrollments</h2>
-        {/* <div>
-          { enrollments.map(e => this.renderEnrollment(e)) }
-        </div> */}
-      </div>
+          <Table celled inverted selectable>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Activity</Table.HeaderCell>
+                <Table.HeaderCell>Child</Table.HeaderCell>
+                <Table.HeaderCell>Status</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+
+            <Table.Body>
+              {this.createTable()}
+            </Table.Body>
+          </Table> 
     );
   }
 }
