@@ -97,7 +97,7 @@ export default class Sessionpage extends Component {
       placeholder } = this.state;
 
       return ( 
-          <Table celled inverted selectable>
+          <Table celled selectable>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Activity</Table.HeaderCell>
