@@ -220,6 +220,7 @@ export default class ActivityForm extends Component {
                         }}
                         errorLabel={ <Label color="red" pointing/> }
                     />
+                    <Form.Group widths='equal' >
                     <Form.Field 
                         label="Date Range"
                         control={DatesRangeInput}
@@ -236,6 +237,19 @@ export default class ActivityForm extends Component {
                         iconPosition="left"
                         onChange={h}
                     />
+                      <Form.Dropdown
+                            label="Days of Week"
+                            name="days_of_occurrence"
+                            placeholder='Days Activity Occurs'
+                            fluid
+                            multiple
+                            search
+                            selection
+                            options={dayOptions}
+                            onChange={h}
+                            value={this.state.days_of_occurrence}
+                    />
+                    </Form.Group>
                     <Form.Group widths='equal' >
 
                     <TimeInput
@@ -273,18 +287,6 @@ export default class ActivityForm extends Component {
                         value={this.state.end_time}
                         iconPosition="left"
                         onChange={h}
-                    />
-                      <Form.Dropdown
-                            label="Days"
-                            name="days_of_occurrence"
-                            placeholder='Days of Week Activity Occurs'
-                            fluid
-                            multiple
-                            search
-                            selection
-                            options={dayOptions}
-                            onChange={h}
-                            value={this.state.days_of_occurrence}
                     />
                     </Form.Group>
                     <Form.Input
