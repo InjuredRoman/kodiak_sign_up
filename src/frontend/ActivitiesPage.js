@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import {Table, Header, Segment, Button} from 'semantic-ui-react';
 import ReactTable from 'react-table';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 
 import {
   fetch_all_activities
 } from '../middleend/fetchers';
 
-export default class ActivitiesPage extends Component {
+class ActivitiesPage extends Component {
   constructor(props) {
     super(props);
     console.log("here!");
@@ -16,6 +16,7 @@ export default class ActivitiesPage extends Component {
       loaded: false,
       placeholder: "Loading...",
     };
+    this.createNew = this.createNew.bind(this);
   
   }
 
@@ -29,6 +30,9 @@ export default class ActivitiesPage extends Component {
       error    => { this.setState({ placeholder: "Something went wrong." }); },
     )
     // this.createTable();
+  }
+  createNew() {
+    this.props.history.push("/activity");
   }
 
   render() {
@@ -63,12 +67,11 @@ export default class ActivitiesPage extends Component {
             </Header.Content>
           </Header>
           <ReactTable defaultPageSize={5}data={activities} columns={columns} />
-           <Button color='green'>
-             <Link to="/activity">Create New</Link>
-           </Button>
+            {/* <Form.Button content="Submit" color="green"/> */}
+           <Button content="Create New" color='green' onClick={this.createNew}/>
       </Segment>
     );
-  }
+  };
 
   // createTable() {
   //   let table = []
@@ -127,3 +130,4 @@ export default class ActivitiesPage extends Component {
   //   );
   // }
 }
+export default withRouter(ActivitiesPage);
