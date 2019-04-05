@@ -13,7 +13,8 @@ export default class Dashboard extends Component {
     return (
         <Router>
           <Topbar />
-        <div>
+        hi
+        {/* <div>
           <ul>
             <li>
               <Link to="/">Home</Link>
@@ -21,16 +22,15 @@ export default class Dashboard extends Component {
             <li>
               <Link to="/sessions">Sessions</Link>
             </li>
-            {/* <li>
+            <li>
               <Link to="/topics">Topics</Link>
-            </li> */}
+            </li>
           </ul>
   
-          <hr />
-  
+          <hr /> */}
+        <div>
           <Route exact path="/" component={Homepage} />
           <Route path="/sessions" component={Sessionpage} />
-          {/* <Route path="/somethingelse" component={SomethingElsePage} /> */}
         </div>
       </Router>
     );

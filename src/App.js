@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import SignupForm from './Form.js';
 import Dashboard from './Dashboard.js';
+import Homepage from './Homepage.js';
+import Sessionpage from './Sessionpage.js';
+import Topbar from './Topbar.js';
 import {Container, Header, Segment} from 'semantic-ui-react';
 import './App.css';
 import { Form, Field } from 'react-final-form';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
 class App extends Component {
@@ -29,8 +33,13 @@ class App extends Component {
           />
         </Container>
       </Segment>
-      <Dashboard />
-        {/* <SignupForm name="roman"/> */}
+      <center><Homepage /></center>
+      <Router>
+      <Topbar />
+        <div>
+          <Route path="/sessions" component={Sessionpage} />
+        </div>
+      </Router>
 
       </div>
     );
