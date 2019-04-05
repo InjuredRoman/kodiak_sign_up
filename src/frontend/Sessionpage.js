@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 // import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import {Table} from 'semantic-ui-react';
+import ActivityForm from './ActivityForm';
 // import Block from '../components/Block';
 
 import {
   fetch_all_enrollments
-} from './middle/fetchers';
+} from '../middleend/fetchers';
 
 export default class Sessionpage extends Component {
   constructor(props) {
@@ -20,14 +21,14 @@ export default class Sessionpage extends Component {
   }
 
   async componentDidMount() {
-    const res = await fetch('http://127.0.0.1:8000/api/enrollments/');
-    const todos = await res.json();
-    console.log(todos);
-    this.setState({ enrollments: todos, loaded: true });
-    // fetch_all_enrollments(
-    //   response => { this.setState({ enrollments: response, loaded: true }, () => console.log(this.state.enrollments)); },
-    //   error    => { this.setState({ placeholder: "Something went wrong." }); },
-    // )
+    // const res = await fetch('http://127.0.0.1:8000/api/enrollments/');
+    // const todos = await res.json();
+    // console.log(todos);
+    // this.setState({ enrollments: todos, loaded: true });
+    fetch_all_enrollments(
+      response => { this.setState({ enrollments: response, loaded: true }, () => console.log(this.state.enrollments)); },
+      error    => { this.setState({ placeholder: "Something went wrong." }); },
+    )
   }
 
   renderEnrollment(p) {
@@ -97,6 +98,8 @@ export default class Sessionpage extends Component {
       placeholder } = this.state;
 
       return ( 
+        <div>
+          <ActivityForm />
           <Table celled selectable>
             <Table.Header>
               <Table.Row>
@@ -110,6 +113,9 @@ export default class Sessionpage extends Component {
               {this.createTable()}
             </Table.Body>
           </Table> 
+
+
+        </div>
     );
   }
 }

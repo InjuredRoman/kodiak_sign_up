@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import SignupForm from './Form.js';
-import Dashboard from './Dashboard.js';
+import SignupForm from './frontend/Form.js';
+import Dashboard from './frontend/Dashboard.js';
 import {Container, Header, Segment} from 'semantic-ui-react';
 import './App.css';
 import { Form, Field } from 'react-final-form';

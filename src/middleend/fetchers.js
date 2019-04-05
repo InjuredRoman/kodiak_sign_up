@@ -5,6 +5,8 @@ const root = "https://banana-tart-91724.herokuapp.com";
 const enrollment_list_endpoint = "/api/enrollments/";
 const parent_list_endpoint = "/api/parents/";
 const child_list_endpoint = "/api/children/";
+const activity_list_endpoint = "/api/activities/";
+const activity_create_endpoint = "/api/activities/";
 
 function error_handler(err) {
     console.log(err);
@@ -19,7 +21,7 @@ export function fetch_all_enrollments(on_success, on_error=(error_handler)) {
         // headers: new Headers({ "Content-Type": "application/json" })
     };
     const real_endpoint = root + enrollment_list_endpoint;
-    fetch(enrollment_list_endpoint)
+    fetch(real_endpoint)
     .then(response => {
         if (response.status !== 200) {
             on_error(response);
@@ -29,4 +31,29 @@ export function fetch_all_enrollments(on_success, on_error=(error_handler)) {
         }
     })
     .then(data => on_success(data));
+}
+
+export function fetch_all_activities(on_success, on_error=(error_handler)) {
+    const real_endpoint = root + activity_list_endpoint;
+    fetch(real_endpoint)
+    .then(response => {
+        if (response.status !== 200) {
+            on_error(response);
+        } else {
+            console.log(response);
+            return response.json();
+        }
+    })
+    .then(data => on_success(data));
+}
+
+export function create_activity(activity_information) {
+    const real_endpoint = root + activity_create_endpoint;
+    const conf = {
+        method: "post",
+        body: JSON.stringify(activity_information),
+        headers: new Headers({ "Content-Type": "application/json" })
+    };
+    console.log(JSON.stringify(activity_information));
+    fetch(real_endpoint, conf).then(response => console.log(response));
 }
