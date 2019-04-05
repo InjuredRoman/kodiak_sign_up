@@ -1,0 +1,39 @@
+.infoCards {
+  margin: auto;
+  margin-right: 20%;
+}
+
+.card1 {
+  float: right;
+  padding-left: 1%;
+}
+
+.card2 {
+  float: right;
+  padding-left: 1%;
+}
+
+.card3 {
+  float: right;
+  padding-left: 1%;
+}
+
+.card4 {
+  float: right;
+  padding-left: 1%;
+}
+
+.card5 {
+  float: right;
+  padding-left: 1%;
+}
+
+.navBar {
+  float: left;
+}
+
+.table1 {
+  float: right;
+  margin-right: 33%;
+  margin-top: 2%;
+}

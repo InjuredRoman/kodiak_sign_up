@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import {Table} from 'semantic-ui-react';
-import ActivityForm from './ActivityForm';
-// import Block from '../components/Block';
-
+import {Table, Header, Grid, Segment, Icon} from 'semantic-ui-react';
+import ReactTable from 'react-table';
 import {
   fetch_all_enrollments
 } from '../middleend/fetchers';
@@ -91,31 +88,55 @@ export default class Sessionpage extends Component {
     return table
   }
 
+  filterByStatus(L, enrollment_status) {
+    var result = L.filter(enrollment => enrollment.confirmed === enrollment_status);
+    return result;
+  }
+
   render() {
-    const { 
-      enrollments, 
-      loaded, 
-      placeholder } = this.state;
+    const confirmed_enrollments = this.filterByStatus(this.state.enrollments, true);
+    const pending_enrollments = this.filterByStatus(this.state.enrollments, false);
+    const columns = [
+      {
+        Header: 'Activity',
+        accessor: 'activity.title' // String-based value accessors!
+      },
+      {
+        Header: 'Child',
+        accessor: 'child.last_name' // String-based value accessors!
+      },
+      // {
+      //   Header: 'Status',
+      //   accessor: 'confirmed', // String-based value accessors!
+      //   Cell: props =>
+      // },
+    ];
 
-      return ( 
-        <div>
-          <ActivityForm />
-          <Table celled selectable>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Activity</Table.HeaderCell>
-                <Table.HeaderCell>Child</Table.HeaderCell>
-                <Table.HeaderCell>Status</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-
-            <Table.Body>
-              {this.createTable()}
-            </Table.Body>
-          </Table> 
-
-
-        </div>
+    return (
+      <Segment>
+      <Grid columns={2} divided>
+      <Grid.Column >
+            <Header as='h2'color='green'>
+              <Icon name='checkmark' />
+              <Header.Content>
+                Confirmed 
+                <Header.Subheader>Manage Confirmed Enrollments</Header.Subheader>
+              </Header.Content>
+            </Header>
+            <ReactTable defaultPageSize="10"data={pending_enrollments} columns={columns} />
+      </Grid.Column>
+      <Grid.Column >
+            <Header as='h2'color='orange'>
+              <Icon name='exclamation' />
+              <Header.Content>
+                Pending 
+                <Header.Subheader>Manage Pending Enrollments</Header.Subheader>
+              </Header.Content>
+            </Header>
+            <ReactTable defaultPageSize="10"data={confirmed_enrollments} columns={columns} />
+      </Grid.Column>
+      </Grid>
+      </Segment>
     );
   }
 }

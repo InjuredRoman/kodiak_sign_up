@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import Homepage from './Homepage.js';
 import Sessionpage from './Sessionpage.js';
 import Topbar from './Topbar.js';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import ActivitiesPage from './ActivitiesPage.js';
+import ActivityForm from './ActivityForm.js';
+import { BrowserRouter as Router, Route} from "react-router-dom";
 
 export default class Dashboard extends Component {
   // constructor(props) {
@@ -13,7 +15,8 @@ export default class Dashboard extends Component {
     return (
         <Router>
           <Topbar />
-        <div>
+        hi
+        {/* <div>
           <ul>
             <li>
               <Link to="/">Home</Link>
@@ -21,16 +24,14 @@ export default class Dashboard extends Component {
             <li>
               <Link to="/sessions">Sessions</Link>
             </li>
-            {/* <li>
+            <li>
               <Link to="/topics">Topics</Link>
-            </li> */}
+            </li>
           </ul>
   
-          <hr />
-  
-          <Route exact path="/" component={Homepage} />
-          <Route path="/sessions" component={Sessionpage} />
-          {/* <Route path="/somethingelse" component={SomethingElsePage} /> */}
+          <hr /> */}
+        <div>
+          <Route path="/" component={Homepage} />
         </div>
       </Router>
     );

@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import SignupForm from './frontend/Form.js';
 import Dashboard from './frontend/Dashboard.js';
+import ActivitiesPage from './frontend/ActivitiesPage';
+import ActivityForm from './frontend/ActivityForm';
+import Homepage from './frontend/Homepage.js';
+import Sessionpage from './frontend/Sessionpage.js';
+import Topbar from './frontend/Topbar.js';
 import {Container, Header, Segment} from 'semantic-ui-react';
 import './App.css';
 import { Form, Field } from 'react-final-form';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
 class App extends Component {
@@ -13,8 +19,8 @@ class App extends Component {
   render() {
     return (
       <div>
-      <Segment inverted>
-        <Container text>
+      {/* <Segment inverted> */}
+        {/* <Container text>
           <Header
             as='h1'
             textAlign='center'
@@ -27,10 +33,19 @@ class App extends Component {
               marginTop: '2em',
             }}
           />
-        </Container>
-      </Segment>
-      <Dashboard />
-        {/* <SignupForm name="roman"/> */}
+        </Container> */}
+      {/* </Segment> */}
+      {/* <center><Homepage /></center> */}
+
+      <Router>
+        <Topbar/>
+      {/* </Router> */}
+      {/* <Router> */}
+          <Route path="/home" component={Homepage} />
+          <Route path="/sessions" component={Sessionpage} />
+          <Route path="/activity" component={ActivityForm} />
+          <Route path="/activities" component={ActivitiesPage} />
+      </Router>
 
       </div>
     );
