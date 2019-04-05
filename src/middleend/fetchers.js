@@ -6,7 +6,7 @@ const enrollment_list_endpoint = "/api/enrollments/";
 const parent_list_endpoint = "/api/parents/";
 const child_list_endpoint = "/api/children/";
 const activity_list_endpoint = "/api/activities/";
-const activity_create_endpoint = "/api/activities/";
+const activity_create_endpoint = "/api/make_activity/";
 
 function error_handler(err) {
     console.log(err);
@@ -50,7 +50,7 @@ export function fetch_all_activities(on_success, on_error=(error_handler)) {
 export function create_activity(activity_information) {
     const real_endpoint = root + activity_create_endpoint;
     const conf = {
-        method: "post",
+        method: "POST",
         body: JSON.stringify(activity_information),
         headers: new Headers({ "Content-Type": "application/json" })
     };

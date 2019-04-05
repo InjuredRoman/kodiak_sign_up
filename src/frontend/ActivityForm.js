@@ -47,15 +47,25 @@ export default class ActivityForm extends Component {
         this.state.start_time = this.parse_time(this.state.start_time);
         this.state.end_time = this.parse_time(this.state.end_time);
         delete this.state.datesRange;
-        //TODO: add real days of week field
-        this.state.days_of_occurrence=[
-            {"id":"1","day":"MON"},
-            {"id":"2","day":"TUE"},
-            {"id":"5","day":"FRI"}
-        ];
         create_activity(this.state);
-        this.form.reset();
+        this.clearForm();
     };
+    clearForm() {
+        this.form.reset();
+        this.setState({
+            'title' : '',
+            'youngest_enrolled' : '',
+            'oldest_enrolled' : '',
+            'start_date' : '',
+            'end_date' : '',
+            'days_of_occurrence' : '',
+            'start_time' : '',
+            'end_time' : '',
+            'max_enrollment' : '',
+            datesRange:''
+
+        })
+    }
 
     constructor(props) {
         super(props);
@@ -105,23 +115,43 @@ export default class ActivityForm extends Component {
     // }
 
     render() {
-        var opts = {
-            'a' : 'Unlimited Pool and Ice Rink Access (all ages, do not select again if you already have access)',
-            'b' : 'Leather Crafting March 11-14 at KBM 3:30 - 5:30 p.m. Heritage Center Ages 6-18',
-            'c' : 'KBM Spring Break Rock Climbing Club mornings (10 a.m. to noon) March 11-14 for students age 8-14',
-            'd' : 'Spring Arts 2019',
-            'd1' : 'Relief Printing with Hailey Davis, 10 a.m. to noon, March 11-15 for ages 8 - 11',
-            'd2' : 'Explore Acrylics with Erica Ross, 1 - 3 p.m., March 11-15 for ages 8 - 11',
-            'd3' : 'Theatre Games with the ShakesBears 10 a.m. to noon March for ages 9 - 12',
-        };
-        var options = [
-            { text: opts['a'], value: 'a' },
-            { text: opts['b'], value: 'b' },
-            { text: opts['c'], value: 'c' },
-            { text: opts['d'] + " - " + opts['d1'], value: 'd1' },
-            { text: opts['d'] + " - " + opts['d2'], value: 'd2' },
-            { text: opts['d'] + " - " + opts['d3'], value: 'd3' },
-        ];
+        const dayOptions = [
+            {
+              key: 0,
+              text: 'Monday',
+              value: 'MON',
+            },
+            {
+              key: 1,
+              text: 'Tuesday',
+              value: 'TUE',
+            },
+            {
+              key: 2,
+              text: 'Wednesday',
+              value: 'WED',
+            },
+            {
+              key: 3,
+              text: 'Thursday',
+              value: 'THU',
+            },
+            {
+              key: 4,
+              text: 'Friday',
+              value: 'FRI',
+            },
+            {
+              key: 5,
+              text: 'Saturday',
+              value: 'SAT',
+            },
+            {
+              key: 6,
+              text: 'Sunday',
+              value: 'SUN',
+            }
+          ]
         var layoutChoice = 'vertical';
         // var s = this.onSubmit;
         var h = this.handleChange;
@@ -137,33 +167,12 @@ export default class ActivityForm extends Component {
             },
           };
         return (
-            // "title": "Activity 4",
-            // "youngest_enrolled": 2
-            // "oldest_enrolled": 2,
-            // "start_date": "2019-04-04",
-            // "end_date": "2019-04-04",
-            // "days_of_occurrence": [],
-            // "start_time": "18:38:04.950703",
-            // "end_time": "18:38:04.950727",
-            // "max_enrollment": 2,
-            // "enrolled_students": [
-            //     5,
-            //     5,
-            //     10,
-            //     10
-            // ],
-            // "id": 5,
             <Container>
-                {/* <Form.Field
-                    control={DatesRangeInput} */}
-
                 <Form
                     ref={ ref => this.form = ref }
                     onSubmit={this.handleSubmit}
-                    // layout={layoutChoice}
                 >
                     <Form.Group widths="equal">
-                    {/* First name */}
                     <Form.Input
                         onChange={h}
                         required
@@ -264,6 +273,18 @@ export default class ActivityForm extends Component {
                         value={this.state.end_time}
                         iconPosition="left"
                         onChange={h}
+                    />
+                      <Form.Dropdown
+                            label="Days"
+                            name="days_of_occurrence"
+                            placeholder='Days of Week Activity Occurs'
+                            fluid
+                            multiple
+                            search
+                            selection
+                            options={dayOptions}
+                            onChange={h}
+                            value={this.state.days_of_occurrence}
                     />
                     </Form.Group>
                     <Form.Input
