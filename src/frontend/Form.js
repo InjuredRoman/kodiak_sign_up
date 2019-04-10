@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Label, Container, Divider} from 'semantic-ui-react';
+import {fetch_all_activities, create_enrollment} from '../middleend/fetchers';
 import {
     Form, Dropdown, 
   } from 'formsy-semantic-ui-react';
@@ -14,7 +15,13 @@ export default class SignupForm extends Component {
 
     onSubmit(event) {
         console.log(event);
-        this.setState(event, this.sendEmail());
+        this.setState(event);
+        create_enrollment(
+            event, 
+            response => {
+                this.setState({response: response}, console.log(response))
+            }
+        );
     };
 
     handleSubmit(event) {
@@ -25,10 +32,11 @@ export default class SignupForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            'firstName' : '',
-            'lastName' : '',
-            'parentEmail' : '',
-            'activities' : ''
+            'child_first_name' : '',
+            'child_last_name' : '',
+            'parent_email' : '',
+            'activities' : '',
+            'possible_activities' : ''
         }
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -36,6 +44,26 @@ export default class SignupForm extends Component {
         // this.handleSubmit = this.handleSubmit.bind(this);
         // this.MyForm = this.MyForm.bind(this);
     };
+
+    organize_options(activities) {
+        var possible_activities = 
+            activities.map((a, index)=> ({
+                key: index,
+                text: a.title,
+                value: a.id
+            }));
+        this.setState({possible_activities: possible_activities}, console.log(this.state));
+        }
+
+    componentDidMount() {
+        fetch_all_activities(
+        response => { this.organize_options(response); },
+        error    => { this.setState({ placeholder: "Something went wrong." }); },
+        );
+
+    }
+
+
     print_state() {
         console.log(this.state);
     }
@@ -110,7 +138,7 @@ export default class SignupForm extends Component {
                     <Form.Input
                         onChange={h}
                         required
-                        name="firstName"
+                        name="child_first_name"
                         label="Child's First name"
                         placeholder="First Name"
                         validations="isWords"
@@ -123,7 +151,7 @@ export default class SignupForm extends Component {
                     {/* Last name */}
                     <Form.Input
                         onChange={h}
-                        name="lastName"
+                        name="child_last_name"
                         placeholder="Last name"
                         label="Child's Last name"
                         required
@@ -141,7 +169,7 @@ export default class SignupForm extends Component {
                     {/* parent email */}
                     <Form.Input
                         onChange={h}
-                        name="parentEmail"
+                        name="parent_email"
                         placeholder="Email"
                         icon="mail"
                         label="Parent/Guardian Email"
@@ -170,7 +198,7 @@ export default class SignupForm extends Component {
                             customValidation: 'Please select at least one activity',
                         }}
                         errorLabel={ <Label color="red" pointing/> }
-                        options={ options }
+                        options={ this.state.possible_activities }
                     />
                     <Form.Group>
                         <Form.Button content="Submit" color="green"/>

@@ -28,7 +28,7 @@ class ActivitiesPage extends Component {
     fetch_all_activities(
       response => { this.setState({ activities: response, loaded: true }, () => console.log(this.state.enrollments)); },
       error    => { this.setState({ placeholder: "Something went wrong." }); },
-    )
+    );
     // this.createTable();
   }
   createNew() {

@@ -6,10 +6,11 @@ import ActivityForm from './frontend/ActivityForm';
 import Homepage from './frontend/Homepage.js';
 import Sessionpage from './frontend/Sessionpage.js';
 import Topbar from './frontend/Topbar.js';
+import EnrollmentUpdate from './frontend/EnrollmentUpdate.js';
 import {Container, Header, Segment} from 'semantic-ui-react';
 import './App.css';
 import { Form, Field } from 'react-final-form';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Route, Link } from "react-router-dom";
 
 
 class App extends Component {
@@ -45,6 +46,15 @@ class App extends Component {
           <Route path="/sessions" component={Sessionpage} />
           <Route path="/activity" component={ActivityForm} />
           <Route path="/activities" component={ActivitiesPage} />
+          <Route path="/signup" component={SignupForm} />
+          {/* <Route
+            path='/confirm_enrollment/:enrollment_id'
+            render={(props) => <EnrollmentUpdate {...props} update_type={'confirm'} />}
+          />
+          <Route
+            path='/cancel_enrollment/:enrollment_id'
+            render={(props) => <EnrollmentUpdate {...props} update_type={'cancel'} />}
+          /> */}
       </Router>
 
       </div>
