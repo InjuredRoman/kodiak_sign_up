@@ -3,6 +3,7 @@ import SignupForm from './frontend/Form.js';
 import Dashboard from './frontend/Dashboard.js';
 import ActivitiesPage from './frontend/ActivitiesPage';
 import ActivityForm from './frontend/ActivityForm';
+import LoginForm from './frontend/LoginForm';
 import Homepage from './frontend/Homepage.js';
 import Sessionpage from './frontend/Sessionpage.js';
 import Topbar from './frontend/Topbar.js';
@@ -43,6 +44,7 @@ class App extends Component {
       {/* </Router> */}
       {/* <Router> */}
           <Route path="/home" component={Homepage} />
+          <Route path="/login" component={LoginForm} />
           <Route path="/sessions" component={Sessionpage} />
           <Route path="/activity" component={ActivityForm} />
           <Route path="/activities" component={ActivitiesPage} />

@@ -9,9 +9,26 @@ const activity_list_endpoint = "/api/activities/";
 const activity_create_endpoint = "/api/make_activity/";
 const enrollment_rud_endpoint = "/api/rud_enrollment/"; //retrieve, update, destroy endpoint
 const enrollment_create_endpoint = '/api/create_enrollment/';
+const login_endpoint = "/api/login/";
 
 function error_handler(err) {
     console.log(err);
+}
+
+export function login(user_information) {
+    const real_endpoint = root + login_endpoint;
+    const conf = {
+        method: "post",
+        body: JSON.stringify(user_information),
+        headers: new Headers({ "Content-Type": "application/json" })
+    };
+    var result = fetch(real_endpoint, conf)
+        .then(response => response.json())
+        .then(data => data)
+        .catch(function(err) {
+            console.log(err);
+        });
+    return result;
 }
 
 export function update_enrollment(e_id, on_success, on_error=(error_handler), new_confirmation_status=true) {
