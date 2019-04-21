@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SignupForm from './frontend/Form.js';
 import Dashboard from './frontend/Dashboard.js';
+import AuthorizedWrapper from './frontend/AuthorizedWrapper';
 import ActivitiesPage from './frontend/ActivitiesPage';
 import ActivityForm from './frontend/ActivityForm';
 import LoginForm from './frontend/LoginForm';
@@ -45,10 +46,18 @@ class App extends Component {
       {/* <Router> */}
           <Route path="/home" component={Homepage} />
           <Route path="/login" component={LoginForm} />
-          <Route path="/sessions" component={Sessionpage} />
-          <Route path="/activity" component={ActivityForm} />
-          <Route path="/activities" component={ActivitiesPage} />
-          <Route path="/signup" component={SignupForm} />
+          <Route path="/sessions"
+            render={(props) => <AuthorizedWrapper {...props}><Sessionpage /></AuthorizedWrapper> }
+          />
+          <Route path="/activity"
+            render={(props) => <AuthorizedWrapper {...props}><ActivityForm /></AuthorizedWrapper> }
+          />
+          <Route path="/activities" 
+            render={(props) => <AuthorizedWrapper {...props}><ActivitiesPage /></AuthorizedWrapper> }
+          />
+          <Route path="/signup" 
+            render={(props) => <AuthorizedWrapper {...props}><SignupForm /></AuthorizedWrapper> }
+          />
           {/* <Route
             path='/confirm_enrollment/:enrollment_id'
             render={(props) => <EnrollmentUpdate {...props} update_type={'confirm'} />}

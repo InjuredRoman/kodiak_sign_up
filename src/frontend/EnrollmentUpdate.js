@@ -69,7 +69,6 @@ export default class EnrollmentUpdate extends React.Component {
                 </Modal.Description>
                 </Modal.Content>
             </Modal>
-            // <h1>yo you're cancelled, straight up</h1>
 
         );
     }
