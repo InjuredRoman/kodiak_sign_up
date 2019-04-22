@@ -18,7 +18,7 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+a:focus { color: 'none'; }
 .App-link {
   color: #61dafb;
 }

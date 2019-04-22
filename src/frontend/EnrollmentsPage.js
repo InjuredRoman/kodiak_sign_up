@@ -1,21 +1,33 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import {Table, Header, Grid, Segment, Icon} from 'semantic-ui-react';
-import ReactTable from 'react-table';
+// import ReactTable from 'react-table';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import Paper from '@material-ui/core/Paper';
+import MaterialTable from 'material-table';
+import ReactLoading from 'react-loading';
+
+import { unstable_Box as Box } from '@material-ui/core/Box';
 import {
   fetch_all_enrollments
 } from '../middleend/fetchers';
 
-export default class Sessionpage extends Component {
+export default class EnrollmentsPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      value: 0,
       enrollments: [],
       loaded: false,
       placeholder: "Loading...",
+      enrollment_type: "pending"
     };
   
   }
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
 
   async componentDidMount() {
     // const res = await fetch('http://127.0.0.1:8000/api/enrollments/');
@@ -24,7 +36,7 @@ export default class Sessionpage extends Component {
     // this.setState({ enrollments: todos, loaded: true });
     fetch_all_enrollments(
       response => { this.setState({ enrollments: response, loaded: true }, () => console.log(this.state.enrollments)); },
-      error    => { this.setState({ placeholder: "Something went wrong." }); },
+      error    => { this.setState({ loaded: false, placeholder: "Something went wrong." }); },
     )
   }
 
@@ -90,20 +102,27 @@ export default class Sessionpage extends Component {
 
   filterByStatus(L, enrollment_status) {
     var result = L.filter(enrollment => enrollment.confirmed === enrollment_status);
+    result = result.map((e, i) => {
+      return { activity_title: e.activity.title,
+        child_last_name: e.child.last_name,
+        child_name: e.child.first_name + " " + e.child.last_name
+      };
+    });
     return result;
   }
 
   render() {
-    const confirmed_enrollments = this.filterByStatus(this.state.enrollments, true);
-    const pending_enrollments = this.filterByStatus(this.state.enrollments, false);
+    const confirmed_enrollments = this.state.loaded ? this.filterByStatus(this.state.enrollments, true) : [];
+    const pending_enrollments = this.state.loaded ? this.filterByStatus(this.state.enrollments, false) : [];
+    var loading = <ReactLoading type="spinningBubbles" />
     const columns = [
       {
-        Header: 'Activity',
-        accessor: 'activity.title' // String-based value accessors!
+        title: 'Activity',
+        field: 'activity_title'
       },
       {
-        Header: 'Child',
-        accessor: 'child.last_name' // String-based value accessors!
+        title: 'Child',
+        field: 'child_name' // String-based value accessors!
       },
       // {
       //   Header: 'Status',
@@ -113,30 +132,39 @@ export default class Sessionpage extends Component {
     ];
 
     return (
-      <Segment>
-      <Grid columns={2} divided>
-      <Grid.Column >
-            <Header as='h2'color='green'>
+      <Fragment>
+
+      <Tabs value={this.state.value} onChange={this.handleChange} textColor="secondary">
+        <Tab component='a' style={{'text-decoration':'none'}}label="Pending Enrollments"></Tab>
+        <Tab component='a'style={{'text-decoration':'none'}}label="Confirmed Enrollments"></Tab>
+      </Tabs>
+      {
+        this.state.value===0 &&
+          <Fragment>
+            {/* <Header as='h2'color='green'>
               <Icon name='checkmark' />
               <Header.Content>
                 Confirmed 
                 <Header.Subheader>Manage Confirmed Enrollments</Header.Subheader>
               </Header.Content>
-            </Header>
-            <ReactTable defaultPageSize="10"data={pending_enrollments} columns={columns} />
-      </Grid.Column>
-      <Grid.Column >
-            <Header as='h2'color='orange'>
+            </Header> */}
+            <MaterialTable title="Pending" columns={columns} isLoading={!this.state.loaded} data={pending_enrollments}  />
+
+          </Fragment>
+      }
+      {this.state.value===1 &&
+          <Fragment>
+            {/* <Header as='h2'color='orange'>
               <Icon name='exclamation' />
               <Header.Content>
                 Pending 
                 <Header.Subheader>Manage Pending Enrollments</Header.Subheader>
               </Header.Content>
-            </Header>
-            <ReactTable defaultPageSize="10"data={confirmed_enrollments} columns={columns} />
-      </Grid.Column>
-      </Grid>
-      </Segment>
+            </Header> */}
+            <MaterialTable title="Confirmed" isLoading={!this.state.loaded} data={confirmed_enrollments} columns={columns} />
+          </Fragment>
+      }
+      </Fragment>
     );
   }
 }

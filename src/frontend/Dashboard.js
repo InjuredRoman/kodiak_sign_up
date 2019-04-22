@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 // import ConfirmedTable from './ConfirmedTable.js';
 import Homepage from './Homepage.js';
-import Sessionpage from './Sessionpage.js';
 import Topbar from './Topbar.js';
-import ActivitiesPage from './ActivitiesPage.js';
-import ActivityForm from './ActivityForm.js';
 import { BrowserRouter as Router, Route} from "react-router-dom";
 
 export default class Dashboard extends Component {
