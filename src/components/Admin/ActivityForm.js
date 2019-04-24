@@ -4,7 +4,7 @@ import {
     Form, Dropdown, 
   } from 'formsy-semantic-ui-react';
 
-import {create_activity} from '../middleend/fetchers';
+import {create_activity} from '../../middleend/fetchers';
 import {
     // DateInput,
     TimeInput,

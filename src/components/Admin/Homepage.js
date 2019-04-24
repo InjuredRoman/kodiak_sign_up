@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Homepage.css';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+// import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {
   Card,
   Button,

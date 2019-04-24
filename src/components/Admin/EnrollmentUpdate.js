@@ -1,5 +1,5 @@
 import React from 'react';
-import {update_enrollment, destroy_enrollment} from '../middleend/fetchers.js';
+import {update_enrollment, destroy_enrollment} from '../../middleend/fetchers.js';
 import {Modal, Header, Icon} from 'semantic-ui-react';
 
 

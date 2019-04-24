@@ -10,12 +10,11 @@ import ReactLoading from 'react-loading';
 import { unstable_Box as Box } from '@material-ui/core/Box';
 import {
   fetch_all_enrollments
-} from '../middleend/fetchers';
+} from '../../middleend/fetchers';
 
 export default class EnrollmentsPage extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       value: 0,
       enrollments: [],
@@ -23,84 +22,26 @@ export default class EnrollmentsPage extends Component {
       placeholder: "Loading...",
       enrollment_type: "pending"
     };
-  
+
+    this.filterByStatus = this.filterByStatus.bind(this);
   }
+
   handleChange = (event, value) => {
     this.setState({ value });
   };
 
   async componentDidMount() {
-    // const res = await fetch('http://127.0.0.1:8000/api/enrollments/');
-    // const todos = await res.json();
-    // console.log(todos);
-    // this.setState({ enrollments: todos, loaded: true });
     fetch_all_enrollments(
       response => { this.setState({ enrollments: response, loaded: true }, () => console.log(this.state.enrollments)); },
       error    => { this.setState({ loaded: false, placeholder: "Something went wrong." }); },
     )
   }
 
-  renderEnrollment(p) {
-    // const url = "/project" + p.id;
-    const style = {
-      margin: '20px', 
-      display:'inline-block',
-      width: '20em',
-    };
-    return (
-        {/* <Link to={ url }>
-          <Block
-            title={ "Project" + p.id }
-            description="would be in a list"
-           />
-          </Link> */}
-          // <React.Fragment>
-          //   <Table.Row>
-          //     <Table.Cell>
-          //       {p.activity.title}
-          //     </Table.Cell>
-          //     <Table.Cell>
-          //       {p.child.last_name}
-          //     </Table.Cell>
-          //     <Table.Cell>
-          //       {p.confirmed ? "Enrolled" : "Pending Approval"}
-          //     </Table.Cell>
-          //   </Table.Row>
-          // </React.Fragment>
-    )
-  }
-  createTable() {
-    let table = []
-
-    // Outer loop to create parent
-    console.log(this.state);
-    for (let i = 0; i < this.state['enrollments'].length; i++) {
-      let e = this.state['enrollments'][i];
-      console.log(e);
-      let row = [];
-      row.push(
-        <Table.Cell>
-          {e.activity.title}
-        </Table.Cell>
-      );
-      row.push(
-        <Table.Cell>
-          {e.child.last_name}
-        </Table.Cell>
-      );
-      row.push(
-        <Table.Cell>
-          {e.confirmed ? "Enrolled" : "Pending Approval"}
-        </Table.Cell>
-      );
-      //Create the parent and add the children
-      // table.push(<tr>{children}</tr>)
-      table.push(<Table.Row key={i} children={row} />)
-    }
-    return table
-  }
 
   filterByStatus(L, enrollment_status) {
+    if (L == null) {
+      return [];
+    }
     var result = L.filter(enrollment => enrollment.confirmed === enrollment_status);
     result = result.map((e, i) => {
       return { activity_title: e.activity.title,
@@ -122,13 +63,8 @@ export default class EnrollmentsPage extends Component {
       },
       {
         title: 'Child',
-        field: 'child_name' // String-based value accessors!
+        field: 'child_name' 
       },
-      // {
-      //   Header: 'Status',
-      //   accessor: 'confirmed', // String-based value accessors!
-      //   Cell: props =>
-      // },
     ];
 
     return (

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Label, Container, Divider} from 'semantic-ui-react';
-import {fetch_all_activities, create_enrollment} from '../middleend/fetchers';
+import {fetch_all_activities, create_enrollment} from 'middleend/fetchers';
 import {
     Form, Dropdown, 
   } from 'formsy-semantic-ui-react';
@@ -8,7 +8,7 @@ import {
 import nodemailer from 'nodemailer';
 import * as emailjs from 'emailjs-com';
 
-export default class SignupForm extends Component {
+export default class Signup extends Component {
     validate() {
         return true;
     };

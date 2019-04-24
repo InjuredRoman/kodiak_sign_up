@@ -5,7 +5,7 @@ import {Link, withRouter} from 'react-router-dom';
 
 import {
   fetch_all_activities
-} from '../middleend/fetchers';
+} from '../../middleend/fetchers';
 
 class ActivitiesPage extends Component {
   constructor(props) {
