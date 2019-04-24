@@ -4,6 +4,16 @@ import {retrieve_enrollments_by_token, update_enrollment, destroy_enrollment} fr
 import { SnackbarProvider, withSnackbar } from 'notistack';
 import MaterialTable from 'material-table';
 import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import Typography from '@material-ui/core/Typography';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Modal from '@material-ui/core/Modal';
+import Icon from '@material-ui/core/Icon';
+import Fab from '@material-ui/core/Fab';
+import { Link } from 'react-router-dom'
+import DoneOutlineIcon from '@material-ui/icons/Done';
 
 class EnrollmentUpdate extends React.Component {
     constructor(props) {
@@ -90,9 +100,23 @@ class EnrollmentUpdate extends React.Component {
 
             <Grid container
                 justify="center"
+                direction="column"
+                spacing={24}
                 alignContent="center"
                 style={{ minHeight: '100vh' }}
             >
+            {(this.state.loaded && (enrollment_data.length === 0)) ? 
+            <Grid item xs={12}>
+
+                <DoneOutlineIcon fontSize="large" color="primary" />
+                    <Typography component='h1'>
+                        No more pending enrollments in this batch!
+                    </Typography>
+                    <Fab variant="extended" component={Link} to="/signup">
+                        Sign up for more
+                    </Fab>
+            </Grid>
+            :
             <MaterialTable
                 columns={[
                     { title: 'Activity', field: 'activity_title' },
@@ -134,7 +158,7 @@ class EnrollmentUpdate extends React.Component {
                         },
                     }),
                 ]}
-            />
+            />}
             </Grid>
         );
     }
