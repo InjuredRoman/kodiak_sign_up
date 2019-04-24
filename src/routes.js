@@ -2,6 +2,7 @@ import ActivitiesPage from 'components/Admin/ActivitiesPage';
 import ActivityForm from 'components/Admin/ActivityForm';
 import EnrollmentsPage from 'components/Admin/EnrollmentsPage';
 import Homepage from 'components/Admin/Homepage';
+import EnrollmentUpdate from 'components/Parent/EnrollmentUpdate'
 
 const routes = [
     {
@@ -28,5 +29,10 @@ const routes = [
         name:"Sessions",
         component: ActivitiesPage
     },
+    {
+        path:"/update_enrollments/:token",
+        base:"/",
+        component: EnrollmentUpdate,
+    }
 ];
 export default routes;

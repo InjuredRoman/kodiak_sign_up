@@ -46,14 +46,20 @@ export default class Signup extends Component {
     };
 
     organize_options(activities) {
-        var possible_activities = 
-            activities.map((a, index)=> ({
-                key: index,
-                text: a.title,
-                value: a.id
-            }));
-        this.setState({possible_activities: possible_activities}, console.log(this.state));
+        var possible_activities;
+        if (activities == null) {
+            possible_activities = []
+        } else {
+            possible_activities = 
+                activities.map((a, index)=> ({
+                    key: index,
+                    text: a.title,
+                    value: a.id
+                }));
+            this.setState({possible_activities: possible_activities}, console.log(this.state));
         }
+
+    }
 
     componentDidMount() {
         fetch_all_activities(

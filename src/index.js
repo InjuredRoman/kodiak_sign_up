@@ -11,10 +11,12 @@ import Signup from 'components/Parent/Signup';
 //routing support
 import { HashRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 
+import { SnackbarProvider, withSnackbar } from 'notistack';
 //theme for site
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import amber from '@material-ui/core/colors/amber';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import SnackEnrollmentUpdate from './components/Parent/EnrollmentUpdate';
 const theme = createMuiTheme( // same theme, just dark
   {
   //   palette: {
@@ -45,7 +47,14 @@ ReactDOM.render(
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
           <Route path="/admin" component={Dashboard} />
-
+          <Route path="/update_enrollments/:token" 
+            render={
+                (props) => 
+                <SnackbarProvider maxSnack={5}>
+                  <SnackEnrollmentUpdate {...props}/>
+                </SnackbarProvider>
+              }
+          />
         </Switch>
     </Router>
     </MuiThemeProvider>,

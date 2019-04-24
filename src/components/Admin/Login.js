@@ -83,7 +83,7 @@ export default class Login extends React.Component {
                         margin="normal"
                         variant="outlined"
                     />
-                    <Button onClick={this.onClick} component="button" variant="contained" type="submit" color="primary">
+                    <Button onClick={this.onClick} component="button" variant="contained" type="submit" coltar="primary">
                         Login
                     </Button>
 

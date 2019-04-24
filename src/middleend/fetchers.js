@@ -9,6 +9,8 @@ const activity_list_endpoint = "/api/activities/";
 const activity_create_endpoint = "/api/make_activity/";
 const enrollment_rud_endpoint = "/api/rud_enrollment/"; //retrieve, update, destroy endpoint
 const enrollment_create_endpoint = '/api/create_enrollment/';
+const enrollment_batch_update_endpoint = '/api/batch_update_enrollments/';
+const enrollment_retrieve_by_token_endpoint = '/api/enrollments_by_token/';
 const login_endpoint = "/api/login/";
 
 function error_handler(err) {
@@ -29,6 +31,41 @@ export function login(user_information) {
             console.log(err);
         });
     return result;
+}
+
+export function retrieve_enrollments_by_token(token, on_success, on_error=(error_handler)) {
+    const retrieve_enrollments_by_token_endpoint = root + enrollment_retrieve_by_token_endpoint + token + "/";
+    const content = {
+        method: "GET",
+    };
+
+    fetch(retrieve_enrollments_by_token_endpoint, content)
+        .then(response => {
+            if(response.status !== 200) {
+                on_error(response);
+            } else {
+                return response.json();
+            }
+        })
+        .then(data => on_success(data));
+}
+export function batch_update_enrollments(enrollments, on_success, on_error=(error_handler)) {
+    const batch_update_endpoint = root + enrollment_batch_update_endpoint;
+    const content = {
+        method: "PUT",
+        body: JSON.stringify(enrollments),
+        headers: new Headers({ "Content-Type": "application/json" })
+    };
+
+    fetch(batch_update_endpoint, content)
+        .then(response => {
+            if(response.status !== 200) {
+                on_error(response);
+            } else {
+                return response.json();
+            }
+        })
+        .then(data => on_success(data));
 }
 
 export function update_enrollment(e_id, on_success, on_error=(error_handler), new_confirmation_status=true) {
