@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/kodiak_sign_up/precache-manifest.05c23accf1d5a58154865c089f6cbcfc.js"
+  "/kodiak_sign_up/precache-manifest.7eee8199a2bedc1295c717eeca2ae8e0.js"
 );
 
 workbox.clientsClaim();
