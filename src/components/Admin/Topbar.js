@@ -19,6 +19,36 @@ import { makeStyles } from '@material-ui/styles';
 import deepPurple from '@material-ui/core/colors/purple';
 import amber from '@material-ui/core/colors/amber';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+const theme = createMuiTheme({
+
+    // same theme, just dark
+    palette: {
+      type: 'dark', // Switching the dark mode on is a single property value change.
+    },
+    typography: {
+        useNextVariants: true,
+        // Use the system font instead of the default Roboto font.
+        fontFamily: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif',
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ].join(','),
+    },
+    // {
+    //     palette: {
+    //         primary: deepPurple,
+    //         secondary: amber,
+    //     },
+    // }
+    // typography: { useNextVariants: true },
+});
 
 function m() {
     var res = {};
@@ -29,25 +59,6 @@ function m() {
     }
     return res;
 }
-const theme = createMuiTheme(
-    // same theme, just dark
-    // palette: {
-    //   type: 'dark', // Switching the dark mode on is a single property value change.
-    // },
-    {
-        palette: {
-            primary: deepPurple,
-            secondary: amber,
-        },
-    }
-    // typography: { useNextVariants: true },
-);
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     flexGrow: 1,
-//     backgroundColor: theme.palette.background.paper,
-//   },
-// }));
 const styles = theme => ({
     root: {
         flexGrow: 1,

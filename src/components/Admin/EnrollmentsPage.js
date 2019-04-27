@@ -87,12 +87,10 @@ export default class EnrollmentsPage extends Component {
                 >
                     <Tab
                         component="a"
-                        style={{ 'text-decoration': 'none' }}
                         label="Pending Enrollments"
                     />
                     <Tab
                         component="a"
-                        style={{ 'text-decoration': 'none' }}
                         label="Confirmed Enrollments"
                     />
                 </Tabs>

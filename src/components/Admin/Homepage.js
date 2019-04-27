@@ -2,12 +2,48 @@ import React, { Component } from 'react';
 import './Homepage.css';
 // import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 // import { Card, Button, Table } from 'react-bootstrap';
+import Grid from '@material-ui/core/Grid';
+import Card from 'components/Card/Card.jsx';
+import CardHeader from 'components/Card/CardHeader.jsx';
+import CardBody from 'components/Card/CardBody.jsx';
+import { withStyles } from '@material-ui/core/styles';
 
-export default class Homepage extends Component {
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  header: {
+    background: theme.palette.secondary.light,
+  },
+  paper: {
+    height: 140,
+    width: 100,
+  },
+  control: {
+    padding: theme.spacing.unit * 2,
+  },
+});
+
+class Homepage extends Component {
     render() {
+        const {classes} = this.props;
         return (
             // <>
             <div>
+              <Grid justify="center" className={classes.root} container>
+                <Grid item xs={12}>
+                <Card>
+                    <CardHeader className={classes.header}>
+                        <h4>Welcome!</h4>
+                        <p>great info</p>
+                    </CardHeader>
+                    <CardBody>
+                      Juicy info here
+                    </CardBody>
+                </Card>
+                </Grid>
+              
+              </Grid>
                 {/* //     <div className="infoCards"> */}
                 {/* //         <div className="card1"> */}
                 {/* //             <Card 
@@ -147,3 +183,4 @@ export default class Homepage extends Component {
         );
     }
 }
+export default withStyles(styles)(Homepage);

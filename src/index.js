@@ -25,35 +25,65 @@ import amber from '@material-ui/core/colors/amber';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import SnackEnrollmentUpdate from './components/Parent/EnrollmentUpdate';
 import 'assets/css/styles.css';
+const theme = createMuiTheme({
 
-const theme = createMuiTheme(
     // same theme, just dark
-    {
-        //   palette: {
-        //     primary: deepPurple,
-        //     secondary: amber,
-        //   },
-        // }
-        palette: {
-            primary: {
-                light: '#757ce8',
-                main: '#3f50b5',
-                dark: '#002884',
-                contrastText: '#fff',
-            },
-            secondary: {
-                light: '#ff7961',
-                main: '#f44336',
-                dark: '#ba000d',
-                contrastText: '#000',
-            },
-            background: {
-                main: 'black',
-                // main: '#e0e0e0'
-            },
-        },
-    }
-);
+    // palette: {
+    //   type: 'dark', // Switching the dark mode on is a single property value change.
+    // },
+    typography: {
+        useNextVariants: true,
+        // Use the system font instead of the default Roboto font.
+        fontFamily: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif',
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ].join(','),
+    },
+    // {
+    //     palette: {
+    //         primary: deepPurple,
+    //         secondary: amber,
+    //     },
+    // }
+    // typography: { useNextVariants: true },
+});
+
+// const theme = createMuiTheme(
+//     // same theme, just dark
+//     {
+//         //   palette: {
+//         //     primary: deepPurple,
+//         //     secondary: amber,
+//         //   },
+//         // }
+//         palette: {
+//             primary: {
+//                 light: '#757ce8',
+//                 main: '#3f50b5',
+//                 dark: '#002884',
+//                 contrastText: '#fff',
+//             },
+//             secondary: {
+//                 light: '#ff7961',
+//                 main: '#f44336',
+//                 dark: '#ba000d',
+//                 contrastText: '#000',
+//             },
+//             background: {
+//                 main: 'black',
+//                 // main: '#e0e0e0'
+//             },
+//         },
+//     }
+// );
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>
         <Router>

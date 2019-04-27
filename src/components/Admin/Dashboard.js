@@ -45,7 +45,7 @@ class Dashboard extends Component {
     // }
     render() {
         return (
-            <Grid container spacing={40}>
+            <Grid container justify="center" spacing={40}>
                 <Grid item xs={3}>
                     <Topbar routes={routes} />
                 </Grid>
