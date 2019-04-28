@@ -37,3 +37,13 @@
   margin-right: 33%;
   margin-top: 2%;
 }
+
+.ct-chart-line .ct-label,
+.ct-chart-bar .ct-label {
+  display: block;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}

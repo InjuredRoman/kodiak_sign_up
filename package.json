@@ -16,6 +16,7 @@
     "@material-ui/icons": "^3.0.2",
     "@material-ui/styles": "^4.0.0-alpha.8",
     "babel-polyfill": "^6.26.0",
+    "chartist": "^0.11.0",
     "formsy-react": "^1.1.5",
     "formsy-semantic-ui-react": "^0.3.5",
     "material-table": "^1.32.0",

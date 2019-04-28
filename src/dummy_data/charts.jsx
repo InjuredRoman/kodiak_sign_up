@@ -13,7 +13,24 @@ var delays = 80,
 // // // Daily Sales
 // #############################
 
-const dailySalesChart = {
+
+function filterConfirmedByDay(L) {
+        if (L == null) {
+            return [];
+        }
+        confirmed = L.map(
+            enrollment => (Date.parse(enrollment.updated_at) - Date.parse(enrollment.created_at) >= 2000)
+        );
+        var result = [0, 0, 0, 0, 0, 0, 0]
+        L.map((e, i) => {
+          if(confirmed[i] === true) {
+            result[Date.parse(e.updated_at).getDay()] += 1;
+          }
+        });
+        return result;
+    }
+
+var dailySalesChart = {
   data: {
     labels: ["M", "T", "W", "T", "F", "S", "S"],
     series: [[12, 17, 7, 17, 23, 18, 38]]
@@ -63,6 +80,7 @@ const dailySalesChart = {
   }
 };
 
+// These are the charts that are imported by Homepage.js
 module.exports = {
     dailySalesChart,
 };

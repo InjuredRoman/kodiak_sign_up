@@ -26,7 +26,6 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import SnackEnrollmentUpdate from './components/Parent/EnrollmentUpdate';
 import 'assets/css/styles.css';
 const theme = createMuiTheme({
-
     // same theme, just dark
     // palette: {
     //   type: 'dark', // Switching the dark mode on is a single property value change.
@@ -35,16 +34,16 @@ const theme = createMuiTheme({
         useNextVariants: true,
         // Use the system font instead of the default Roboto font.
         fontFamily: [
-          '-apple-system',
-          'BlinkMacSystemFont',
-          '"Segoe UI"',
-          'Roboto',
-          '"Helvetica Neue"',
-          'Arial',
-          'sans-serif',
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
         ].join(','),
     },
     // {

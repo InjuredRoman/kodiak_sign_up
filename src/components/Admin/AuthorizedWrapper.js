@@ -13,7 +13,7 @@ import Fab from '@material-ui/core/Fab';
 export default class AuthorizedWrapper extends React.Component {
     getNoAccessPage() {
         return (
-            <Grid container justify="center" >
+            <Grid container justify="center">
                 <Card>
                     <CardContent>
                         Unfortunately you don't have access to this. Try logging
