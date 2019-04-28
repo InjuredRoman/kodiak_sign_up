@@ -85,14 +85,8 @@ export default class EnrollmentsPage extends Component {
                     onChange={this.handleChange}
                     textColor="secondary"
                 >
-                    <Tab
-                        component="a"
-                        label="Pending Enrollments"
-                    />
-                    <Tab
-                        component="a"
-                        label="Confirmed Enrollments"
-                    />
+                    <Tab component="a" label="Pending Enrollments" />
+                    <Tab component="a" label="Confirmed Enrollments" />
                 </Tabs>
                 {this.state.value === 0 && (
                     <Fragment>

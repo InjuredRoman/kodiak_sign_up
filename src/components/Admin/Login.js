@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import { login } from '../../middleend/fetchers';
 import UserProfile from './UserProfile';
 
-
 import Avatar from '@material-ui/core/Avatar';
 // import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
@@ -25,37 +24,38 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 // } from 'uniforms-material';
 const styles = theme => ({
     main: {
-    backgroundColor: theme.palette.secondary.light,
-      width: 'auto',
-      display: 'block', // Fix IE 11 issue.
-      marginLeft: theme.spacing.unit * 3,
-      marginRight: theme.spacing.unit * 3,
-      [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-        width: 400,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-      },
+        backgroundColor: theme.palette.secondary.light,
+        width: 'auto',
+        display: 'block', // Fix IE 11 issue.
+        marginLeft: theme.spacing.unit * 3,
+        marginRight: theme.spacing.unit * 3,
+        [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+            width: 400,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
     },
     paper: {
-      marginTop: theme.spacing.unit * 8,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+        marginTop: theme.spacing.unit * 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit *
+            3}px ${theme.spacing.unit * 3}px`,
     },
     avatar: {
-      margin: theme.spacing.unit,
-      backgroundColor: theme.palette.secondary.main,
+        margin: theme.spacing.unit,
+        backgroundColor: theme.palette.secondary.main,
     },
     form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing.unit,
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing.unit,
     },
     submit: {
-    backgroundColor:theme.palette.secondary.main,
-      marginTop: theme.spacing.unit * 3,
+        backgroundColor: theme.palette.secondary.main,
+        marginTop: theme.spacing.unit * 3,
     },
-  });
+});
 
 class Login extends React.Component {
     constructor(props) {
@@ -97,8 +97,8 @@ class Login extends React.Component {
     }
 
     render() {
-        const {classes} = this.props;
-        const loginForm = 
+        const { classes } = this.props;
+        const loginForm = (
             <Fragment>
                 <Avatar className={classes.avatar}>
                     <AccountCircleOutlinedIcon />
@@ -106,56 +106,66 @@ class Login extends React.Component {
                 <AutoForm
                     schema={LoginSchema}
                     onSubmit={data => this.getResponse(data)}
-                    >
+                >
                     {/* <form onSubmit={this.getResponse}> */}
-                        <TextField
-                            name="username"
-                            // label="Email"
-                            type="email"
-                            variant="outlined"
-                            // value={this.state.name}
-                            // onChange={this.handleChange}
-                            // required
-                        />
-                        <TextField
-                            // required
-                            name="password"
-                            // label="Password"
-                            type="password"
-                            // value={this.state.password}
-                            // onChange={this.handleChange}
-                            // autoComplete="current-password"
-                            // margin="normal"
-                            variant="outlined"
-                        />
-                        <SubmitField fullWidth value="login" className={classes.submit} />
-                        <ErrorsField />
+                    <TextField
+                        name="username"
+                        // label="Email"
+                        type="email"
+                        variant="outlined"
+                        // value={this.state.name}
+                        // onChange={this.handleChange}
+                        // required
+                    />
+                    <TextField
+                        // required
+                        name="password"
+                        // label="Password"
+                        type="password"
+                        // value={this.state.password}
+                        // onChange={this.handleChange}
+                        // autoComplete="current-password"
+                        // margin="normal"
+                        variant="outlined"
+                    />
+                    <SubmitField
+                        fullWidth
+                        value="login"
+                        className={classes.submit}
+                    />
+                    <ErrorsField />
                 </AutoForm>
             </Fragment>
-        const spinner = 
+        );
+        const spinner = (
             <div class="sk-cube-grid">
-            <div class="sk-cube sk-cube1"></div>
-            <div class="sk-cube sk-cube2"></div>
-            <div class="sk-cube sk-cube3"></div>
-            <div class="sk-cube sk-cube4"></div>
-            <div class="sk-cube sk-cube5"></div>
-            <div class="sk-cube sk-cube6"></div>
-            <div class="sk-cube sk-cube7"></div>
-            <div class="sk-cube sk-cube8"></div>
-            <div class="sk-cube sk-cube9"></div>
+                <div class="sk-cube sk-cube1" />
+                <div class="sk-cube sk-cube2" />
+                <div class="sk-cube sk-cube3" />
+                <div class="sk-cube sk-cube4" />
+                <div class="sk-cube sk-cube5" />
+                <div class="sk-cube sk-cube6" />
+                <div class="sk-cube sk-cube7" />
+                <div class="sk-cube sk-cube8" />
+                <div class="sk-cube sk-cube9" />
             </div>
+        );
         return (
             <div className={classes.main}>
-            <Paper className={classes.paper}>
-            {/* {spinner} */}
-                {this.state.sent ?
-                    (sessionStorage.getItem("status")==="authorized" ? <Redirect to="/admin/dashboard" /> : spinner)
-                :
-                    loginForm
-                }
-            {/* { sessionStorage.getItem("status")==="authorized" ?
+                <Paper className={classes.paper}>
+                    {/* {spinner} */}
+                    {this.state.sent ? (
+                        sessionStorage.getItem('status') === 'authorized' ? (
+                            <Redirect to="/admin/dashboard" />
+                        ) : (
+                            spinner
+                        )
+                    ) : (
+                        loginForm
+                    )}
+                    {/* { sessionStorage.getItem("status")==="authorized" ?
             <Redirect to="/admin" /> : */}
-            </Paper>
+                </Paper>
             </div>
             // {/* } */}
         );

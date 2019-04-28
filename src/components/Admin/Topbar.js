@@ -20,25 +20,24 @@ import deepPurple from '@material-ui/core/colors/purple';
 import amber from '@material-ui/core/colors/amber';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 const theme = createMuiTheme({
-
     // same theme, just dark
     palette: {
-      type: 'dark', // Switching the dark mode on is a single property value change.
+        type: 'dark', // Switching the dark mode on is a single property value change.
     },
     typography: {
         useNextVariants: true,
         // Use the system font instead of the default Roboto font.
         fontFamily: [
-          '-apple-system',
-          'BlinkMacSystemFont',
-          '"Segoe UI"',
-          'Roboto',
-          '"Helvetica Neue"',
-          'Arial',
-          'sans-serif',
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
+            '"Segoe UI Emoji"',
+            '"Segoe UI Symbol"',
         ].join(','),
     },
     // {

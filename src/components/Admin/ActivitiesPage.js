@@ -68,23 +68,22 @@ class ActivitiesPage extends Component {
         ];
 
         return (
-          <Fragment>
-            {/* <Header as='h2'color='green'>
+            <Fragment>
+                {/* <Header as='h2'color='green'>
               <Icon name='checkmark' />
               <Header.Content>
                 Sessions
               <Header.Subheader>Manage Sessions</Header.Subheader>
               </Header.Content>
             </Header> */}
-            <MaterialTable
-              title="Sessions List"
-              columns={columns}
-              isLoading={!this.state.loaded}
-              data={activities}
-            />
-          </Fragment>
+                <MaterialTable
+                    title="Sessions List"
+                    columns={columns}
+                    isLoading={!this.state.loaded}
+                    data={activities}
+                />
+            </Fragment>
         );
     }
-
 }
 export default withRouter(ActivitiesPage);

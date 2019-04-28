@@ -9,41 +9,38 @@ import CardBody from 'components/Card/CardBody.jsx';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  header: {
-    background: theme.palette.secondary.light,
-  },
-  paper: {
-    height: 140,
-    width: 100,
-  },
-  control: {
-    padding: theme.spacing.unit * 2,
-  },
+    root: {
+        flexGrow: 1,
+    },
+    header: {
+        background: theme.palette.secondary.light,
+    },
+    paper: {
+        height: 140,
+        width: 100,
+    },
+    control: {
+        padding: theme.spacing.unit * 2,
+    },
 });
 
 class Homepage extends Component {
     render() {
-        const {classes} = this.props;
+        const { classes } = this.props;
         return (
             // <>
             <div>
-              <Grid justify="center" className={classes.root} container>
-                <Grid item xs={12}>
-                <Card>
-                    <CardHeader className={classes.header}>
-                        <h4>Welcome!</h4>
-                        <p>great info</p>
-                    </CardHeader>
-                    <CardBody>
-                      Juicy info here
-                    </CardBody>
-                </Card>
+                <Grid justify="center" className={classes.root} container>
+                    <Grid item xs={12}>
+                        <Card>
+                            <CardHeader className={classes.header}>
+                                <h4>Welcome!</h4>
+                                <p>great info</p>
+                            </CardHeader>
+                            <CardBody>Juicy info here</CardBody>
+                        </Card>
+                    </Grid>
                 </Grid>
-              
-              </Grid>
                 {/* //     <div className="infoCards"> */}
                 {/* //         <div className="card1"> */}
                 {/* //             <Card 
