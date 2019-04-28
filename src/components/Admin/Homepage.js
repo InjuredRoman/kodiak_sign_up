@@ -92,6 +92,7 @@ class Homepage extends Component {
                                 />
                                 Juicy info here
                             </CardBody>
+                            <CardBody>Juicy info here</CardBody>
                         </Card>
                     </Grid>
                 </Grid>

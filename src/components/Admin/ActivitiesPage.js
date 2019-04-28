@@ -1,7 +1,12 @@
-import React, { Component } from 'react';
-import { Table, Header, Segment, Button } from 'semantic-ui-react';
+import React, { Component, Fragment } from 'react';
+import { Table, Header, Grid, Segment, Button, Icon } from 'semantic-ui-react';
 import ReactTable from 'react-table';
 import { Link, withRouter } from 'react-router-dom';
+
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import Paper from '@material-ui/core/Paper';
+import MaterialTable from 'material-table';
 
 import { fetch_all_activities } from '../../middleend/fetchers';
 
@@ -41,18 +46,19 @@ class ActivitiesPage extends Component {
     render() {
         // const confirmed_enrollments = this.filterByStatus(this.state.enrollments, true);
         const activities = this.state.activities;
+        console.log(activities);
         const columns = [
             {
-                Header: 'Activity',
-                accessor: 'title', // String-based value accessors!
+                title: 'Activity',
+                field: 'title', // String-based value accessors!
             },
             {
-                Header: 'Start Date',
-                accessor: 'start_date', // String-based value accessors!
+                title: 'Start Date',
+                field: 'start_date', // String-based value accessors!
             },
             {
-                Header: 'End Date',
-                accessor: 'end_date', // String-based value accessors!
+                title: 'End Date',
+                field: 'end_date', // String-based value accessors!
             },
             // {
             //   Header: 'Status',
@@ -62,82 +68,22 @@ class ActivitiesPage extends Component {
         ];
 
         return (
-            <Segment>
-                <Header as="h2" color="olive">
-                    <Header.Content>
-                        Activities
-                        <Header.Subheader>Manage Activities</Header.Subheader>
-                    </Header.Content>
-                </Header>
-                <ReactTable
-                    defaultPageSize={5}
-                    data={activities}
+            <Fragment>
+                {/* <Header as='h2'color='green'>
+              <Icon name='checkmark' />
+              <Header.Content>
+                Sessions
+              <Header.Subheader>Manage Sessions</Header.Subheader>
+              </Header.Content>
+            </Header> */}
+                <MaterialTable
+                    title="Sessions List"
                     columns={columns}
+                    isLoading={!this.state.loaded}
+                    data={activities}
                 />
-                {/* <Form.Button content="Submit" color="green"/> */}
-                <Button
-                    content="Create New"
-                    color="green"
-                    onClick={this.createNew}
-                />
-            </Segment>
+            </Fragment>
         );
     }
-
-    // createTable() {
-    //   let table = []
-
-    //   // Outer loop to create parent
-    //   // console.log(this.state);
-    //   for (let i = 0; i < this.state['activities'].length; i++) {
-    //     let a = this.state['activities'][i];
-    //     console.log(a);
-    //     let row = [];
-    //     row.push(
-    //       <Table.Cell>
-    //         {a.title}
-    //       </Table.Cell>
-    //     );
-    //     row.push(
-    //       <Table.Cell>
-    //         {a.start_date}
-    //       </Table.Cell>
-    //     );
-    //     row.push(
-    //       <Table.Cell>
-    //         {a.end_date}
-    //       </Table.Cell>
-    //     );
-    //     //Create the parent and add the children
-    //     // table.push(<tr>{children}</tr>)
-    //     table.push(<Table.Row key={i} children={row} />)
-    //   }
-    //   return table
-    // }
-
-    // render() {
-
-    //     return (
-    //       <div>
-    //           <Button inverted color='green'>
-    //             <Link to="/activity">Create New</Link>
-    //           </Button>
-    //         <Table celled selectable>
-    //           <Table.Header>
-    //             <Table.Row>
-    //               <Table.HeaderCell>Activity</Table.HeaderCell>
-    //               <Table.HeaderCell>Start Date</Table.HeaderCell>
-    //               <Table.HeaderCell>End Date</Table.HeaderCell>
-    //             </Table.Row>
-    //           </Table.Header>
-
-    //           <Table.Body>
-    //             {this.createTable()}
-    //           </Table.Body>
-    //         </Table>
-
-    //       </div>
-    //   );
-    // }
 }
 export default withRouter(ActivitiesPage);
