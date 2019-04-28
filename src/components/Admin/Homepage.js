@@ -15,9 +15,10 @@ import { fetch_all_enrollments } from '../../middleend/fetchers';
 const styles = theme => ({
     root: {
         flexGrow: 1,
+        padding: theme.spacing.unit * 2,
     },
     header: {
-        background: theme.palette.secondary.light,
+        background: theme.palette.primary.main,
     },
     paper: {
         height: 140,
@@ -76,7 +77,7 @@ class Homepage extends Component {
             // <>
             <div>
                 <Grid justify="center" className={classes.root} container>
-                    <Grid item xs={12}>
+                    <Grid item xs={4}>
                         <Card>
                             <CardHeader className={classes.header}>
                                 <h4>Welcome!</h4>
@@ -90,147 +91,10 @@ class Homepage extends Component {
                                     options={dailySalesChart.options}
                                     listener={dailySalesChart.animation}
                                 />
-                                Juicy info here
                             </CardBody>
-                            <CardBody>Juicy info here</CardBody>
                         </Card>
                     </Grid>
                 </Grid>
-                {/* //     <div className="infoCards"> */}
-                {/* //         <div className="card1"> */}
-                {/* //             <Card 
-            //                 bg="primary"
-            //                 text="white"
-            //                 style={{ width: '18rem' }}
-            //             >
-            //                 <Card.Header>Header</Card.Header>
-            //                 <Card.Body>
-            //                     <Card.Title>Primary Card Title</Card.Title>
-            //                     <Card.Text>
-            //                         Some quick example text to build on the card
-            //                         title and make up the bulk of the card's
-            //                         content.
-            //                     </Card.Text>
-            //                 </Card.Body>
-            //             </Card>
-            //         </div>
-
-            //         <div className="card2">
-            //             <Card
-            //                 bg="secondary"
-            //                 text="white"
-            //                 style={{ width: '18rem' }}
-            //             >
-            //                 <Card.Header>Header</Card.Header>
-            //                 <Card.Body>
-            //                     <Card.Title>Secondary Card Title</Card.Title>
-            //                     <Card.Text>
-            //                         Some quick example text to build on the card
-            //                         title and make up the bulk of the card's
-            //                         content.
-            //                     </Card.Text>
-            //                 </Card.Body>
-            //             </Card>
-            //         </div>
-
-            //         <div className="card3">
-            //             <Card
-            //                 bg="success"
-            //                 text="white"
-            //                 style={{ width: '18rem' }}
-            //             >
-            //                 <Card.Header>Header</Card.Header>
-            //                 <Card.Body>
-            //                     <Card.Title>Success Card Title</Card.Title>
-            //                     <Card.Text>
-            //                         Some quick example text to build on the card
-            //                         title and make up the bulk of the card's
-            //                         content.
-            //                     </Card.Text>
-            //                 </Card.Body>
-            //             </Card>
-            //         </div>
-
-            //         <div className="card4">
-            //             <Card
-            //                 bg="danger"
-            //                 text="white"
-            //                 style={{ width: '18rem' }}
-            //             >
-            //                 <Card.Header>Header</Card.Header>
-            //                 <Card.Body>
-            //                     <Card.Title>Danger Card Title</Card.Title>
-            //                     <Card.Text>
-            //                         Some quick example text to build on the card
-            //                         title and make up the bulk of the card's
-            //                         content.
-            //                     </Card.Text>
-            //                 </Card.Body>
-            //             </Card>
-            //         </div>
-
-            //         <div className="card5">
-            //             <Card
-            //                 bg="warning"
-            //                 text="white"
-            //                 style={{ width: '18rem' }}
-            //             >
-            //                 <Card.Header>Header</Card.Header>
-            //                 <Card.Body>
-            //                     <Card.Title>Warning Card Title</Card.Title>
-            //                     <Card.Text>
-            //                         Some quick example text to build on the card
-            //                         title and make up the bulk of the card's
-            //                         content.
-            //                     </Card.Text>
-            //                 </Card.Body>
-            //             </Card>
-            //         </div>
-         <div class = 'table1'>
-        <Table responsive>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Table heading</th>
-              <th>Table heading</th>
-              <th>Table heading</th>
-              <th>Table heading</th>
-              <th>Table heading</th>
-              <th>Table heading</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-            </tr>
-          </tbody>
-        </Table>;
-        </div>
-        */}
             </div>
         );
     }

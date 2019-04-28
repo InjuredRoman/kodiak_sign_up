@@ -46,10 +46,10 @@ class Dashboard extends Component {
     render() {
         return (
             <Grid container justify="center" spacing={40}>
-                <Grid item xs={3}>
+                <Grid item xs={2}>
                     <Topbar routes={routes} />
                 </Grid>
-                <Grid item xs={9}>
+                <Grid item xs={10}>
                     {admin_routes}
                 </Grid>
             </Grid>

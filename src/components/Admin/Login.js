@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { login } from '../../middleend/fetchers';
 import UserProfile from './UserProfile';
-
+import CubeGridSpinner from 'components/utils/Spinners';
 import Avatar from '@material-ui/core/Avatar';
 // import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
@@ -24,7 +24,6 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 // } from 'uniforms-material';
 const styles = theme => ({
     main: {
-        backgroundColor: theme.palette.secondary.light,
         width: 'auto',
         display: 'block', // Fix IE 11 issue.
         marginLeft: theme.spacing.unit * 3,
@@ -137,23 +136,10 @@ class Login extends React.Component {
                 </AutoForm>
             </Fragment>
         );
-        const spinner = (
-            <div class="sk-cube-grid">
-                <div class="sk-cube sk-cube1" />
-                <div class="sk-cube sk-cube2" />
-                <div class="sk-cube sk-cube3" />
-                <div class="sk-cube sk-cube4" />
-                <div class="sk-cube sk-cube5" />
-                <div class="sk-cube sk-cube6" />
-                <div class="sk-cube sk-cube7" />
-                <div class="sk-cube sk-cube8" />
-                <div class="sk-cube sk-cube9" />
-            </div>
-        );
+        const spinner = <CubeGridSpinner foreground="pink"/>;
         return (
             <div className={classes.main}>
                 <Paper className={classes.paper}>
-                    {/* {spinner} */}
                     {this.state.sent ? (
                         sessionStorage.getItem('status') === 'authorized' ? (
                             <Redirect to="/admin/dashboard" />
@@ -163,11 +149,8 @@ class Login extends React.Component {
                     ) : (
                         loginForm
                     )}
-                    {/* { sessionStorage.getItem("status")==="authorized" ?
-            <Redirect to="/admin" /> : */}
                 </Paper>
             </div>
-            // {/* } */}
         );
     }
 }

@@ -18,6 +18,8 @@ import {
     Switch,
 } from 'react-router-dom';
 
+import DateFnsUtils from '@date-io/date-fns'; // for datepickers, peer dependency of material-ui-pickers
+import MuiPickersUtilsProvider from 'material-ui-pickers/MuiPickersUtilsProvider';
 import { SnackbarProvider, withSnackbar } from 'notistack';
 //theme for site
 import deepPurple from '@material-ui/core/colors/deepPurple';
@@ -84,7 +86,8 @@ const theme = createMuiTheme({
 //     }
 // );
 ReactDOM.render(
-    <MuiThemeProvider theme={theme}>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <MuiThemeProvider theme={theme}>
         <Router>
             <Switch>
                 {/* <Route path="/signup" component={Signup} /> */}
@@ -101,7 +104,9 @@ ReactDOM.render(
                 />
             </Switch>
         </Router>
-    </MuiThemeProvider>,
+        </MuiThemeProvider>
+    </MuiPickersUtilsProvider>
+    ,
     document.getElementById('root')
 );
 
