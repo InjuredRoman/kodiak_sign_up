@@ -56,6 +56,14 @@ const styles = theme => ({
     },
 });
 
+function wait(ms)
+{
+    var d = new Date();
+    var d2 = null;
+    do { d2 = new Date(); }
+    while(d2-d < ms);
+}
+
 class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -82,8 +90,10 @@ class Login extends React.Component {
 
     getResponse(form_info) {
         var self = this;
+        self.setState({sent: true});
+        // wait(2000);
         login(form_info).then(val => {
-            self.setState({ sent: true }, self.storeInfo(val));
+            self.storeInfo(val);
         });
         // var res = login(form_info);
         // self.setState({user_info: res})

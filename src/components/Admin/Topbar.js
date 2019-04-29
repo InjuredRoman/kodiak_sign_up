@@ -19,35 +19,35 @@ import { makeStyles } from '@material-ui/styles';
 import deepPurple from '@material-ui/core/colors/purple';
 import amber from '@material-ui/core/colors/amber';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-const theme = createMuiTheme({
-    // same theme, just dark
-    palette: {
-        type: 'dark', // Switching the dark mode on is a single property value change.
-    },
-    typography: {
-        useNextVariants: true,
-        // Use the system font instead of the default Roboto font.
-        fontFamily: [
-            '-apple-system',
-            'BlinkMacSystemFont',
-            '"Segoe UI"',
-            'Roboto',
-            '"Helvetica Neue"',
-            'Arial',
-            'sans-serif',
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"',
-        ].join(','),
-    },
-    // {
-    //     palette: {
-    //         primary: deepPurple,
-    //         secondary: amber,
-    //     },
-    // }
-    // typography: { useNextVariants: true },
-});
+// const theme = createMuiTheme({
+//     // same theme, just dark
+//     palette: {
+//         type: 'dark', // Switching the dark mode on is a single property value change.
+//     },
+//     typography: {
+//         useNextVariants: true,
+//         // Use the system font instead of the default Roboto font.
+//         fontFamily: [
+//             '-apple-system',
+//             'BlinkMacSystemFont',
+//             '"Segoe UI"',
+//             'Roboto',
+//             '"Helvetica Neue"',
+//             'Arial',
+//             'sans-serif',
+//             '"Apple Color Emoji"',
+//             '"Segoe UI Emoji"',
+//             '"Segoe UI Symbol"',
+//         ].join(','),
+//     },
+//     // {
+//     //     palette: {
+//     //         primary: deepPurple,
+//     //         secondary: amber,
+//     //     },
+//     // }
+//     // typography: { useNextVariants: true },
+// });
 
 function m() {
     var res = {};
@@ -112,12 +112,6 @@ function Topbar(props) {
         </List>
     );
 
-    const [hovering] = useState(false);
-    const styles = {
-        hover: {
-            backgroundColor: theme.palette.secondary.dark,
-        },
-    };
     function getValue() {
         var val_key = props.history.location.pathname.substr(1);
         const valDict = {

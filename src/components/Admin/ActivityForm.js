@@ -21,6 +21,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import GridContainer from 'components/Grid/GridContainer.jsx';
 import GridItem from 'components/Grid/GridItem.jsx';
+import CustomTimePickerInline from 'components/utils/CustomTimePickerInline';
+import CustomDatePickerInline from 'components/utils/CustomDatePickerInline';
 
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -30,6 +32,7 @@ import TimePickerInline from "material-ui-pickers/TimePicker/TimePickerInline";
 import SuperSelectField from 'material-ui-superselectfield';
 
 import AutoForm from 'uniforms-material/AutoForm';
+import AutoField from 'uniforms-material/AutoField';
 import TextField from 'uniforms-material/TextField';
 import DateField from 'uniforms-material/DateField';
 import SelectField from 'uniforms-material/SelectField';
@@ -296,13 +299,13 @@ class ActivityForm extends Component {
                     />
                 </GridItem>
                <GridItem xs={5}>
-                    <DatePickerInline
+                    <CustomDatePickerInline
                         // showInlineError={true}
                         className={classes.field}
                         name="start_date"
                         maxDate={this.state.end_date} 
-                        value={this.state.start_date} 
-                        onChange={start => this.setState({start_date: start})} 
+                        // value={this.state.start_date} 
+                        myOnChange={(e) => this.setState({a: "eeeee"}, () => console.log("aaaa"))}
                         label="Start Date"
                         variant="outlined"
                         InputLabelProps={{
@@ -312,13 +315,13 @@ class ActivityForm extends Component {
                     />
                </GridItem>
                <GridItem xs={5}>
-                    <DatePickerInline
+                    <CustomDatePickerInline
                         // showInlineError={true}
                         className={classes.field}
                         name="end_date"
                         minDate={this.state.start_date} 
-                        value={this.state.end_date} 
-                        onChange={end => this.setState({end_date: end})} 
+                        // value={this.state.end_date} 
+                        myOnChange={end => this.setState({end_date: end})} 
                         label="End Date"
                         variant="outlined"
                         fullWidth
@@ -327,14 +330,45 @@ class ActivityForm extends Component {
                         // }}
                     />
                </GridItem>
-               <GridItem xs={5}>
-                    <TimePickerInline
+               {/* <GridItem xs={5}>
+                    <AutoField
+                        component={TimePickerInline}
                         // showInlineError={true}
                         className={classes.field}
                         name="start_time"
                         label="Start Time"
-                        value={this.state.start_time}
-                        onChange={start => this.setState({start_time: start})} 
+                        // value={this.state.start_time}
+                        // onChange={start => this.setState({start_time: start})} 
+                        variant="outlined"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        fullWidth
+                    />
+               </GridItem> */}
+               <GridItem xs={5}>
+                    <CustomTimePickerInline
+                        showInlineError={true}
+                        className={classes.field}
+                        name="start_time"
+                        label="Start Time"
+                        // value={this.state.start_time}
+                        // onChange={start => this.setState({start_time: start})} 
+                        variant="outlined"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        fullWidth
+                    /> 
+               </GridItem>
+               <GridItem xs={5}>
+                    <CustomTimePickerInline
+                        showInlineError={true}
+                        className={classes.field}
+                        name="end_time"
+                        label="End Time"
+                        // value={this.state.end_time}
+                        // onChange={end => this.setState({end_time: end})} 
                         variant="outlined"
                         InputLabelProps={{
                             shrink: true,
@@ -342,7 +376,7 @@ class ActivityForm extends Component {
                         fullWidth
                     />
                </GridItem>
-               <GridItem xs={5}>
+               {/* <GridItem xs={5}>
                     <TimePickerInline
                         // showInlineError={true}
                         clearable={true}
@@ -357,7 +391,7 @@ class ActivityForm extends Component {
                         }}
                         fullWidth
                     />
-               </GridItem>
+               </GridItem> */}
                <GridItem xs={9}>
                     <SelectField
 

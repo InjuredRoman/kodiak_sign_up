@@ -17,11 +17,11 @@ import routes from 'routes.js';
 //   )
 //   );
 // };
-
+const topbarRoutes = routes.filter((route) => (route.isInTopbar));
 const admin_routes = (
     <Switch>
         {routes.map((route, key) => {
-            if (route.base === '/admin') {
+            if ((route.base === '/admin')) {
                 return (
                     <Route
                         path={route.base + route.path}
@@ -47,7 +47,7 @@ class Dashboard extends Component {
         return (
             <Grid container justify="center" spacing={40}>
                 <Grid item xs={2}>
-                    <Topbar routes={routes} />
+                    <Topbar routes={topbarRoutes} />
                 </Grid>
                 <Grid item xs={10}>
                     {admin_routes}
