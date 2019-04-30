@@ -4,7 +4,7 @@ import { ActivitySchema } from 'assets/schema/ActivitySchema';
 // import { Label, Container, Divider } from 'semantic-ui-react';
 // import { Form, Dropdown } from 'formsy-semantic-ui-react';
 
-// import { create_activity } from '../../middleend/fetchers';
+import { create_activity } from 'middleend/fetchers';
 // import {
 //     // DateInput,
 //     TimeInput,
@@ -24,6 +24,8 @@ import GridItem from 'components/Grid/GridItem.jsx';
 import CustomTimePickerInline from 'components/utils/CustomTimePickerInline';
 import CustomDatePickerInline from 'components/utils/CustomDatePickerInline';
 
+import format from 'date-fns/format';
+
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
@@ -39,6 +41,7 @@ import SelectField from 'uniforms-material/SelectField';
 import SubmitField from 'uniforms-material/SubmitField';
 import NumField from 'uniforms-material/NumField';
 import ErrorsField from 'uniforms-material/ErrorsField';
+import AccessTimeOutlinedIcon from '@material-ui/icons/AccessTimeOutlined';
 
 const styles = theme => ({
     main: {
@@ -68,14 +71,14 @@ const styles = theme => ({
       flexGrow: 1,
     },
     cssFocused: {},
-    notchedOutline: {
-        // backgroundColor: '#FFFFFF',
-    },
-    cssOutlinedInput: {
-        '&$cssFocused $notchedOutline': {
+    // notchedOutline: {
+    //     // backgroundColor: '#FFFFFF',
+    // },
+    // cssOutlinedInput: {
+    //     '&$cssFocused $notchedOutline': {
         //   borderColor: "purple",
-        },
-    },
+    //     },
+    // },
     // paper: {
     //   padding: theme.spacing.unit * 2,
     //   textAlign: 'center',
@@ -87,9 +90,18 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
     },
+    menuItem: {
+        '&:focus': {
+          backgroundColor: theme.palette.primary.main,
+          '& $primary, & $icon': {
+            color: theme.palette.common.white,
+          },
+        },
+    },
     submit: {
         backgroundColor: theme.palette.secondary.main,
         marginTop: theme.spacing.unit * 3,
+        // fontColor: "#FFFFFF",
     },
   });
 
@@ -121,20 +133,26 @@ class ActivityForm extends Component {
         }
         return result;
     }
-    handleSubmit(event) {
+    handleSubmit(form_info) {
+        // console.log(form_info);
+        form_info.start_date = format(new Date(form_info.start_date), 'MM/dd/yyyy');
+        form_info.end_date = format(new Date(form_info.end_date), 'MM/dd/yyyy');
+        form_info.start_time = format(new Date(form_info.start_time), 'HH:mm:ss.SSS');
+        form_info.end_time = format(new Date(form_info.end_time), 'HH:mm:ss.SSS');
+        console.log(form_info);
         // console.log(event);
-        var datesRange = this.state.datesRange;
-        this.state.start_date = datesRange
-            .substr(0, datesRange.indexOf('-'))
-            .trim(); //.replace(/\//g, "-")
-        this.state.end_date = datesRange
-            .substr(datesRange.indexOf('-') + 1)
-            .trim(); //.replace(/\//g, "-")
-        this.state.start_time = this.parse_time(this.state.start_time);
-        this.state.end_time = this.parse_time(this.state.end_time);
-        delete this.state.datesRange;
-        create_activity(this.state);
-        this.clearForm();
+        // var datesRange = this.state.datesRange;
+        // this.state.start_date = datesRange
+        //     .substr(0, datesRange.indexOf('-'))
+        //     .trim(); //.replace(/\//g, "-")
+        // this.state.end_date = datesRange
+        //     .substr(datesRange.indexOf('-') + 1)
+        //     .trim(); //.replace(/\//g, "-")
+        // this.state.start_time = this.parse_time(this.state.start_time);
+        // this.state.end_time = this.parse_time(this.state.end_time);
+        // delete this.state.datesRange;
+        create_activity(form_info,
+            (data)=>console.log(data));
     }
 
     constructor(props) {
@@ -236,24 +254,41 @@ class ActivityForm extends Component {
         const loginForm =
             <AutoForm
                 schema={ActivitySchema}
-                onSubmit={data=> console.log(data)}
+                onSubmit={data=> this.handleSubmit(data)}
                 onChange={(key, value) => console.log(key, value)}
             >
             <GridContainer justify="center">
 
                <GridItem xs={9}>
                     <TextField
-                        InputProps={{
-                            classes: {
-                                root: classes.cssOutlinedInput,
-                                focused: classes.cssFocused,
-                                notchedOutline: classes.notchedOutline,
-                            },
-                        }}
+                        // InputProps={{
+                        //     classes: {
+                        //         root: classes.cssOutlinedInput,
+                        //         focused: classes.cssFocused,
+                        //         notchedOutline: classes.notchedOutline,
+                        //     },
+                        // }}
                         className={classes.field}
                         name="title"
                         label="Session Title"
-                        variant="outlined"
+                        // variant="outlined"
+                        fullWidth
+                        showInlineError={true}
+                    />
+               </GridItem>
+               <GridItem xs={3}>
+                    <TextField
+                        // InputProps={{
+                        //     classes: {
+                        //         root: classes.cssOutlinedInput,
+                        //         focused: classes.cssFocused,
+                        //         notchedOutline: classes.notchedOutline,
+                        //     },
+                        // }}
+                        className={classes.field}
+                        name="group_code"
+                        label="Group Code"
+                        // variant="outlined"
                         fullWidth
                         showInlineError={true}
                     />
@@ -300,12 +335,13 @@ class ActivityForm extends Component {
                 </GridItem>
                <GridItem xs={5}>
                     <CustomDatePickerInline
+                        keyboard
                         // showInlineError={true}
                         className={classes.field}
                         name="start_date"
-                        maxDate={this.state.end_date} 
+                        // maxDate={this.state.end_date} 
                         // value={this.state.start_date} 
-                        myOnChange={(e) => this.setState({a: "eeeee"}, () => console.log("aaaa"))}
+                        // myOnChange={(e) => this.setState({a: "eeeee"}, () => console.log("aaaa"))}
                         label="Start Date"
                         variant="outlined"
                         InputLabelProps={{
@@ -316,12 +352,13 @@ class ActivityForm extends Component {
                </GridItem>
                <GridItem xs={5}>
                     <CustomDatePickerInline
+                        keyboard
                         // showInlineError={true}
                         className={classes.field}
                         name="end_date"
-                        minDate={this.state.start_date} 
+                        // minDate={this.state.start_date} 
                         // value={this.state.end_date} 
-                        myOnChange={end => this.setState({end_date: end})} 
+                        // myOnChange={end => this.setState({end_date: end})} 
                         label="End Date"
                         variant="outlined"
                         fullWidth
@@ -348,6 +385,8 @@ class ActivityForm extends Component {
                </GridItem> */}
                <GridItem xs={5}>
                     <CustomTimePickerInline
+                        keyboard
+                        keyboardIcon={<AccessTimeOutlinedIcon/>}
                         showInlineError={true}
                         className={classes.field}
                         name="start_time"
@@ -363,6 +402,8 @@ class ActivityForm extends Component {
                </GridItem>
                <GridItem xs={5}>
                     <CustomTimePickerInline
+                        keyboard
+                        keyboardIcon={<AccessTimeOutlinedIcon/>}
                         showInlineError={true}
                         className={classes.field}
                         name="end_time"
@@ -397,15 +438,20 @@ class ActivityForm extends Component {
 
                         // multiple={true}
                         showInlineError={true}
-                        className={classes.field}
+                        // className={classes.menuItem}
                         name="days_of_occurrence"
+                        // MenuProps={{
+                        //     MenuListProps: {className: classes.menuItem}
+                        // }
+                        // }
+                        // variant="filled"
                         // checkboxes={true}
                         // allowedValues={['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']}
                         // transform={value => valueToLabelMap[value]}
                         options={dayOptions}
                     />
                </GridItem>
-               <GridItem xs={4}>
+               <GridItem xs={4} style={{fontColor:"#FFFFFF"}}>
                 <SubmitField
                     fullWidth
                     value="Create Activity"

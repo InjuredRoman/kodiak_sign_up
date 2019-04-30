@@ -11,6 +11,7 @@ import {withRouter} from 'react-router-dom';
 import Button from '@material-ui/core/Button'; 
 import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
+import CubeGridSpinner from 'components/utils/Spinners';
 
 import { fetch_all_activities } from 'middleend/fetchers';
 const styles = theme => ({
@@ -78,6 +79,18 @@ class ActivitiesPage extends Component {
 
     render() {
         const {classes} = this.props;
+        var components=(!this.state.loaded) ? {
+            Header: props => (
+                <Fragment></Fragment>
+            ),
+            Body: props => (
+                <Fragment>
+                {/* <MTableBody {...props} /> */}
+                <CubeGridSpinner foreground="#f50057" background="white"/>
+
+                </Fragment>
+            )
+        } : {};
         // const confirmed_enrollments = this.filterByStatus(this.state.enrollments, true);
         const activities = this.state.activities;
         console.log(activities);
@@ -100,7 +113,6 @@ class ActivitiesPage extends Component {
             //   Cell: props =>
             // },
         ];
-
         return (
             <div className={classes.main}>
                 {/* <Paper className={classes.paper}> */}
@@ -109,7 +121,8 @@ class ActivitiesPage extends Component {
                     <MaterialTable
                         title="Sessions List"
                         columns={columns}
-                        isLoading={!this.state.loaded}
+                        components={components}
+                        // isLoading={!this.state.loaded}
                         data={activities}
                     />
                 </GridItem>

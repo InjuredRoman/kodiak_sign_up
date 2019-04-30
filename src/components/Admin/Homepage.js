@@ -4,6 +4,7 @@ import './Homepage.css';
 // import { Card, Button, Table } from 'react-bootstrap';
 import Grid from '@material-ui/core/Grid';
 import Card from 'components/Card/Card.jsx';
+import Typography from '@material-ui/core/Typography';
 import CardHeader from 'components/Card/CardHeader.jsx';
 import CardBody from 'components/Card/CardBody.jsx';
 import { withStyles } from '@material-ui/core/styles';
@@ -80,8 +81,9 @@ class Homepage extends Component {
                     <Grid item xs={4}>
                         <Card>
                             <CardHeader className={classes.header}>
-                                <h4>Welcome!</h4>
-                                <p>great info</p>
+                                <Typography variant="h5" gutterBottom>
+                                    Confirmed Enrollments
+                                </Typography>
                             </CardHeader>
                             <CardBody>
                                 <ChartistGraph

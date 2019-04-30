@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Topbar from 'components/Admin/Topbar';
 import AuthorizedWrapper from 'components/Admin/AuthorizedWrapper';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 
 import routes from 'routes.js';
@@ -46,9 +46,9 @@ class Dashboard extends Component {
     render() {
         return (
             <Grid container justify="center" spacing={40}>
-                <Grid item xs={2}>
-                    <Topbar routes={topbarRoutes} />
-                </Grid>
+                {/* <Grid item xs={2}> */}
+                    <Topbar history = {this.props.history} routes={topbarRoutes} />
+                {/* </Grid> */}
                 <Grid item xs={10}>
                     {admin_routes}
                 </Grid>
@@ -57,4 +57,4 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+export default withRouter(Dashboard);

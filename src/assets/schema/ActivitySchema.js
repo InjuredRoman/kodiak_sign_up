@@ -4,6 +4,10 @@ export const ActivitySchema = new SimpleSchema({
     title: {
         type: String,
     },
+    group_code: {
+        type: String,
+        max: 15,
+    },
     youngest_enrolled: {
         type: SimpleSchema.Integer,
     },
@@ -24,10 +28,10 @@ export const ActivitySchema = new SimpleSchema({
         allowedValues: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
     },
     start_time: {
-        type: String,
+        type: Date,
     },
     end_time: {
-        type: String,
+        type: Date,
     },
     max_enrollment: SimpleSchema.Integer
 });

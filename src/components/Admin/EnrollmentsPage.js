@@ -4,12 +4,56 @@ import { Table, Header, Grid, Segment, Icon } from 'semantic-ui-react';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Paper from '@material-ui/core/Paper';
-import MaterialTable from 'material-table';
+import MaterialTable, {} from 'material-table';
 
-import { unstable_Box as Box } from '@material-ui/core/Box';
+import GridContainer from 'components/Grid/GridContainer.jsx';
+import GridItem from 'components/Grid/GridItem.jsx';
+
+
+import CubeGridSpinner from 'components/utils/Spinners';
+
 import { fetch_all_enrollments } from '../../middleend/fetchers';
+import { withStyles } from '@material-ui/core';
+import theme from 'index.js';
+const styles = theme => ({
+    main: {
+        width: 'auto',
+        position: 'relative',
+        display: 'block', // Fix IE 11 issue.
+        marginLeft: theme.spacing.unit * 5,
+        marginRight: theme.spacing.unit * 5,
+        marginTop: theme.spacing.unit * 8,
+        // [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+        //     width: 400,
+        //     marginLeft: 'auto',
+        //     marginRight: 'auto',
+        // },
+    },
+    spinner: {
+        // position: 'absolute',
+        // margin-left: 200px;
+        // /* position: sticky; */
+        // margin-right: -185px;
+        // marginLeft: theme.spacing.unit * 25,
+        // marginRight: -theme.spacing.unit * 25,
+    },
+    paper: {
+        // marginTop: theme.spacing.unit * 8,
+        display: 'flex',
+        flexDirection: 'column',
+        // alignItems: 'center',
+        // padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit *
+            // 3}px ${theme.spacing.unit * 3}px`,
+    },
+    root: {
+      flexGrow: 1,
+    },
+    button: {
+      margin: theme.spacing.unit,
+    },
+});
 
-export default class EnrollmentsPage extends Component {
+class EnrollmentsPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -61,6 +105,25 @@ export default class EnrollmentsPage extends Component {
     }
 
     render() {
+        const {classes} = this.props;
+        var components=(!this.state.loaded) ? {
+            Header: props => (
+                <Fragment></Fragment>
+            ),
+            Body: props => (
+                <Fragment>
+                {/* <MTableBody {...props} /> */}
+                <CubeGridSpinner foreground="#f50057" background="white"/>
+
+                </Fragment>
+            )
+        } : {};
+        // components = {
+        //     ...components,
+        //     Paper: props => {
+        //         <Paper square {...props} />
+        //     }
+        // };
         const confirmed_enrollments = this.state.loaded
             ? this.filterByStatus(this.state.enrollments, true)
             : [];
@@ -79,7 +142,12 @@ export default class EnrollmentsPage extends Component {
         ];
 
         return (
-            <Fragment>
+            <div className={classes.main}>
+                {/* <Paper className={classes.paper}> */}
+                <GridContainer justify="center">
+                <GridItem xs={12}>
+                <Paper square className={classes.paper}>
+
                 <Tabs
                     value={this.state.value}
                     onChange={this.handleChange}
@@ -88,41 +156,35 @@ export default class EnrollmentsPage extends Component {
                     <Tab component="a" label="Pending Enrollments" />
                     <Tab component="a" label="Confirmed Enrollments" />
                 </Tabs>
+                </Paper>
                 {this.state.value === 0 && (
-                    <Fragment>
-                        {/* <Header as='h2'color='green'>
-              <Icon name='checkmark' />
-              <Header.Content>
-                Confirmed
-                <Header.Subheader>Manage Confirmed Enrollments</Header.Subheader>
-              </Header.Content>
-            </Header> */}
+                    <Paper square>
                         <MaterialTable
+                            // square
                             title="Pending"
                             columns={columns}
-                            isLoading={!this.state.loaded}
+                            components={components}
+                            // isLoading={!this.state.loaded}
                             data={pending_enrollments}
                         />
-                    </Fragment>
+                    </Paper>
                 )}
                 {this.state.value === 1 && (
-                    <Fragment>
-                        {/* <Header as='h2'color='orange'>
-              <Icon name='exclamation' />
-              <Header.Content>
-                Pending
-                <Header.Subheader>Manage Pending Enrollments</Header.Subheader>
-              </Header.Content>
-            </Header> */}
+                    <Paper square>
                         <MaterialTable
                             title="Confirmed"
-                            isLoading={!this.state.loaded}
+                            // isLoading={!this.state.loaded}
+                            components={components}
                             data={confirmed_enrollments}
                             columns={columns}
                         />
-                    </Fragment>
+                    </Paper>
                 )}
-            </Fragment>
+            </GridItem>
+            </GridContainer>
+            </div>
         );
     }
 }
+
+export default withStyles(styles)(EnrollmentsPage);

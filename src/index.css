@@ -12,6 +12,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+[class^="MuiButton-label-"] {
+  color: #FFFFFF
+}
 .sk-cube-grid {
   width: 40px;
   height: 40px;
@@ -53,8 +57,6 @@ code {
 .sk-cube-grid .sk-cube9 {
   -webkit-animation-delay: 0.2s;
           animation-delay: 0.2s; }
-
-
 
 @-webkit-keyframes sk-cubeGridScaleDelay {
   0%, 70%, 100% {

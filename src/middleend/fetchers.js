@@ -191,12 +191,20 @@ export function fetch_all_activities(on_success, on_error = error_handler) {
         .then(data => on_success(data));
 }
 
-export function create_activity(activity_information) {
+export function create_activity(activity_information, on_success, on_error=error_handler) {
     const real_endpoint = root + activity_create_endpoint;
     const conf = {
         method: 'POST',
         body: JSON.stringify(activity_information),
         headers: new Headers({ 'Content-Type': 'application/json' }),
     };
-    fetch(real_endpoint, conf).then(response => console.log(response));
+    fetch(real_endpoint, conf)
+        .then(response => {
+            if (response.status !== 200) {
+                on_error(response);
+            } else {
+                return response.json();
+            }
+        })
+        .then( data => on_success(data));
 }

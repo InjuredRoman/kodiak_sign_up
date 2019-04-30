@@ -69,6 +69,7 @@ class Login extends React.Component {
         super(props);
         this.state = {
             sent: false,
+            received: true,
             user_info: [],
             username: '',
             password: '',
@@ -93,7 +94,7 @@ class Login extends React.Component {
         self.setState({sent: true});
         // wait(2000);
         login(form_info).then(val => {
-            self.storeInfo(val);
+            self.setState({received: true}, self.storeInfo(val));
         });
         // var res = login(form_info);
         // self.setState({user_info: res})
@@ -146,11 +147,9 @@ class Login extends React.Component {
                 </AutoForm>
             </Fragment>
         );
-        const spinner = <CubeGridSpinner foreground="pink"/>;
-        return (
-            <div className={classes.main}>
-                <Paper className={classes.paper}>
-                    {this.state.sent ? (
+        const spinner = <CubeGridSpinner foreground="#f50057" background="white"/>;
+        const content = 
+                    this.state.sent ? (
                         sessionStorage.getItem('status') === 'authorized' ? (
                             <Redirect to="/admin/dashboard" />
                         ) : (
@@ -158,7 +157,11 @@ class Login extends React.Component {
                         )
                     ) : (
                         loginForm
-                    )}
+                    );
+        return (
+            <div className={classes.main}>
+                <Paper className={classes.paper}>
+                    {content}
                 </Paper>
             </div>
         );

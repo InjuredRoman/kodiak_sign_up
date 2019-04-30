@@ -1,54 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import Tab from '@material-ui/core/Tab';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import MenuList from '@material-ui/core/MenuList';
+import MenuItem from '@material-ui/core/MenuItem';
+// import List from '@material-ui/core/List';
+// import ListItem from '@material-ui/core/ListItem';
+
 import ListItemText from '@material-ui/core/ListItemText';
 import Paper from '@material-ui/core/Paper';
 import NoSsr from '@material-ui/core/NoSsr';
 import {
     BrowserRouter as Router,
-    Route,
-    Link,
     NavLink,
     withRouter,
 } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/styles';
-import deepPurple from '@material-ui/core/colors/purple';
-import amber from '@material-ui/core/colors/amber';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-// const theme = createMuiTheme({
-//     // same theme, just dark
-//     palette: {
-//         type: 'dark', // Switching the dark mode on is a single property value change.
-//     },
-//     typography: {
-//         useNextVariants: true,
-//         // Use the system font instead of the default Roboto font.
-//         fontFamily: [
-//             '-apple-system',
-//             'BlinkMacSystemFont',
-//             '"Segoe UI"',
-//             'Roboto',
-//             '"Helvetica Neue"',
-//             'Arial',
-//             'sans-serif',
-//             '"Apple Color Emoji"',
-//             '"Segoe UI Emoji"',
-//             '"Segoe UI Symbol"',
-//         ].join(','),
-//     },
-//     // {
-//     //     palette: {
-//     //         primary: deepPurple,
-//     //         secondary: amber,
-//     //     },
-//     // }
-//     // typography: { useNextVariants: true },
-// });
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 
+import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
+import AssignmentIndOutlinedIcon from '@material-ui/icons/AssignmentIndOutlined';
+import ClassOutlinedIcon from '@material-ui/icons/ClassOutlined';
 function m() {
     var res = {};
     for (var i = 0; i < arguments.length; ++i) {
@@ -60,15 +33,17 @@ function m() {
 }
 const styles = theme => ({
     root: {
-        flexGrow: 1,
-        backgroundColor: theme.palette.background.paper,
+        // flexGrow: 1,
+        // backgroundColor: theme.palette.background.paper,
+        width: 500,
+        marginTop: '10px',
     },
-    tabsRoot: {
-        borderBottom: '1px solid #e8e8e8',
-    },
-    tabsIndicator: {
-        backgroundColor: '#1890ff',
-    },
+    // tabsRoot: {
+    //     borderBottom: '1px solid #e8e8e8',
+    // },
+    // tabsIndicator: {
+    //     backgroundColor: '#1890ff',
+    // },
     tabRoot: {
         '&:hover': {
             color: '#1890ff', //theme.palette.secondary,
@@ -82,34 +57,72 @@ const styles = theme => ({
         //   color: '#40a9ff',
         // },
     },
+    tabItem: {
+        '&:focus': {
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.common.white,
+            '& $primary, & $icon': {
+                color: theme.palette.common.white,
+            },
+        },
+    },
     tabSelected: {},
+    primary: {},
     typography: {
         padding: theme.spacing.unit * 3,
     },
 });
 
 function Topbar(props) {
-    // const classes = useStyles();
-    var state = {
-        0: false,
-        1: false,
-        2: false,
-    };
+    const {classes} = props;
+    const [value, setValue] = useState('dashboard');
 
-    const nav_links = (
-        <List>
+    function handleChange(event, newValue) {
+        const newDest = "/admin/" + newValue;
+        props.history.push(newDest);
+        setValue(newValue);
+    }
+    // const nav_links = (
+    //     <Paper square>
+    //     <MenuList>
+    //         {props.routes.map((route, i) => {
+    //             if (route.base === '/admin') {
+    //                 return (
+    //                     <NavLink style={{ textDecoration: 'none' }} to={route.base + route.path} key={i}>
+    //                         <MenuItem className={classes.tabItem} >
+    //                             <ListItemText classes={{ primary: classes.primary }}primary={route.name} />
+    //                         </MenuItem>
+    //                     </NavLink>
+    //                 );
+    //             }
+    //         })}
+    //     </MenuList>
+    //     </Paper>
+    // );
+    const icons = {
+        "Dashboard": <DashboardOutlinedIcon />,
+        "Enrollments": <AssignmentIndOutlinedIcon />,
+        "Sessions": <ClassOutlinedIcon />,
+    };
+    const bottomNavLinks = (
+        <Paper>
+        <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
             {props.routes.map((route, i) => {
                 if (route.base === '/admin') {
                     return (
-                        <NavLink to={route.base + route.path} key={i}>
-                            <ListItem button>
-                                <ListItemText primary={route.name} />
-                            </ListItem>
-                        </NavLink>
+                            <BottomNavigationAction 
+                                className={classes.tabItem}
+                                key={i}
+                                label={route.name} 
+                                value={route.name.toLowerCase()} 
+                                icon={icons[route.name]} 
+                            />
                     );
                 }
             })}
-        </List>
+        </BottomNavigation>
+
+        </Paper>
     );
 
     function getValue() {
@@ -121,74 +134,16 @@ function Topbar(props) {
         };
         return valDict[val_key];
     }
-    function handleChange(event, value) {
-        const routeDict = {
-            0: 'home',
-            1: 'enrollments',
-            2: 'sessions',
-        };
-        props.history.push('/' + routeDict[value]);
-    }
     function onMouseEnter(event, value) {
         state[value] = true;
     }
     function onMouseLeave(event, value) {
         state[value] = true;
     }
-    const classes = props;
     return (
-        <div>{nav_links}</div>
-        // <NoSsr>
-        //   {/* <div className={{flexGrow:1, backgroundColor: theme.palette.secondary.dark}}> */}
-        //    <div >
-        //   <AppBar >
-        //   <Tabs onChange={handleChange} variant="fullWidth" value={getValue()}>
-        //     <Tab onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} component="div"label="Overview"
-        //     classes={{root: classes.tabRoot, indicator: classes.tabIndicator}} textColor="primary"
-        //     />
-        //     <Tab style={{ textDecoration: 'none',color:'none' }}component="div" label="Enrollments"/>
-        //     <Tab style={{ textDecoration: 'none', hover: theme.palette.secondary.light}}component="a" label="Sessions" />
-
-        //   </Tabs>
-
-        //   </AppBar>
-        //   </div>
-        // </NoSsr>
+        <div className={classes.root}>
+        {bottomNavLinks}
+        </div>
     );
 }
-// class Topbar extends Component {
-// state = { activeItem: 'home' }
-// constructor(props) {
-//   super(props);
-//   this.handleItemClick = this.handleItemClick.bind(this);
-// }
-// handleItemClick = (e, { name }) => {
-//   this.setState({ activeItem: name })
-// }
-//   handleChange = (event, value) => {
-//     const routeDict = {
-//       0: 'home',
-//       1: 'enrollments',
-//       2: 'sessions'
-//     }
-//     this.setState({ value });
-//     this.props.history.push("/" + routeDict[value]);
-//   };
-//   render() {
-//     return (
-//       <div className={classes.root}>
-//       <AppBar >
-//       <Tabs onChange={this.handleChange} variant="fullWidth" textColor="secondary" indicatorColor="secondary">
-//         <Tab component="a" onClick={event => event.preventDefault()}label="Overview"/>
-//         <Tab component="a" label="Enrollments"/>
-//         <Tab component="a" label="Sessions" />
-
-//       </Tabs>
-
-//       </AppBar>
-//       </div>
-
-//     );
-//   }
-// }
-export default withRouter(withStyles(styles)(Topbar));
+export default withStyles(styles)(Topbar);
