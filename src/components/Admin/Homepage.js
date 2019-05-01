@@ -10,7 +10,7 @@ import CardBody from 'components/Card/CardBody.jsx';
 import { withStyles } from '@material-ui/core/styles';
 import ChartistGraph from 'react-chartist';
 
-import { dailySalesChart } from 'dummy_data/charts.jsx';
+import { dailySalesChart, pending } from 'dummy_data/charts.jsx';
 import { fetch_all_enrollments } from '../../middleend/fetchers';
 
 const styles = theme => ({
@@ -71,8 +71,26 @@ class Homepage extends Component {
         });
         return result;
     }
+
+    filterPendingByDay(L) {
+        if (L == null) {
+            return [];
+        }
+        var pending = L.map(
+            enrollment => (Date.parse(enrollment.updated_at) - Date.parse(enrollment.created_at) < 2000)
+        );
+        var result = [0, 0, 0, 0, 0, 0, 0]
+        L.map((e, i) => {
+          if(pending[i] === true) {
+            var date = new Date(Date.parse(e.updated_at))
+            result[date.getDay()] += 1;
+          }
+        });
+        return result;
+    }
     render() {
         dailySalesChart.data.series = [this.filterConfirmedByDay(this.state.enrollments)]
+        pending.data.series = [this.filterPendingByDay(this.state.enrollments)]
         const { classes } = this.props;
         return (
             // <>
@@ -95,8 +113,26 @@ class Homepage extends Component {
                                 />
                             </CardBody>
                         </Card>
+                        <Card>
+                            <CardHeader className={classes.header}>
+                                <Typography variant="h5" gutterBottom>
+                                    Pending Enrollments
+                                </Typography>
+                            </CardHeader>
+                            <CardBody>
+                                <ChartistGraph
+                                    className="ct-chart"
+                                    data={pending.data}
+                                    type="Line"
+                                    options={pending.options}
+                                    listener={pending.animation}
+                                />
+                            </CardBody>
+                        </Card>
                     </Grid>
                 </Grid>
+
+                
             </div>
         );
     }
