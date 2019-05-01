@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import './Homepage.css';
 // import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 // import { Card, Button, Table } from 'react-bootstrap';
 import Grid from '@material-ui/core/Grid';
@@ -54,13 +53,16 @@ class Dashboard extends Component {
             }
         );
     }
-
-    filterConfirmedByDay(L) {
+    /*
+    filterLastSevenDays(L) {
         if (L == null) {
             return [];
         }
-        var confirmed = L.map(
-            enrollment => (Date.parse(enrollment.updated_at) - Date.parse(enrollment.created_at) >= 2000)
+        var today = new Date()
+        var timeElapsedToday = (today.getHours() * 3600000) + (today.getMinutes() * 60000) + (today.getSeconds() * 1000)
+        var todayString = today.toString()
+        var sevenDays = L.map(
+            enrollment => (Date.parse(todayString) - Date.parse(enrollment.updated_at) <= (604800000 - timeElapsedToday))
         );
         var result = [0, 0, 0, 0, 0, 0, 0]
         L.map((e, i) => {
@@ -71,7 +73,56 @@ class Dashboard extends Component {
         });
         return result;
     }
+    */
 
+    filterConfirmedByDay(L) {
+        if (L == null) {
+            return [];
+        }
+        var today = new Date();
+        var timeElapsedToday = (today.getHours() * 3600000) + (today.getMinutes() * 60000) + (today.getSeconds() * 1000);
+        var todayString = today.toString();
+        var sevenDays = L.map(
+            enrollment => (Date.parse(todayString) - Date.parse(enrollment.updated_at) <= (604800000 - timeElapsedToday))
+        );
+        var confirmed = L.map(
+            enrollment => (Date.parse(enrollment.updated_at) - Date.parse(enrollment.created_at) >= 2000)
+        );
+        var result = [0, 0, 0, 0, 0, 0, 0];
+        L.map((e, i) => {
+          if(confirmed[i] === true && sevenDays[i] == true) {
+            var date = new Date(Date.parse(e.updated_at));
+            result[date.getDay()] += 1;
+          };
+        });
+        return result;
+    }
+
+    filterPendingByDay(L) {
+        if (L == null) {
+            return [];
+        }
+        var today = new Date();
+        var timeElapsedToday = (today.getHours() * 3600000) + (today.getMinutes() * 60000) + (today.getSeconds() * 1000);
+        var todayString = today.toString();
+        var sevenDays = L.map(
+            enrollment => (Date.parse(todayString) - Date.parse(enrollment.created_at) <= (604800000 - timeElapsedToday))
+        );
+        var pending = L.map(
+            enrollment => (Date.parse(enrollment.updated_at) - Date.parse(enrollment.created_at) < 2000)
+        );
+        var result = [0, 0, 0, 0, 0, 0, 0];
+        L.map((e, i) => {
+          if(pending[i] === true & sevenDays[i] == true) {
+            var date = new Date(Date.parse(e.updated_at));
+            console.log(date.getDay())
+            result[date.getDay()] += 1;
+          };
+        });
+        return result;
+    }
+
+    /*
     filterPendingByDay(L) {
         if (L == null) {
             return [];
@@ -88,9 +139,35 @@ class Dashboard extends Component {
         });
         return result;
     }
+    */
+
+    // Helper function for displaying the correct day of the week on the graph
+    arrayRotateOne(arr, reverse) {
+      if (reverse) arr.unshift(arr.pop());
+      else arr.push(arr.shift());
+      return arr;
+    }
+
+    shift(days, today){
+      var shifted = days.slice(0);
+      for(var i=0; i<today; i++){
+        this.arrayRotateOne(shifted, false);
+      }
+      return shifted;
+    }
+
     render() {
-        confirmed.data.series = [this.filterConfirmedByDay(this.state.enrollments)]
-        pending.data.series = [this.filterPendingByDay(this.state.enrollments)]
+        var today = new Date();
+        var dayOfWeek = today.getDay()
+        var dateRange = this.shift(["S", "M", "T", "W", "T", "F", "S"], dayOfWeek+1)
+        console.log(this.filterConfirmedByDay(this.state.enrollments))
+        console.log(this.filterPendingByDay(this.state.enrollments))
+        confirmed.data.series = [this.shift(this.filterConfirmedByDay(this.state.enrollments), dayOfWeek+1)]
+        pending.data.series = [this.shift(this.filterPendingByDay(this.state.enrollments), dayOfWeek+1)]
+        console.log(confirmed.data.series);
+        console.log(pending.data.series);
+        confirmed.data.labels = dateRange
+        pending.data.labels = dateRange
         const { classes } = this.props;
         return (
             // <>
