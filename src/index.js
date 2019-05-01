@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 //component imports
 import Login from 'components/Admin/Login';
-import Dashboard from 'components/Admin/Dashboard';
+import Homepage from 'components/Admin/Homepage';
 import Signup from 'components/Parent/Signup';
 import Signup_Redux from 'components/Parent/Signup_redux';
 
@@ -93,7 +93,7 @@ ReactDOM.render(
                 {/* <Route path="/signup" component={Signup} /> */}
                 <Route path="/signup" component={Signup_Redux} />
                 <Route path="/login" component={Login} />
-                <Route path="/admin" component={Dashboard} />
+                <Route path="/admin" component={Homepage} />
                 <Route
                     path="/update_enrollments/:token"
                     render={props => (

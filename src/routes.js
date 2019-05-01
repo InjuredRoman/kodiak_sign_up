@@ -1,7 +1,7 @@
 import ActivitiesPage from 'components/Admin/ActivitiesPage';
 import ActivityForm from 'components/Admin/ActivityForm';
 import EnrollmentsPage from 'components/Admin/EnrollmentsPage';
-import Homepage from 'components/Admin/Homepage';
+import Dashboard from 'components/Admin/Dashboard';
 import EnrollmentUpdate from 'components/Parent/EnrollmentUpdate';
 
 const routes = [
@@ -9,7 +9,7 @@ const routes = [
         path: '/dashboard',
         base: '/admin',
         name: 'Dashboard',
-        component: Homepage,
+        component: Dashboard,
         isInTopbar: true
     },
     {

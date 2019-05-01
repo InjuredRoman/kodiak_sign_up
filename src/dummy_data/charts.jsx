@@ -16,7 +16,7 @@ var delays = 80,
 var pending = {
   data: {
     labels: ["M", "T", "W", "T", "F", "S", "S"],
-    series: [[12, 17, 7, 17, 23, 18, 38]]
+    series: [[0, 0, 0, 0, 0, 0, 0]]
   },
   options: {
     lineSmooth: Chartist.Interpolation.cardinal({
@@ -65,10 +65,10 @@ var pending = {
 };
 
 
-var dailySalesChart = {
+var confirmed = {
   data: {
     labels: ["M", "T", "W", "T", "F", "S", "S"],
-    series: [[12, 17, 7, 17, 23, 18, 38]]
+    series: [[0, 0, 0, 0, 0, 0, 0]]
   },
   options: {
     lineSmooth: Chartist.Interpolation.cardinal({
@@ -117,5 +117,5 @@ var dailySalesChart = {
 
 // These are the charts that are imported by Homepage.js
 module.exports = {
-    dailySalesChart, pending
+    confirmed, pending
 };
