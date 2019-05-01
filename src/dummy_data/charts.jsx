@@ -22,9 +22,11 @@ var pending = {
     lineSmooth: Chartist.Interpolation.cardinal({
       tension: 0
     }),
-    low: 0,
-    // change this in Homepage.js to the max value 
-    high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+    stretch: true,
+    area: true,
+    // low: 0,
+    // // change this in Homepage.js to the max value 
+    // high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
     chartPadding: {
       top: 0,
       right: 0,
@@ -74,8 +76,9 @@ var confirmed = {
     lineSmooth: Chartist.Interpolation.cardinal({
       tension: 0
     }),
-    low: 0,
-    high: 20, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+    stretch: true,
+    // low: 0,
+    // high: 20, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
     chartPadding: {
       top: 0,
       right: 0,

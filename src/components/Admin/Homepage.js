@@ -49,7 +49,7 @@ class Homepage extends Component {
                 {/* <Grid item xs={2}> */}
                     <Topbar history = {this.props.history} routes={topbarRoutes} />
                 {/* </Grid> */}
-                <Grid item xs={10}>
+                <Grid item xs={12}>
                     {admin_routes}
                 </Grid>
             </Grid>

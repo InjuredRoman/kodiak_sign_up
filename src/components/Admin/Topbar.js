@@ -57,8 +57,17 @@ const styles = theme => ({
         //   color: '#40a9ff',
         // },
     },
+    selected: {
+        '&:hover': {
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.common.white,
+            '& $': {
+                color: theme.palette.common.white,
+            },
+        },
+    },
     tabItem: {
-        '&:focus': {
+        '&:hover': {
             backgroundColor: theme.palette.primary.main,
             color: theme.palette.common.white,
             '& $primary, & $icon': {
@@ -104,18 +113,30 @@ function Topbar(props) {
         "Enrollments": <AssignmentIndOutlinedIcon />,
         "Sessions": <ClassOutlinedIcon />,
     };
-    const bottomNavLinks = (
+    var bottomNavLinks = (
         <Paper>
         <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
             {props.routes.map((route, i) => {
                 if (route.base === '/admin') {
+                    var additionalProps = {};
+                    if(route.name.toLowerCase() === value) {
+                        additionalProps = {
+                            className:classes.selected,
+                        };
+                    }
+                    else {
+                        additionalProps = {
+                            className:classes.tabItem,
+                        }
+                    }
                     return (
                             <BottomNavigationAction 
-                                className={classes.tabItem}
+                                // className={classes.tabItem}
                                 key={i}
                                 label={route.name} 
                                 value={route.name.toLowerCase()} 
                                 icon={icons[route.name]} 
+                                {...additionalProps}
                             />
                     );
                 }

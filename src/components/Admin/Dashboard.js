@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 // import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 // import { Card, Button, Table } from 'react-bootstrap';
-import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import GridContainer from 'components/Grid/GridContainer.jsx';
+import GridItem from 'components/Grid/GridItem.jsx';
 import Card from 'components/Card/Card.jsx';
 import Typography from '@material-ui/core/Typography';
 import CardHeader from 'components/Card/CardHeader.jsx';
@@ -17,12 +19,35 @@ const styles = theme => ({
         flexGrow: 1,
         padding: theme.spacing.unit * 2,
     },
-    header: {
-        background: theme.palette.primary.main,
+    ctLine: {
+        stroke: "blue",
+        /* Control the thikness of your lines */
+        strokeWidth: "5px",
+        /* Create a dashed line with a pattern */
+        strokeDasharray: "1px 2px",
+
+    },
+    main: {
+        width: 'auto',
+        display: 'block', // Fix IE 11 issue.
+        marginLeft: theme.spacing.unit * 3,
+        marginRight: theme.spacing.unit * 3,
+        // [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+        //     width: 400,
+        //     marginLeft: 'auto',
+        //     marginRight: 'auto',
+        // },
     },
     paper: {
-        height: 140,
-        width: 100,
+        marginTop: theme.spacing.unit * 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit *
+            3}px ${theme.spacing.unit * 3}px`,
+    },
+    header: {
+        background: theme.palette.primary.main,
     },
     control: {
         padding: theme.spacing.unit * 2,
@@ -172,15 +197,12 @@ class Dashboard extends Component {
         return (
             // <>
             <div>
-                <Grid justify="center" className={classes.root} container>
-                    <Grid item xs={4}>
-                        <Card>
-                            <CardHeader className={classes.header}>
-                                <Typography variant="h5" gutterBottom>
+                <GridContainer justify="center" className={classes.main}>
+                    <GridItem xs={4}>
+                        <Paper className={classes.paper}>
+                                <Typography variant="h4" gutterBottom>
                                     Confirmed Enrollments
                                 </Typography>
-                            </CardHeader>
-                            <CardBody>
                                 <ChartistGraph
                                     className="ct-chart"
                                     data={confirmed.data}
@@ -188,15 +210,13 @@ class Dashboard extends Component {
                                     options={confirmed.options}
                                     listener={confirmed.animation}
                                 />
-                            </CardBody>
-                        </Card>
-                        <Card>
-                            <CardHeader className={classes.header}>
-                                <Typography variant="h5" gutterBottom>
+                        </Paper>
+                    </GridItem>
+                    <GridItem xs={4}>
+                        <Paper className={classes.paper}>
+                                <Typography variant="h4" gutterBottom>
                                     Pending Enrollments
                                 </Typography>
-                            </CardHeader>
-                            <CardBody>
                                 <ChartistGraph
                                     className="ct-chart"
                                     data={pending.data}
@@ -204,10 +224,9 @@ class Dashboard extends Component {
                                     options={pending.options}
                                     listener={pending.animation}
                                 />
-                            </CardBody>
-                        </Card>
-                    </Grid>
-                </Grid>
+                        </Paper>
+                    </GridItem>
+                </GridContainer>
 
                 
             </div>

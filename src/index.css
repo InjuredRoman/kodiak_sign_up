@@ -13,6 +13,25 @@ code {
     monospace;
 }
 
+.ct-series-a .ct-line {
+  /* Set the colour of this series line */
+  stroke: blue;
+  /* Control the thikness of your lines */
+  stroke-width: 5px;
+  /* Create a dashed line with a pattern */
+  stroke-dasharray: 1px 2px;
+}
+
+/* This selector overrides the points style on line charts. Points on line charts are actually just very short strokes. This allows you to customize even the point size in CSS */
+.ct-series-a .ct-point {
+  /* Colour of your points */
+  stroke: blue;
+  /* Size of your points */
+  stroke-width: 10px;
+  /* Make your points appear as squares */
+  /* stroke-linecap: square; */
+}
+
 [class^="MuiButton-label-"] {
   color: #FFFFFF
 }

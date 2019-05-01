@@ -367,22 +367,6 @@ class ActivityForm extends Component {
                         // }}
                     />
                </GridItem>
-               {/* <GridItem xs={5}>
-                    <AutoField
-                        component={TimePickerInline}
-                        // showInlineError={true}
-                        className={classes.field}
-                        name="start_time"
-                        label="Start Time"
-                        // value={this.state.start_time}
-                        // onChange={start => this.setState({start_time: start})} 
-                        variant="outlined"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        fullWidth
-                    />
-               </GridItem> */}
                <GridItem xs={5}>
                     <CustomTimePickerInline
                         keyboard
@@ -417,37 +401,10 @@ class ActivityForm extends Component {
                         fullWidth
                     />
                </GridItem>
-               {/* <GridItem xs={5}>
-                    <TimePickerInline
-                        // showInlineError={true}
-                        clearable={true}
-                        className={classes.field}
-                        name="end_time"
-                        label="End Time"
-                        value={this.state.end_time}
-                        onChange={end => this.setState({end_time: end})} 
-                        variant="outlined"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        fullWidth
-                    />
-               </GridItem> */}
                <GridItem xs={9}>
                     <SelectField
-
-                        // multiple={true}
                         showInlineError={true}
-                        // className={classes.menuItem}
                         name="days_of_occurrence"
-                        // MenuProps={{
-                        //     MenuListProps: {className: classes.menuItem}
-                        // }
-                        // }
-                        // variant="filled"
-                        // checkboxes={true}
-                        // allowedValues={['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']}
-                        // transform={value => valueToLabelMap[value]}
                         options={dayOptions}
                     />
                </GridItem>
@@ -464,8 +421,6 @@ class ActivityForm extends Component {
 
             </AutoForm>
         return (
-        // <Card className={classes.root}>
-        //     <CardHeader color="primary">
         <div className={classes.main}>
         <Paper className={classes.paper}>
                 <Typography variant="h2" gutterBottom>
