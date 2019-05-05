@@ -15,15 +15,53 @@ const enrollment_batch_update_endpoint = '/api/batch_update_enrollments/';
 const enrollment_retrieve_by_token_endpoint = '/api/enrollments_by_token/';
 const login_endpoint = '/api/login/';
 const registration_endpoint = '/api/registration/'
+const refresh_token_endpoint = '/refresh-token/'
+import UserProfile from 'components/Admin/UserProfile';
+import * as jwtDecode from 'jwt-decode';
 
 function error_handler(err) {
     console.log(err);
 }
 
 function getAuthHeader(headers= new Headers()) {
+    const token = UserProfile.getToken();
+    var s = jwtDecode(token);
+    var expDate = new Date(0);
+    expDate.setUTCSeconds(s.exp);
+    var minsTillExp = (expDate - new Date())/60000
+    if (minsTillExp < 0) { // expired token, have to login once more
+        UserProfile.setStatus("unauthorized");
+    } else if (minsTillExp < 5) { // want to refresh token, within 5 minutes of expiration
+        refreshToken(token,
+            (response) => UserProfile.setToken(response.token),
+            (err) => UserProfile.setStatus("unauthorized")
+        );
+    } else {
+        // console.log(UserProfile.getToken());
+        // nothing really happens here
+    }
+
     // curl -H "Authorization: JWT <your_token>" http://localhost:8000/protected-url/
-    headers.append("Authorization", "JWT " + sessionStorage.getItem("token"));
+    headers.append("Authorization", "JWT " + UserProfile.getToken());
     return headers;
+}
+
+export function refreshToken(token, on_success, on_err=on_error) {
+    const real_endpoint = root + refresh_token_endpoint;
+    var tokenDict = {
+        token: token
+    };
+    const conf = {
+        method: 'post',
+        body: JSON.stringify(tokenDict),
+        headers: new Headers({ 'Content-Type': 'application/json'}),
+    };
+    var result = fetch(real_endpoint, conf)
+        .then(response => response.json())
+        .then(data => on_success(data))
+        .catch(function(err) {
+            on_err(err)
+        });
 }
 
 export function send_weekly_digest(on_success, on_error = error_handler) {

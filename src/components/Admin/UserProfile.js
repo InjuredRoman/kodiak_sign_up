@@ -21,14 +21,28 @@ export default class UserProfile extends React.Component {
     }
     }
     */
+    static getToken() {
+        return sessionStorage.getItem("token");
+    }
+
+    static getStatus() {
+        return sessionStorage.getItem("status");
+    }
+
+    static setToken(token){
+        sessionStorage.setItem("token", token);
+    }
+
+    static setStatus(status){
+        sessionStorage.setItem("status", status);
+    }
 
     static storeUserInformation(user_info) {
         // var i;
         // var field;
         // console.log(user_information);
-        sessionStorage.setItem("token", user_info.token)
-        sessionStorage.setItem("status", user_info.status)
-        sessionStorage.setItem("user_email", user_info.user.email)
+        this.setToken(user_info.token);
+        this.setStatus(user_info.status);
         // for (i = 0; i < this.state.fields.length; i++) {
         //     field = this.state.fields[i];
         //     sessionStorage.setItem(field, user_information[field]);

@@ -73,9 +73,7 @@ class Dashboard extends Component {
     async componentDidMount() {
         fetch_all_enrollments(
             response => {
-                this.setState({ enrollments: response, loaded: true }, () =>
-                    console.log(this.state.enrollments)
-                );
+                this.setState({ enrollments: response, loaded: true })
             },
             error => {
                 this.setState({
@@ -171,7 +169,6 @@ class Dashboard extends Component {
         L.map((e, i) => {
           if(pending[i] === true & sevenDays[i] == true) {
             var date = new Date(Date.parse(e.updated_at));
-            console.log(date.getDay())
             result[date.getDay()] += 1;
           };
         });

@@ -1,36 +1,20 @@
 import React, { Component } from 'react';
 
 import { ActivitySchema } from 'assets/schema/ActivitySchema';
-// import { Label, Container, Divider } from 'semantic-ui-react';
-// import { Form, Dropdown } from 'formsy-semantic-ui-react';
 
 import { create_activity } from 'middleend/fetchers';
-// import {
-//     // DateInput,
-//     TimeInput,
-//     // DateTimeInput,
-//     DatesRangeInput,
-// } from 'semantic-ui-calendar-react';
-// import Card from 'components/Card/Card.jsx';
-// import CardHeader from 'components/Card/CardHeader.jsx';
-// import CardBody from 'components/Card/CardBody.jsx';
-// import CardFooter from 'components/Card/CardFooter.jsx';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
 import GridContainer from 'components/Grid/GridContainer.jsx';
 import GridItem from 'components/Grid/GridItem.jsx';
 import CustomTimePickerInline from 'components/utils/CustomTimePickerInline';
 import CustomDatePickerInline from 'components/utils/CustomDatePickerInline';
+import {withSnackbar} from 'notistack';
 
 import format from 'date-fns/format';
 
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
-import DatePickerInline from "material-ui-pickers/DatePicker/DatePickerInline";
-import TimePickerInline from "material-ui-pickers/TimePicker/TimePickerInline";
+
 import SuperSelectField from 'material-ui-superselectfield';
 
 import AutoForm from 'uniforms-material/AutoForm';
@@ -112,8 +96,21 @@ class ActivityForm extends Component {
     }
 
     onSubmit(event) {
-        console.log(event);
+        // console.log(event);
         create_activity(event);
+    }
+    successSnackbar() {
+        this.props.enqueueSnackbar(
+                'Successfully created activity!',
+                { variant: 'success' }
+        );
+    }
+
+    failSnackbar() {
+        this.props.enqueueSnackbar(
+                'Sorry, something seems to have gone wrong.',
+                { variant: 'error' }
+        );
     }
 
     handleSubmit(form_info) {
@@ -122,9 +119,8 @@ class ActivityForm extends Component {
         form_info.end_date = format(new Date(form_info.end_date), 'MM/dd/yyyy');
         form_info.start_time = format(new Date(form_info.start_time), 'HH:mm:ss.SSS');
         form_info.end_time = format(new Date(form_info.end_time), 'HH:mm:ss.SSS');
-        console.log(form_info);
-        create_activity(form_info,
-            (data)=>console.log(data));
+        // console.log(form_info);
+        create_activity(form_info, (data) => (this.successSnackbar()), (err) => (this.failSnackbar()));
     }
 
     constructor(props) {
