@@ -4,11 +4,15 @@ import 'babel-polyfill';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
+import {SnackbarProvider} from 'notistack';
+
 //component imports
 import Login from 'components/Admin/Login';
+import Registration from 'components/Admin/Registration';
 import Homepage from 'components/Admin/Homepage';
 import Signup from 'components/Parent/Signup';
 import Signup_Redux from 'components/Parent/Signup_redux';
+import NoMatch from 'components/NoMatch';
 
 //routing support
 import {
@@ -20,7 +24,6 @@ import {
 
 import DateFnsUtils from '@date-io/date-fns'; // for datepickers, peer dependency of material-ui-pickers
 import MuiPickersUtilsProvider from 'material-ui-pickers/MuiPickersUtilsProvider';
-import { SnackbarProvider, withSnackbar } from 'notistack';
 //theme for site
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import amber from '@material-ui/core/colors/amber';
@@ -86,13 +89,15 @@ const theme = createMuiTheme({
 //     }
 // );
 ReactDOM.render(
+
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <MuiThemeProvider theme={theme}>
+    <SnackbarProvider>
         <Router>
             <Switch>
                 {/* <Route path="/signup" component={Signup} /> */}
-                <Route path="/signup" component={Signup_Redux} />
                 <Route path="/login" component={Login} />
+                <Route path="/register" component={Registration} />
                 <Route path="/admin" component={Homepage} />
                 <Route
                     path="/update_enrollments/:token"
@@ -102,8 +107,11 @@ ReactDOM.render(
                         </SnackbarProvider>
                     )}
                 />
+                <Route path="/signup" component={Signup_Redux} />
+                <Route component={NoMatch} />
             </Switch>
         </Router>
+    </SnackbarProvider>
         </MuiThemeProvider>
     </MuiPickersUtilsProvider>
     ,

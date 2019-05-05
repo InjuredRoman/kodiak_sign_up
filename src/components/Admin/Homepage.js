@@ -4,6 +4,7 @@ import Topbar from 'components/Admin/Topbar';
 import AuthorizedWrapper from 'components/Admin/AuthorizedWrapper';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
+import {SnackbarProvider} from 'notistack';
 
 import routes from 'routes.js';
 
@@ -49,9 +50,12 @@ class Homepage extends Component {
                 {/* <Grid item xs={2}> */}
                     <Topbar history = {this.props.history} routes={topbarRoutes} />
                 {/* </Grid> */}
-                <Grid item xs={12}>
-                    {admin_routes}
-                </Grid>
+                    <Grid item xs={10}>
+                <SnackbarProvider>
+                        {admin_routes}
+
+                </SnackbarProvider>
+                    </Grid>
             </Grid>
         );
     }

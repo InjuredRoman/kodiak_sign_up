@@ -3,9 +3,7 @@ import { login } from '../../middleend/fetchers';
 import UserProfile from './UserProfile';
 import CubeGridSpinner from 'components/utils/Spinners';
 import Avatar from '@material-ui/core/Avatar';
-// import TextField from '@material-ui/core/TextField';
-import Card from '@material-ui/core/Card';
-import Grid from '@material-ui/core/Grid';
+
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Redirect } from 'react-router-dom';
@@ -15,6 +13,7 @@ import SubmitField from 'uniforms-material/SubmitField';
 import ErrorsField from 'uniforms-material/ErrorsField';
 // import { AutoForm } from 'uniforms-material';
 import { LoginSchema } from 'assets/schema/LoginSchema';
+import {withSnackbar} from 'notistack';
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
@@ -69,14 +68,18 @@ class Login extends React.Component {
         super(props);
         this.state = {
             sent: false,
-            received: true,
+            received: false,
+            tryAgain: false,
             user_info: [],
             username: '',
             password: '',
         };
         this.onClick = this.onClick.bind(this);
         this.getResponse = this.getResponse.bind(this);
+        this.handleResponse = this.handleResponse.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.successSnackbar = this.successSnackbar.bind(this);
+        this.failSnackbar = this.failSnackbar.bind(this);
     }
 
     onClick() {
@@ -84,17 +87,51 @@ class Login extends React.Component {
         this.getResponse({ username: username, password: password });
     }
 
+    handleResponse(response) {
+        if (response['status'] === 'authorized') {
+            this.storeInfo(response);
+            this.successSnackbar();
+        } else {
+            // show incorrect login popup here!
+            this.failSnackbar();
+            this.setState({sent: false});
+        }
+    }
     storeInfo(user_info) {
         // var user_info = this.state.user_info;
         UserProfile.storeUserInformation(user_info);
+    }
+
+    /*{ response from login endpoint
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6InJvbWFuLmEua2F1Zm1hbkBnbWFpbC5jb20iLCJleHAiOjE1NTcwMTk1MjEsImVtYWlsIjoicm9tYW4uYS5rYXVmbWFuQGdtYWlsLmNvbSIsIm9yaWdfaWF0IjoxNTU3MDE1OTIxfQ.B0YBRHxKbmAvnn79lddaVvg1aZODY65cY3tfG1sZyOQ",
+        "user": {
+            "email": "roman.a.kaufman@gmail.com",
+            "first_name": "",
+            "last_name": "",
+            "pk": 1,
+            "username": "roman.a.kaufman@gmail.com"
+        }
+    } */
+    successSnackbar() {
+        this.props.enqueueSnackbar(
+                'Successfully logged in!',
+                { variant: 'success' }
+        );
+    }
+
+    failSnackbar() {
+        this.props.enqueueSnackbar(
+                'Sorry, your username or password seem to be incorrect. Please try again',
+                { variant: 'error' }
+        );
     }
 
     getResponse(form_info) {
         var self = this;
         self.setState({sent: true});
         // wait(2000);
-        login(form_info).then(val => {
-            self.setState({received: true}, self.storeInfo(val));
+        login(form_info).then(response => {
+            self.setState({received: true}, self.handleResponse(response));
         });
         // var res = login(form_info);
         // self.setState({user_info: res})
@@ -120,7 +157,7 @@ class Login extends React.Component {
                     {/* <form onSubmit={this.getResponse}> */}
                     <TextField
                         name="username"
-                        // label="Email"
+                        label="Email"
                         type="email"
                         variant="outlined"
                         // value={this.state.name}
@@ -163,9 +200,11 @@ class Login extends React.Component {
                 <Paper className={classes.paper}>
                     {content}
                 </Paper>
+                <p>Don't have an account? Register for one <a href="#/register">here</a></p>
             </div>
         );
     }
 }
 
-export default withStyles(styles)(Login);
+const SnackLogin = withStyles(styles)(withSnackbar(Login));
+export default SnackLogin;

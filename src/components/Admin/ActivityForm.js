@@ -116,23 +116,6 @@ class ActivityForm extends Component {
         create_activity(event);
     }
 
-    print_state() {
-        console.log(this.state);
-    }
-    parse_time(t) {
-        var time = t.substr(0, t.indexOf(' '));
-        var suffix = t.substr(t.indexOf(' ') + 1);
-        var result;
-        if (suffix === 'AM') {
-            result = time;
-        } else if (suffix === 'PM') {
-            var hour = time.substr(0, time.indexOf(':'));
-            var minute = time.substr(time.indexOf(':') + 1);
-            hour = (parseInt(hour, 10) + 12).toString();
-            result = hour + ':' + minute;
-        }
-        return result;
-    }
     handleSubmit(form_info) {
         // console.log(form_info);
         form_info.start_date = format(new Date(form_info.start_date), 'MM/dd/yyyy');
@@ -140,17 +123,6 @@ class ActivityForm extends Component {
         form_info.start_time = format(new Date(form_info.start_time), 'HH:mm:ss.SSS');
         form_info.end_time = format(new Date(form_info.end_time), 'HH:mm:ss.SSS');
         console.log(form_info);
-        // console.log(event);
-        // var datesRange = this.state.datesRange;
-        // this.state.start_date = datesRange
-        //     .substr(0, datesRange.indexOf('-'))
-        //     .trim(); //.replace(/\//g, "-")
-        // this.state.end_date = datesRange
-        //     .substr(datesRange.indexOf('-') + 1)
-        //     .trim(); //.replace(/\//g, "-")
-        // this.state.start_time = this.parse_time(this.state.start_time);
-        // this.state.end_time = this.parse_time(this.state.end_time);
-        // delete this.state.datesRange;
         create_activity(form_info,
             (data)=>console.log(data));
     }
@@ -190,6 +162,7 @@ class ActivityForm extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
     handleChange(e, { name, value }) {
         if (this.state.hasOwnProperty(name)) {
             this.setState({ [name]: value });
@@ -197,12 +170,6 @@ class ActivityForm extends Component {
         console.log(name, value);
         // this.setState({[name]:value}, this.print_state)
     }
-    // handleChange = (event, {name, value}) => {
-    //     if (this.state.hasOwnProperty(name)) {
-    //         this.setState({ [name]: value });
-    //         console.log(name, value);
-    //     }
-    // }
 
     render() {
         const dayOptions = [
