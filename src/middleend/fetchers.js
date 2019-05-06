@@ -199,13 +199,10 @@ export function create_enrollment(
     // content.headers = getAuthHeader(content.headers);
     fetch(create_endpoint, content)
         .then(response => {
-            if (response.status !== 200) {
-                on_error(response);
-            } else {
-                return response.json();
-            }
+            return response.json();
         })
-        .then(data => on_success(data));
+        .then(data => on_success(data))
+        .catch(err => on_error(err));
 }
 
 export function update_activity(activity_info, on_success, on_error = error_handler) {
@@ -307,7 +304,7 @@ export function fetch_all_activities(on_success, on_error = error_handler) {
     const real_endpoint = root + activity_list_endpoint;
     const content = {
         method: 'GET',
-        headers: getAuthHeader()
+        // headers: getAuthHeader()
     };
     fetch(real_endpoint, content)
         .then(response => {

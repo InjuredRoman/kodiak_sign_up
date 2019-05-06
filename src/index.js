@@ -14,6 +14,8 @@ import Signup from 'components/Parent/Signup';
 import Signup_Redux from 'components/Parent/Signup_redux';
 import NoMatch from 'components/NoMatch';
 
+import 'semantic-ui-css/semantic.min.css'
+
 //routing support
 import {
     HashRouter as Router,
@@ -107,7 +109,7 @@ ReactDOM.render(
                         </SnackbarProvider>
                     )}
                 />
-                <Route path="/signup" component={Signup_Redux} />
+                <Route path="/signup" component={Signup} />
                 <Route component={NoMatch} />
             </Switch>
         </Router>
