@@ -1,36 +1,20 @@
 import React, { Component } from 'react';
 
 import { ActivitySchema } from 'assets/schema/ActivitySchema';
-// import { Label, Container, Divider } from 'semantic-ui-react';
-// import { Form, Dropdown } from 'formsy-semantic-ui-react';
 
 import { create_activity } from 'middleend/fetchers';
-// import {
-//     // DateInput,
-//     TimeInput,
-//     // DateTimeInput,
-//     DatesRangeInput,
-// } from 'semantic-ui-calendar-react';
-// import Card from 'components/Card/Card.jsx';
-// import CardHeader from 'components/Card/CardHeader.jsx';
-// import CardBody from 'components/Card/CardBody.jsx';
-// import CardFooter from 'components/Card/CardFooter.jsx';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
 import GridContainer from 'components/Grid/GridContainer.jsx';
 import GridItem from 'components/Grid/GridItem.jsx';
 import CustomTimePickerInline from 'components/utils/CustomTimePickerInline';
 import CustomDatePickerInline from 'components/utils/CustomDatePickerInline';
+import {withSnackbar} from 'notistack';
 
 import format from 'date-fns/format';
 
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
-import DatePickerInline from "material-ui-pickers/DatePicker/DatePickerInline";
-import TimePickerInline from "material-ui-pickers/TimePicker/TimePickerInline";
+
 import SuperSelectField from 'material-ui-superselectfield';
 
 import AutoForm from 'uniforms-material/AutoForm';
@@ -112,47 +96,31 @@ class ActivityForm extends Component {
     }
 
     onSubmit(event) {
-        console.log(event);
+        // console.log(event);
         create_activity(event);
     }
+    successSnackbar() {
+        this.props.enqueueSnackbar(
+                'Successfully created activity!',
+                { variant: 'success' }
+        );
+    }
 
-    print_state() {
-        console.log(this.state);
+    failSnackbar() {
+        this.props.enqueueSnackbar(
+                'Sorry, something seems to have gone wrong.',
+                { variant: 'error' }
+        );
     }
-    parse_time(t) {
-        var time = t.substr(0, t.indexOf(' '));
-        var suffix = t.substr(t.indexOf(' ') + 1);
-        var result;
-        if (suffix === 'AM') {
-            result = time;
-        } else if (suffix === 'PM') {
-            var hour = time.substr(0, time.indexOf(':'));
-            var minute = time.substr(time.indexOf(':') + 1);
-            hour = (parseInt(hour, 10) + 12).toString();
-            result = hour + ':' + minute;
-        }
-        return result;
-    }
+
     handleSubmit(form_info) {
         // console.log(form_info);
         form_info.start_date = format(new Date(form_info.start_date), 'MM/dd/yyyy');
         form_info.end_date = format(new Date(form_info.end_date), 'MM/dd/yyyy');
         form_info.start_time = format(new Date(form_info.start_time), 'HH:mm:ss.SSS');
         form_info.end_time = format(new Date(form_info.end_time), 'HH:mm:ss.SSS');
-        console.log(form_info);
-        // console.log(event);
-        // var datesRange = this.state.datesRange;
-        // this.state.start_date = datesRange
-        //     .substr(0, datesRange.indexOf('-'))
-        //     .trim(); //.replace(/\//g, "-")
-        // this.state.end_date = datesRange
-        //     .substr(datesRange.indexOf('-') + 1)
-        //     .trim(); //.replace(/\//g, "-")
-        // this.state.start_time = this.parse_time(this.state.start_time);
-        // this.state.end_time = this.parse_time(this.state.end_time);
-        // delete this.state.datesRange;
-        create_activity(form_info,
-            (data)=>console.log(data));
+        // console.log(form_info);
+        create_activity(form_info, (data) => (this.successSnackbar()), (err) => (this.failSnackbar()));
     }
 
     constructor(props) {
@@ -190,6 +158,7 @@ class ActivityForm extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
     handleChange(e, { name, value }) {
         if (this.state.hasOwnProperty(name)) {
             this.setState({ [name]: value });
@@ -197,12 +166,6 @@ class ActivityForm extends Component {
         console.log(name, value);
         // this.setState({[name]:value}, this.print_state)
     }
-    // handleChange = (event, {name, value}) => {
-    //     if (this.state.hasOwnProperty(name)) {
-    //         this.setState({ [name]: value });
-    //         console.log(name, value);
-    //     }
-    // }
 
     render() {
         const dayOptions = [

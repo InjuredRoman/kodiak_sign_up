@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 // import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 // import { Card, Button, Table } from 'react-bootstrap';
-import Paper from '@material-ui/core/Paper';
 import GridContainer from 'components/Grid/GridContainer.jsx';
 import GridItem from 'components/Grid/GridItem.jsx';
-import Card from 'components/Card/Card.jsx';
+
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import CardHeader from 'components/Card/CardHeader.jsx';
-import CardBody from 'components/Card/CardBody.jsx';
+import Button from '@material-ui/core/Button'; 
 import { withStyles } from '@material-ui/core/styles';
+
 import ChartistGraph from 'react-chartist';
 
 import { byCurrentActivity, confirmed, pending } from 'dummy_data/charts.jsx';
-import { fetch_all_enrollments, fetch_all_activities } from '../../middleend/fetchers';
+import { fetch_all_enrollments, fetch_all_activities, send_weekly_digest } from 'middleend/fetchers';
+import {withSnackbar} from 'notistack';
 
 const styles = theme => ({
     root: {
@@ -52,23 +53,27 @@ const styles = theme => ({
     control: {
         padding: theme.spacing.unit * 2,
     },
+    button: {
+      margin: theme.spacing.unit,
+    },
 });
 
 class Dashboard extends Component {
-  constructor(props) {
+    constructor(props) {
         super(props);
         this.state = {
             enrollments: [],
             loaded: false,
         };
+        this.sendEmails = this.sendEmails.bind(this);
+        this.successSnackbar = this.successSnackbar.bind(this);
+        this.failSnackbar = this.failSnackbar.bind(this);
     }
 
-  async componentDidMount() {
+    async componentDidMount() {
         fetch_all_enrollments(
             response => {
-                this.setState({ enrollments: response, loaded: true }, () =>
-                    console.log(this.state.enrollments)
-                );
+                this.setState({ enrollments: response, loaded: true })
             },
             error => {
                 console.log("hihihiihihihihihihi")
@@ -92,6 +97,30 @@ class Dashboard extends Component {
                 });
             }
         );
+    }
+
+    successSnackbar() {
+        this.props.enqueueSnackbar(
+                'Successfully sent emails to all parents in system.',
+                { variant: 'success' }
+        );
+    }
+
+    failSnackbar() {
+        this.props.enqueueSnackbar(
+                'Something went wrong. Failed to send weekly digest to all parents.',
+                { variant: 'error' }
+        );
+    }
+    sendEmails() {
+        send_weekly_digest(
+            response => {
+                this.setstate({emailsSent: true, emailSuccess: true}, this.successSnackbar());
+            },
+            error => {
+                this.setstate({emailsSent: true, emailSuccess: false}, this.failSnackbar());
+            }
+        )
     }
     /*
     filterLastSevenDays(L) {
@@ -177,7 +206,6 @@ class Dashboard extends Component {
         L.map((e, i) => {
           if(pending[i] === true & sevenDays[i] == true) {
             var date = new Date(Date.parse(e.updated_at));
-            console.log(date.getDay())
             result[date.getDay()] += 1;
           };
         });
@@ -239,8 +267,8 @@ class Dashboard extends Component {
         return (
             // <>
             <div>
-                <GridContainer justify="center" className={classes.main}>
-                    <GridItem xs={4}>
+                <GridContainer justify="center" className={classes.main} spacing={40}>
+                    <GridItem xs={6}>
                         <Paper className={classes.paper}>
                                 <Typography variant="h4" gutterBottom>
                                     Confirmed Enrollments
@@ -254,7 +282,7 @@ class Dashboard extends Component {
                                 />
                         </Paper>
                     </GridItem>
-                    <GridItem xs={4}>
+                    <GridItem xs={6}>
                         <Paper className={classes.paper}>
                                 <Typography variant="h4" gutterBottom>
                                     Pending Enrollments
@@ -281,6 +309,10 @@ class Dashboard extends Component {
                                     listener={byCurrentActivity.animation}
                                 />
                         </Paper>
+                    <GridItem xs={6}>
+                        <Button fullWidth onClick={this.sendEmails} variant="contained" color="secondary" className={classes.button}>
+                            Send Weekly Digest
+                        </Button>
                     </GridItem>
                 </GridContainer>
 
@@ -289,4 +321,12 @@ class Dashboard extends Component {
         );
     }
 }
-export default withStyles(styles)(Dashboard);
+const SnackDashboard = withStyles(styles)(withSnackbar(Dashboard));
+export default SnackDashboard;
+// function SnackifiedEnrollmentUpdate(props) {
+//     return (
+//         <SnackbarProvider maxSnack={5}>
+//             <Dashboard />
+//         </SnackbarProvider>
+//     );
+// }

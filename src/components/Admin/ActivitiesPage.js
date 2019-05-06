@@ -46,7 +46,6 @@ const styles = theme => ({
 class ActivitiesPage extends Component {
     constructor(props) {
         super(props);
-        console.log('here!');
         this.state = {
             activities: [],
             loaded: false,
@@ -62,9 +61,7 @@ class ActivitiesPage extends Component {
         // this.setState({ enrollments: todos, loaded: true });
         fetch_all_activities(
             response => {
-                this.setState({ activities: response, loaded: true }, () =>
-                    console.log(this.state.enrollments)
-                );
+                this.setState({ activities: response, loaded: true })
             },
             error => {
                 this.setState({ placeholder: 'Something went wrong.' });
@@ -93,7 +90,6 @@ class ActivitiesPage extends Component {
         } : {};
         // const confirmed_enrollments = this.filterByStatus(this.state.enrollments, true);
         const activities = this.state.activities;
-        console.log(activities);
         const columns = [
             {
                 title: 'Activity',

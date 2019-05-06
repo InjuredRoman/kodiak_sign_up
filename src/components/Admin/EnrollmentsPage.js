@@ -74,9 +74,7 @@ class EnrollmentsPage extends Component {
     async componentDidMount() {
         fetch_all_enrollments(
             response => {
-                this.setState({ enrollments: response, loaded: true }, () =>
-                    console.log(this.state.enrollments)
-                );
+                this.setState({ enrollments: response, loaded: true });
             },
             error => {
                 this.setState({
