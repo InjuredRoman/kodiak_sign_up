@@ -309,6 +309,7 @@ class Dashboard extends Component {
                                     listener={byCurrentActivity.animation}
                                 />
                         </Paper>
+                    </GridItem>
                     <GridItem xs={6}>
                         <Button fullWidth onClick={this.sendEmails} variant="contained" color="secondary" className={classes.button}>
                             Send Weekly Digest
