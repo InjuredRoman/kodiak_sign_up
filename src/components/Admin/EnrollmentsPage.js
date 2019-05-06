@@ -23,27 +23,12 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit * 5,
         marginRight: theme.spacing.unit * 5,
         marginTop: theme.spacing.unit * 8,
-        // [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-        //     width: 400,
-        //     marginLeft: 'auto',
-        //     marginRight: 'auto',
-        // },
     },
     spinner: {
-        // position: 'absolute',
-        // margin-left: 200px;
-        // /* position: sticky; */
-        // margin-right: -185px;
-        // marginLeft: theme.spacing.unit * 25,
-        // marginRight: -theme.spacing.unit * 25,
     },
     paper: {
-        // marginTop: theme.spacing.unit * 8,
         display: 'flex',
         flexDirection: 'column',
-        // alignItems: 'center',
-        // padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit *
-            // 3}px ${theme.spacing.unit * 3}px`,
     },
     root: {
       flexGrow: 1,
@@ -116,12 +101,6 @@ class EnrollmentsPage extends Component {
                 </Fragment>
             )
         } : {};
-        // components = {
-        //     ...components,
-        //     Paper: props => {
-        //         <Paper square {...props} />
-        //     }
-        // };
         const confirmed_enrollments = this.state.loaded
             ? this.filterByStatus(this.state.enrollments, true)
             : [];
@@ -141,7 +120,6 @@ class EnrollmentsPage extends Component {
 
         return (
             <div className={classes.main}>
-                {/* <Paper className={classes.paper}> */}
                 <GridContainer justify="center">
                 <GridItem xs={12}>
                 <Paper square className={classes.paper}>
@@ -162,7 +140,6 @@ class EnrollmentsPage extends Component {
                             title="Pending"
                             columns={columns}
                             components={components}
-                            // isLoading={!this.state.loaded}
                             data={pending_enrollments}
                         />
                     </Paper>
@@ -171,7 +148,6 @@ class EnrollmentsPage extends Component {
                     <Paper square>
                         <MaterialTable
                             title="Confirmed"
-                            // isLoading={!this.state.loaded}
                             components={components}
                             data={confirmed_enrollments}
                             columns={columns}

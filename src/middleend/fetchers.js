@@ -196,7 +196,7 @@ export function create_enrollment(
         body: JSON.stringify(e_data),
         headers: new Headers({ 'Content-Type': 'application/json' }),
     };
-    content.headers = getAuthHeader(content.headers);
+    // content.headers = getAuthHeader(content.headers);
     fetch(create_endpoint, content)
         .then(response => {
             if (response.status !== 200) {
@@ -208,14 +208,13 @@ export function create_enrollment(
         .then(data => on_success(data));
 }
 
-export function get_activity(a_id, on_success, on_error = error_handler) {
-    const get_endpoint = root + activity_retrieve_endpoint + a_id + '/';
+export function update_activity(activity_info, on_success, on_error = error_handler) {
+    const update_endpoint = root + activity_retrieve_endpoint + a_id + '/';
     const content = {
-        method: 'GET', // delete would work for, well, deleting
-        headers: getAuthHeader()
+        method: 'PUT',
+        headers: getAuthHeader(),
+        body: JSON.stringify(activity_info)
     };
-
-
 
     fetch(get_endpoint, content)
         .then(response => {
@@ -225,7 +224,27 @@ export function get_activity(a_id, on_success, on_error = error_handler) {
                 return response.json();
             }
         })
-        .then(data => on_success(data));
+        .then(data => on_success(data))
+        .catch(err => on_error(err));
+}
+
+export function get_activity(a_id, on_success, on_error = error_handler) {
+    const get_endpoint = root + activity_retrieve_endpoint + a_id + '/';
+    const content = {
+        method: 'GET', // delete would work for, well, deleting
+        headers: getAuthHeader()
+    };
+
+    fetch(get_endpoint, content)
+        .then(response => {
+            if (response.status !== 200) {
+                on_error(response);
+            } else {
+                return response.json();
+            }
+        })
+        .then(data => on_success(data))
+        .catch(err => on_error(err));
 }
 
 export function get_enrollment(e_id, on_success, on_error = error_handler) {

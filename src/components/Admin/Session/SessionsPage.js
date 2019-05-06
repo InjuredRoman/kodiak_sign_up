@@ -43,7 +43,7 @@ const styles = theme => ({
     },
   });
 
-class ActivitiesPage extends Component {
+class SessionsPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -133,4 +133,4 @@ class ActivitiesPage extends Component {
         );
     }
 }
-export default withRouter(withStyles(styles)(ActivitiesPage));
+export default withRouter(withStyles(styles)(SessionsPage));

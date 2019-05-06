@@ -90,7 +90,7 @@ const styles = theme => ({
   });
 
 
-class ActivityForm extends Component {
+class SessionForm extends Component {
     validate() {
         return true;
     }
@@ -224,13 +224,6 @@ class ActivityForm extends Component {
 
                <GridItem xs={9}>
                     <TextField
-                        // InputProps={{
-                        //     classes: {
-                        //         root: classes.cssOutlinedInput,
-                        //         focused: classes.cssFocused,
-                        //         notchedOutline: classes.notchedOutline,
-                        //     },
-                        // }}
                         className={classes.field}
                         name="title"
                         label="Session Title"
@@ -241,13 +234,6 @@ class ActivityForm extends Component {
                </GridItem>
                <GridItem xs={3}>
                     <TextField
-                        // InputProps={{
-                        //     classes: {
-                        //         root: classes.cssOutlinedInput,
-                        //         focused: classes.cssFocused,
-                        //         notchedOutline: classes.notchedOutline,
-                        //     },
-                        // }}
                         className={classes.field}
                         name="group_code"
                         label="Group Code"
@@ -299,12 +285,8 @@ class ActivityForm extends Component {
                <GridItem xs={5}>
                     <CustomDatePickerInline
                         keyboard
-                        // showInlineError={true}
                         className={classes.field}
                         name="start_date"
-                        // maxDate={this.state.end_date} 
-                        // value={this.state.start_date} 
-                        // myOnChange={(e) => this.setState({a: "eeeee"}, () => console.log("aaaa"))}
                         label="Start Date"
                         variant="outlined"
                         InputLabelProps={{
@@ -319,15 +301,9 @@ class ActivityForm extends Component {
                         // showInlineError={true}
                         className={classes.field}
                         name="end_date"
-                        // minDate={this.state.start_date} 
-                        // value={this.state.end_date} 
-                        // myOnChange={end => this.setState({end_date: end})} 
                         label="End Date"
                         variant="outlined"
                         fullWidth
-                        // InputLabelProps={{
-                        //     shrink: true,
-                        // }}
                     />
                </GridItem>
                <GridItem xs={5}>
@@ -338,8 +314,6 @@ class ActivityForm extends Component {
                         className={classes.field}
                         name="start_time"
                         label="Start Time"
-                        // value={this.state.start_time}
-                        // onChange={start => this.setState({start_time: start})} 
                         variant="outlined"
                         InputLabelProps={{
                             shrink: true,
@@ -355,8 +329,6 @@ class ActivityForm extends Component {
                         className={classes.field}
                         name="end_time"
                         label="End Time"
-                        // value={this.state.end_time}
-                        // onChange={end => this.setState({end_time: end})} 
                         variant="outlined"
                         InputLabelProps={{
                             shrink: true,
@@ -393,163 +365,7 @@ class ActivityForm extends Component {
 
         </Paper>
         </div>
-            // </CardHeader>
-            // <CardBody>
-            //         {loginForm}
-            // {/* </CardBody>
-            // <CardFooter>
-            // </CardFooter>
-        // </Card> */}
-            // <Container>
-            //     <Form
-            //         ref={ref => (this.form = ref)}
-            //         onSubmit={this.handleSubmit}
-            //     >
-            //         <Form.Group widths="equal">
-            //             <Form.Input
-            //                 onChange={h}
-            //                 required
-            //                 name="title"
-            //                 label="Activity Title"
-            //                 placeholder="Bowstaffing 101"
-            //                 value={this.state.title}
-            //                 validations="isWords"
-            //                 errorLabel={<Label color="red" pointing />}
-            //                 validationErrors={{
-            //                     isWords:
-            //                         'No numbers or special characters allowed',
-            //                     isDefaultRequiredValue: 'Title is Required',
-            //                 }}
-            //             />
-            //             {/* Last name */}
-            //             <Form.Input
-            //                 onChange={h}
-            //                 name="youngest_enrolled"
-            //                 value={this.state.youngest_enrolled}
-            //                 placeholder="10"
-            //                 label="Youngest Allowed Age"
-            //                 required
-            //                 validations="isNumeric"
-            //                 errorLabel={<Label color="red" pointing />}
-            //                 validationErrors={{
-            //                     isNumeric: 'Must be a number',
-            //                     isDefaultRequiredValue:
-            //                         'Age Minimum is Required',
-            //                 }}
-            //             />
-            //         </Form.Group>
-
-            //         <Form.Input
-            //             onChange={h}
-            //             name="oldest_enrolled"
-            //             value={this.state.oldest_enrolled}
-            //             placeholder="15"
-            //             // icon="mail"
-            //             label="Oldest Allowed Age"
-            //             // required
-            //             validations="isNumeric"
-            //             validationErrors={{
-            //                 isNumeric: 'Must be a number',
-            //                 // isDefaultRequiredValue: 'Email is Required',
-            //             }}
-            //             errorLabel={<Label color="red" pointing />}
-            //         />
-            //         <Form.Group widths="equal">
-            //             <Form.Field
-            //                 label="Date Range"
-            //                 control={DatesRangeInput}
-            //                 closable
-            //                 name="datesRange"
-            //                 dateFormat="MM/DD/YYYY"
-            //                 placeholder="Start Date - End Date"
-            //                 value={this.state.datesRange}
-            //                 required
-            //                 validationErrors={{
-            //                     isDefaultRequiredValue:
-            //                         'Date Range is Required',
-            //                 }}
-            //                 errorLabel={<Label color="red" pointing />}
-            //                 iconPosition="left"
-            //                 onChange={h}
-            //             />
-            //             <Form.Dropdown
-            //                 label="Days of Week"
-            //                 name="days_of_occurrence"
-            //                 placeholder="Days Activity Occurs"
-            //                 fluid
-            //                 multiple
-            //                 search
-            //                 selection
-            //                 options={dayOptions}
-            //                 onChange={h}
-            //                 value={this.state.days_of_occurrence}
-            //             />
-            //         </Form.Group>
-            //         <Form.Group widths="equal">
-            //             <TimeInput
-            //                 label="Start Time"
-            //                 // control={TimeInput}
-            //                 name="start_time"
-            //                 timeFormat="AMPM"
-            //                 // disableMinute={true}
-            //                 closable
-            //                 placeholder="Start Time"
-            //                 value={this.state.start_time}
-            //                 iconPosition="left"
-            //                 onChange={h}
-            //                 required
-            //                 // validations="isWords"
-            //                 errorLabel={<Label color="red" pointing />}
-            //                 validationErrors={{
-            //                     isDefaultRequiredValue:
-            //                         'Start Time is Required',
-            //                 }}
-            //             />
-            //             <Form.Field
-            //                 label="End Time"
-            //                 required
-            //                 errorLabel={<Label color="red" pointing />}
-            //                 control={TimeInput}
-            //                 name="end_time"
-            //                 timeFormat="AMPM"
-            //                 // disableMinute={true}
-            //                 validationErrors={{
-            //                     isDefaultRequiredValue: 'End Time is Required',
-            //                 }}
-            //                 // closable="true"
-            //                 closable
-            //                 placeholder="End Time"
-            //                 value={this.state.end_time}
-            //                 iconPosition="left"
-            //                 onChange={h}
-            //             />
-            //         </Form.Group>
-            //         <Form.Input
-            //             onChange={h}
-            //             name="max_enrollment"
-            //             value={this.state.max_enrollment}
-            //             placeholder="25"
-            //             // icon="mail"
-            //             label="Maximum Enrollment"
-            //             // required
-            //             validations="isNumeric"
-            //             validationErrors={{
-            //                 isNumeric: 'Must be a number',
-            //                 // isDefaultRequiredValue: 'Email is Required',
-            //             }}
-            //             errorLabel={<Label color="red" pointing />}
-            //         />
-            //         <Form.Group>
-            //             <Form.Button content="Submit" color="green" />
-            //             <Form.Button
-            //                 type="button"
-            //                 content="Reset"
-            //                 onClick={() => this.form.reset()}
-            //             />
-            //         </Form.Group>
-            //     </Form>
-            // </Container>
         );
     }
 }
-export default withStyles(styles)(ActivityForm);
+export default withStyles(styles)(withSnackbar(SessionForm));
