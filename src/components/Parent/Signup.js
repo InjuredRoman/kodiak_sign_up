@@ -136,9 +136,12 @@ class Signup extends Component {
     filterActivities(age) {
         // TODO: Filter the options list by the age depending on what age is put in
         console.log(age);
+        var filteredActivities = this.state.possible_activities.filter(
+        activity => activity.youngest_enrolled <= age && activity.oldest_enrolled >= age
+        );
+        this.setState ({ rendered_activities: filteredActivities }, this.print_state);
         // options = getOptions() <- get options from backend/database/???
         // iterate / map through options, get age ranges and filter options that fit the age criteria
-        return age
     }
 
     handleChange(e) {

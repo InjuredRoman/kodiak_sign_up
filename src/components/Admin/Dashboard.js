@@ -257,7 +257,7 @@ class Dashboard extends Component {
     render() {
         var today = new Date();
         var dayOfWeek = today.getDay();
-        var dateRange = this.shift(["S", "M", "T", "W", "T", "F", "S"], dayOfWeek+1);
+        var dateRange = this.shift(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], dayOfWeek+1);
         var currActivities = this.currentActivityEnrollments(this.state.enrollments, this.state.activities)
         console.log(this.filterConfirmedByDay(this.state.enrollments));
         console.log(this.filterPendingByDay(this.state.enrollments));
