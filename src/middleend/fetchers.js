@@ -121,7 +121,7 @@ export function retrieve_enrollments_by_token(
         root + enrollment_retrieve_by_token_endpoint + token + '/';
     const content = {
         method: 'GET',
-        headers: getAuthHeader()
+        // headers: getAuthHeader()
     };
 
     fetch(retrieve_enrollments_by_token_endpoint, content)
@@ -145,7 +145,7 @@ export function batch_update_enrollments(
         body: JSON.stringify(enrollments),
         headers: new Headers({ 'Content-Type': 'application/json' }),
     };
-    content.headers = getAuthHeader(conf.headers);
+    // content.headers = getAuthHeader(conf.headers);
 
     fetch(batch_update_endpoint, content)
         .then(response => {
@@ -173,7 +173,7 @@ export function update_enrollment(
         body: JSON.stringify(confirmation_update),
         headers: new Headers({ 'Content-Type': 'application/json' }),
     };
-    content.headers = getAuthHeader(content.headers);
+    // content.headers = getAuthHeader(content.headers);
     fetch(confirm_endpoint, content)
         .then(response => {
             if (response.status !== 200) {

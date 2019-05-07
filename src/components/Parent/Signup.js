@@ -8,6 +8,7 @@ import { fetch_all_activities, create_enrollment } from 'middleend/fetchers';
 import { Form, Dropdown } from 'formsy-semantic-ui-react';
 import { withStyles } from '@material-ui/core/styles';
 import {withSnackbar} from 'notistack';
+import MaterialTable from 'material-table';
 
 const styles = theme => ({
     main: {
@@ -115,7 +116,8 @@ class Signup extends Component {
     componentDidMount() {
         fetch_all_activities(
             response => {
-                this.organize_options(response);
+                // this.organize_options(response);
+                this.setState({ possible_activities: response, loaded: true }, () => console.log(response))
             },
             error => {
                 this.setState({ placeholder: 'Something went wrong.' });
@@ -149,6 +151,25 @@ class Signup extends Component {
                 textAlign: 'center',
             },
         };
+        const columns = [
+            {
+                title: 'Activity',
+                field: 'title', // String-based value accessors!
+            },
+            {
+                title: 'Start Date',
+                field: 'start_date', // String-based value accessors!
+            },
+            {
+                title: 'End Date',
+                field: 'end_date', // String-based value accessors!
+            },
+            // {
+            //   Header: 'Status',
+            //   accessor: 'confirmed', // String-based value accessors!
+            //   Cell: props =>
+            // },
+        ];
         const form = 
             <Container>
                 <Form
@@ -212,7 +233,7 @@ class Signup extends Component {
                         style={styles.formElement}
                     />
                     <Divider />
-                    <Dropdown
+                    {/* <Dropdown
                         onChange={this.different}
                         name="activities"
                         value={this.state.activities}
@@ -231,7 +252,18 @@ class Signup extends Component {
                         }}
                         errorLabel={<Label color="red" pointing />}
                         options={this.state.possible_activities}
+                    /> */}
+                    <MaterialTable
+                        title="Sessions List"
+                        columns={columns}
+                        options={{selection:true}}
+                        // components={components}
+                        // isLoading={!this.state.loaded}
+                        data={this.state.possible_activities}
+                        onSelectionChange={(rows) => alert('You selected ' + rows.length + ' rows')}
                     />
+
+                    <Divider />
                     <Form.Group widths={2}>
                         <Form.Button fluid content="Submit" color="green" />
                         <Form.Button fluid

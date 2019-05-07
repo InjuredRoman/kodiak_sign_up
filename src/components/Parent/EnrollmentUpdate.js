@@ -5,6 +5,8 @@ import {
     destroy_enrollment,
 } from 'middleend/fetchers.js';
 
+import Avatar from '@material-ui/core/Avatar';
+import Paper from '@material-ui/core/Paper';
 import { SnackbarProvider, withSnackbar } from 'notistack';
 import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
