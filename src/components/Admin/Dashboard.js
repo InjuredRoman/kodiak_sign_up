@@ -47,6 +47,9 @@ const styles = theme => ({
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit *
             3}px ${theme.spacing.unit * 3}px`,
     },
+    chart: {
+        height: '170px'
+    },
     header: {
         background: theme.palette.primary.main,
     },
@@ -309,6 +312,7 @@ class Dashboard extends Component {
                                     Enrollments by Current Activities
                                 </Typography>
                                 <ChartistGraph
+                                    fullWidth
                                     className="ct-chart"
                                     data={byCurrentActivity.data}
                                     type="Line"
@@ -317,7 +321,7 @@ class Dashboard extends Component {
                                 />
                         </Paper>
                     </GridItem>
-                    <GridItem xs={6}>
+                    <GridItem xs={12}>
                         <Button fullWidth onClick={this.sendEmails} variant="contained" color="secondary" className={classes.button}>
                             Send Weekly Digest
                         </Button>
