@@ -91,9 +91,6 @@ const styles = theme => ({
 
 
 class SessionForm extends Component {
-    validate() {
-        return true;
-    }
 
     onSubmit(event) {
         // console.log(event);

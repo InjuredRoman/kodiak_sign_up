@@ -5,7 +5,10 @@ import {
     destroy_enrollment,
 } from 'middleend/fetchers.js';
 
+import Avatar from '@material-ui/core/Avatar';
+import Paper from '@material-ui/core/Paper';
 import { SnackbarProvider, withSnackbar } from 'notistack';
+import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -18,6 +21,33 @@ import Icon from '@material-ui/core/Icon';
 import Fab from '@material-ui/core/Fab';
 import { Link } from 'react-router-dom';
 import DoneOutlineIcon from '@material-ui/icons/Done';
+
+const styles = theme => ({
+    main: {
+        width: 'auto',
+        display: 'block', // Fix IE 11 issue.
+        marginLeft: theme.spacing.unit * 3,
+        marginRight: theme.spacing.unit * 3,
+        [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+            width: 400,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+    },
+    paper: {
+        marginTop: theme.spacing.unit * 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit *
+            3}px ${theme.spacing.unit * 3}px`,
+    },
+    avatar: {
+        margin: theme.spacing.unit,
+        backgroundColor: theme.palette.secondary.light,
+    },
+
+});
 
 class EnrollmentUpdate extends React.Component {
     constructor(props) {
@@ -140,6 +170,21 @@ class EnrollmentUpdate extends React.Component {
         );
     }
     render() {
+        const {classes} = this.props;
+        const emptyBatchPaper = 
+            <div className={classes.main}>
+            <Paper className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                    <DoneOutlineIcon fontSize="large" color="primary" />
+                </Avatar>
+                    <Typography as="h4">
+                        No more pending enrollments in this batch!
+                    </Typography>
+                    <Fab variant="extended" component={Link} to="/signup">
+                        Sign up for more
+                    </Fab>
+            </Paper>
+            </div>;
         var enrollment_data;
         if (this.state.loaded) {
             enrollment_data = this.state.enrollments.map((e, i) => {
@@ -163,15 +208,7 @@ class EnrollmentUpdate extends React.Component {
                 style={{ minHeight: '100vh' }}
             >
                 {this.state.loaded && enrollment_data.length === 0 ? (
-                    <Grid item xs={12}>
-                        <DoneOutlineIcon fontSize="large" color="primary" />
-                        <Typography component="h1">
-                            No more pending enrollments in this batch!
-                        </Typography>
-                        <Fab variant="extended" component={Link} to="/signup">
-                            Sign up for more
-                        </Fab>
-                    </Grid>
+                    emptyBatchPaper
                 ) : (
                     <MaterialTable
                         columns={[
@@ -229,7 +266,7 @@ class EnrollmentUpdate extends React.Component {
     }
 }
 
-const SnackEnrollmentUpdate = withSnackbar(EnrollmentUpdate);
+const SnackEnrollmentUpdate = withStyles(styles)(withSnackbar(EnrollmentUpdate));
 export default SnackEnrollmentUpdate;
 
 function SnackifiedEnrollmentUpdate() {

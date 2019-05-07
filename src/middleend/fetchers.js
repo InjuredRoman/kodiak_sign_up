@@ -121,7 +121,7 @@ export function retrieve_enrollments_by_token(
         root + enrollment_retrieve_by_token_endpoint + token + '/';
     const content = {
         method: 'GET',
-        headers: getAuthHeader()
+        // headers: getAuthHeader()
     };
 
     fetch(retrieve_enrollments_by_token_endpoint, content)
@@ -145,7 +145,7 @@ export function batch_update_enrollments(
         body: JSON.stringify(enrollments),
         headers: new Headers({ 'Content-Type': 'application/json' }),
     };
-    content.headers = getAuthHeader(conf.headers);
+    // content.headers = getAuthHeader(conf.headers);
 
     fetch(batch_update_endpoint, content)
         .then(response => {
@@ -173,7 +173,7 @@ export function update_enrollment(
         body: JSON.stringify(confirmation_update),
         headers: new Headers({ 'Content-Type': 'application/json' }),
     };
-    content.headers = getAuthHeader(content.headers);
+    // content.headers = getAuthHeader(content.headers);
     fetch(confirm_endpoint, content)
         .then(response => {
             if (response.status !== 200) {
@@ -199,13 +199,10 @@ export function create_enrollment(
     // content.headers = getAuthHeader(content.headers);
     fetch(create_endpoint, content)
         .then(response => {
-            if (response.status !== 200) {
-                on_error(response);
-            } else {
-                return response.json();
-            }
+            return response.json();
         })
-        .then(data => on_success(data));
+        .then(data => on_success(data))
+        .catch(err => on_error(err));
 }
 
 export function update_activity(activity_info, on_success, on_error = error_handler) {
@@ -307,7 +304,7 @@ export function fetch_all_activities(on_success, on_error = error_handler) {
     const real_endpoint = root + activity_list_endpoint;
     const content = {
         method: 'GET',
-        headers: getAuthHeader()
+        // headers: getAuthHeader()
     };
     fetch(real_endpoint, content)
         .then(response => {

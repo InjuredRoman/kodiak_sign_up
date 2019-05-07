@@ -1,10 +1,58 @@
 import React, { Component } from 'react';
 import { Label, Container, Divider } from 'semantic-ui-react';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import GridContainer from 'components/Grid/GridContainer.jsx';
+import GridItem from 'components/Grid/GridItem.jsx';
 import { fetch_all_activities, create_enrollment } from 'middleend/fetchers';
 import { Form, Dropdown } from 'formsy-semantic-ui-react';
-export default class Signup extends Component {
+import { withStyles } from '@material-ui/core/styles';
+import {withSnackbar} from 'notistack';
+import MaterialTable from 'material-table';
+
+const styles = theme => ({
+    main: {
+        width: 'auto',
+        display: 'block', // Fix IE 11 issue.
+        marginLeft: theme.spacing.unit * 3,
+        marginRight: theme.spacing.unit * 3,
+        // [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+        //     width: 400,
+        //     marginLeft: 'auto',
+        //     marginRight: 'auto',
+        // },
+    },
+    cardHeader: {
+        backgroundColor: theme.palette.primary.main,
+        fontColor: theme.palette.common.white
+    },
+    paper: {
+        marginTop: theme.spacing.unit * 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit *
+            3}px ${theme.spacing.unit * 3}px`,
+    },
+});
+
+
+class Signup extends Component {
     validate() {
         return true;
+    }
+    successSnackbar() {
+        this.props.enqueueSnackbar(
+                'Successfully created enrollment! Be sure to confirm via email!',
+                { variant: 'success' }
+        );
+    }
+
+    failSnackbar() {
+        this.props.enqueueSnackbar(
+                'Sorry, something seems to have gone wrong. We may have sent you more information through email!',
+                { variant: 'error' }
+        );
     }
 
     onSubmit(event) {
@@ -19,9 +67,10 @@ export default class Signup extends Component {
                     activities: '',
                     response: response,
                 },
-                this.form.reset()
+                () => {this.form.reset(); this.successSnackbar();}
+            );},
+            () => {this.form.reset(); this.failSnackbar();}
             );
-        });
     }
 
     handleSubmit(event) {
@@ -36,11 +85,13 @@ export default class Signup extends Component {
             child_last_name: '',
             parent_email: '',
             activities: '',
-            possible_activities: '',
+            possible_activities: [],
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.different = this.different.bind(this);
+        this.successSnackbar = this.successSnackbar.bind(this);
+        this.failSnackbar = this.failSnackbar.bind(this);
         // this.handleSubmit = this.handleSubmit.bind(this);
         // this.MyForm = this.MyForm.bind(this);
     }
@@ -65,7 +116,8 @@ export default class Signup extends Component {
     componentDidMount() {
         fetch_all_activities(
             response => {
-                this.organize_options(response);
+                // this.organize_options(response);
+                this.setState({ possible_activities: response, loaded: true }, () => console.log(response))
             },
             error => {
                 this.setState({ placeholder: 'Something went wrong.' });
@@ -97,32 +149,9 @@ export default class Signup extends Component {
         console.log(e);
     }
     render() {
-        var opts = {
-            a:
-                'Unlimited Pool and Ice Rink Access (all ages, do not select again if you already have access)',
-            b:
-                'Leather Crafting March 11-14 at KBM 3:30 - 5:30 p.m. Heritage Center Ages 6-18',
-            c:
-                'KBM Spring Break Rock Climbing Club mornings (10 a.m. to noon) March 11-14 for students age 8-14',
-            d: 'Spring Arts 2019',
-            d1:
-                'Relief Printing with Hailey Davis, 10 a.m. to noon, March 11-15 for ages 8 - 11',
-            d2:
-                'Explore Acrylics with Erica Ross, 1 - 3 p.m., March 11-15 for ages 8 - 11',
-            d3:
-                'Theatre Games with the ShakesBears 10 a.m. to noon March for ages 9 - 12',
-        };
-        var options = [
-            { text: opts['a'], value: 'a' },
-            { text: opts['b'], value: 'b' },
-            { text: opts['c'], value: 'c' },
-            { text: opts['d'] + ' - ' + opts['d1'], value: 'd1' },
-            { text: opts['d'] + ' - ' + opts['d2'], value: 'd2' },
-            { text: opts['d'] + ' - ' + opts['d3'], value: 'd3' },
-        ];
-        var layoutChoice = 'vertical';
         // var s = this.onSubmit;
         var h = this.handleChange;
+        const {classes} = this.props;
         var styles = {
             root: {
                 marginTop: 18,
@@ -134,7 +163,26 @@ export default class Signup extends Component {
                 textAlign: 'center',
             },
         };
-        return (
+        const columns = [
+            {
+                title: 'Activity',
+                field: 'title', // String-based value accessors!
+            },
+            {
+                title: 'Start Date',
+                field: 'start_date', // String-based value accessors!
+            },
+            {
+                title: 'End Date',
+                field: 'end_date', // String-based value accessors!
+            },
+            // {
+            //   Header: 'Status',
+            //   accessor: 'confirmed', // String-based value accessors!
+            //   Cell: props =>
+            // },
+        ];
+        const form = 
             <Container>
                 <Form
                     ref={ref => (this.form = ref)}
@@ -212,7 +260,7 @@ export default class Signup extends Component {
                         style={styles.formElement}
                     />
                     <Divider />
-                    <Dropdown
+                    {/* <Dropdown
                         onChange={this.different}
                         name="activities"
                         value={this.state.activities}
@@ -231,17 +279,45 @@ export default class Signup extends Component {
                         }}
                         errorLabel={<Label color="red" pointing />}
                         options={this.state.possible_activities}
+                    /> */}
+                    <MaterialTable
+                        title="Sessions List"
+                        columns={columns}
+                        options={{selection:true}}
+                        // components={components}
+                        // isLoading={!this.state.loaded}
+                        data={this.state.possible_activities}
+                        onSelectionChange={(rows) => alert('You selected ' + rows.length + ' rows')}
                     />
-                    <Form.Group>
-                        <Form.Button content="Submit" color="green" />
-                        <Form.Button
+
+                    <Divider />
+                    <Form.Group widths={2}>
+                        <Form.Button fluid content="Submit" color="green" />
+                        <Form.Button fluid
                             type="button"
                             content="Reset"
+                            // width={12}
                             onClick={() => this.form.reset()}
                         />
                     </Form.Group>
                 </Form>
-            </Container>
+            </Container>;
+
+        return (
+        <div className={classes.main}>
+            <Paper className={classes.paper}>
+                <Typography variant="h2" gutterBottom>
+                    Session Sign Up
+                </Typography>
+                <GridContainer justify="center">
+                    <GridItem xs={10}>
+                     {form}
+                    </GridItem>
+                </GridContainer>
+            </Paper>
+        </div>
         );
     }
 }
+
+export default withStyles(styles)(withSnackbar(Signup));
