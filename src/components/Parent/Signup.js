@@ -210,7 +210,6 @@ class Signup extends Component {
                         {/* Last name */}
                         <Form.Input
                             onChange={h}
-                            value={this.state.child_last_name}
                             name="child_last_name"
                             placeholder="Last name"
                             label="Child's Last name"
@@ -222,6 +221,7 @@ class Signup extends Component {
                                     'No numbers or special characters allowed',
                                 isDefaultRequiredValue: 'Last Name is Required',
                             }}
+                            value={this.state.child_last_name}
                         />
 
                         {/* Child Age */}
@@ -236,7 +236,7 @@ class Signup extends Component {
                             validationErrors={{
                                 isInt: 'Age must be a number',
                                 isDefaultRequiredValue: 'Age is Required',
-                            }}
+                            }} 
                         />
                     </Form.Group>
 
