@@ -57,20 +57,20 @@ class Signup extends Component {
 
     onSubmit(event) {
         console.log(event);
-        this.setState(event);
-        create_enrollment(event, response => {
-            this.setState(
-                {
-                    child_first_name: '',
-                    child_last_name: '',
-                    parent_email: '',
-                    activities: '',
-                    response: response,
-                },
-                () => {this.form.reset(); this.successSnackbar();}
-            );},
-            () => {this.form.reset(); this.failSnackbar();}
-            );
+        // this.setState(event);
+        // create_enrollment(event, response => {
+        //     this.setState(
+        //         {
+        //             child_first_name: '',
+        //             child_last_name: '',
+        //             parent_email: '',
+        //             activities: '',
+        //             response: response,
+        //         },
+        //         () => {this.form.reset(); this.successSnackbar();}
+        //     );},
+        //     () => {this.form.reset(); this.failSnackbar();}
+        //     );
     }
 
     handleSubmit(event) {
@@ -86,6 +86,7 @@ class Signup extends Component {
             parent_email: '',
             activities: '',
             possible_activities: [],
+            rendered_activities: []
         };
         this.onSubmit = this.onSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -116,8 +117,11 @@ class Signup extends Component {
     componentDidMount() {
         fetch_all_activities(
             response => {
+                var currentActivities = response.filter(
+                    activity => (new Date() <= Date.parse(activity.end_date))
+                    );
                 // this.organize_options(response);
-                this.setState({ possible_activities: response, loaded: true }, () => console.log(response))
+                this.setState({ possible_activities: currentActivities, rendered_activities: currentActivities, loaded: true }, () => console.log(response))
             },
             error => {
                 this.setState({ placeholder: 'Something went wrong.' });
@@ -254,13 +258,14 @@ class Signup extends Component {
                         options={this.state.possible_activities}
                     /> */}
                     <MaterialTable
-                        title="Sessions List"
+                        title="Available Sessions"
                         columns={columns}
-                        options={{selection:true}}
+                        options={{selection:true, search:false}}
                         // components={components}
                         // isLoading={!this.state.loaded}
-                        data={this.state.possible_activities}
-                        onSelectionChange={(rows) => alert('You selected ' + rows.length + ' rows')}
+                        data={this.state.rendered_activities}
+                        onSelectionChange={(rows) => this.setState({activities: rows.map((a)=> a.id)}, console.log(this.state.activities))}
+                        
                     />
 
                     <Divider />
