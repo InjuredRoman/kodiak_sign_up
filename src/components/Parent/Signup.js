@@ -76,9 +76,21 @@ export default class Signup extends Component {
     print_state() {
         console.log(this.state);
     }
+
+    filterActivities(age) {
+        // TODO: Filter the options list by the age depending on what age is put in
+        console.log(age);
+        // options = getOptions() <- get options from backend/database/???
+        // iterate / map through options, get age ranges and filter options that fit the age criteria
+        return age
+    }
+
     handleChange(e) {
         const { value, name } = e.target;
         this.setState({ [name]: value }, this.print_state);
+        if (name === 'age') {
+            this.filterActivities(value);
+        }
     }
 
     different(e) {
@@ -161,6 +173,21 @@ export default class Signup extends Component {
                                 isWords:
                                     'No numbers or special characters allowed',
                                 isDefaultRequiredValue: 'Last Name is Required',
+                            }}
+                        />
+
+                        {/* Child Age */}
+                        <Form.Input
+                            onChange={h}
+                            name="age"
+                            placeholder="Child Age"
+                            label="Child's Age"
+                            required
+                            validations="isInt"
+                            errorLabel={<Label color="red" pointing />}
+                            validationErrors={{
+                                isInt: 'Age must be a number',
+                                isDefaultRequiredValue: 'Age is Required',
                             }}
                         />
                     </Form.Group>

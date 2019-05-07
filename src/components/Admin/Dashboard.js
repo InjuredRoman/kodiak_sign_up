@@ -140,7 +140,7 @@ class Dashboard extends Component {
             result[date.getDay()] += 1;
           }
         });
-        return result;
+        return result
     }
     */
 
@@ -155,14 +155,21 @@ class Dashboard extends Component {
       var currentActivities = activities.filter(
         activity => (Date.parse(todayString) >= Date.parse(activity.start_date) && Date.parse(todayString) <= Date.parse(activity.end_date))
         );
+      var currentActivityIDs = currentActivities.map(
+        activity => activity.id
+        );
       for(var i = 0; i < currentActivities.length; i++){
         result[currentActivities[i].title] = 0
       }
+      console.log(currentActivities);
       for(var i = 0; i < enrollments.length; i++){
-        if(enrollments[i].activity in currentActivities){
-          result[enrollments[i].activity.title] = result[enrollments[i].activity.title]++;
+        console.log(currentActivityIDs.includes(enrollments[i].activity.id))
+        if(currentActivityIDs.includes(enrollments[i].activity.id)){
+          result[enrollments[i].activity.title] = result[enrollments[i].activity.title] + 1;
+          console.log(enrollments[i].activity.title)
         }
       }
+      console.log(result);
       return result
     }
 
@@ -296,7 +303,7 @@ class Dashboard extends Component {
                                 />
                         </Paper>
                     </GridItem>
-                    <GridItem xs={4}>
+                    <GridItem xs={6}>
                         <Paper className={classes.paper}>
                                 <Typography variant="h4" gutterBottom>
                                     Enrollments by Current Activities

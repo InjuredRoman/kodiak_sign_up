@@ -32,6 +32,18 @@ code {
   /* stroke-linecap: square; */
 }
 
+.ct-chart-bar, .ct-chart-line{
+    overflow: visible;
+}
+.ct-label.ct-label.ct-horizontal.ct-end {
+  position: relative;
+  justify-content: flex-end;
+  text-align: right;
+  transform-origin: 100% 0;
+  transform: translate(-100%) rotate(-45deg);
+  white-space:nowrap;
+}
+
 [class^="MuiButton-label-"] {
   color: #FFFFFF
 }
@@ -76,6 +88,7 @@ code {
 .sk-cube-grid .sk-cube9 {
   -webkit-animation-delay: 0.2s;
           animation-delay: 0.2s; }
+
 
 @-webkit-keyframes sk-cubeGridScaleDelay {
   0%, 70%, 100% {
