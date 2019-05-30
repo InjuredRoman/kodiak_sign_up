@@ -21,6 +21,10 @@ module.exports = {
     },
     devServer: {
       contentBase: './build',
+      // https: {
+      //   key: fs.readFileSync('/path/to/server.key'),
+      //   cert: fs.readFileSync('/path/to/server.crt'),
+      // }
     },
     module: {
       rules: [
