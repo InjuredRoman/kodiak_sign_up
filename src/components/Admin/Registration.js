@@ -86,7 +86,7 @@ class Registration extends React.Component {
     }
 
     failSnackbar(err) {
-        // console.log(err);
+        console.log(err);
         this.props.enqueueSnackbar(
                 'Sorry, it seems that email is already in the system.',
                 // err,
@@ -161,6 +161,7 @@ class Registration extends React.Component {
                 <Paper className={classes.paper}>
                     {content}
                 </Paper>
+                <p>Back to login page <a href="#/login">here</a></p>
             </div>
         );
     }
