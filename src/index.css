@@ -40,7 +40,7 @@ code {
   justify-content: flex-end;
   text-align: right;
   transform-origin: 100% 0;
-  transform: translate(-100%) rotate(-45deg);
+  transform: translate(-100%) rotate(-20deg);
   white-space:nowrap;
 }
 

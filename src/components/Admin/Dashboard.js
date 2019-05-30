@@ -11,7 +11,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import ChartistGraph from 'react-chartist';
 
-import { byCurrentActivity, confirmed, pending } from 'dummy_data/charts.jsx';
+import { byCurrentActivity, byFutureActivity, confirmed, pending } from 'dummy_data/charts.jsx';
 import { fetch_all_enrollments, fetch_all_activities, send_weekly_digest } from 'middleend/fetchers';
 import {withSnackbar} from 'notistack';
 
@@ -176,6 +176,31 @@ class Dashboard extends Component {
       return result
     }
 
+    // Returns a dictionary with keys as future activities and values as the number of enrollments per activity 
+    futureActivityEnrollments(enrollments, activities){
+      var result = {}
+      if(enrollments == null || activities == null) {
+            return result;
+        }
+      var today = new Date();
+      var todayString = today.toString();
+      var currentActivities = activities.filter(
+        activity => (Date.parse(todayString) <= Date.parse(activity.start_date) && Date.parse(todayString) <= Date.parse(activity.end_date))
+        );
+      var currentActivityIDs = currentActivities.map(
+        activity => activity.id
+        );
+      for(var i = 0; i < currentActivities.length; i++){
+        result[currentActivities[i].title] = 0
+      }
+      for(var i = 0; i < enrollments.length; i++){
+        if(currentActivityIDs.includes(enrollments[i].activity.id)){
+          result[enrollments[i].activity.title] = result[enrollments[i].activity.title] + 1;
+        }
+      }
+      return result
+    }
+
     filterConfirmedByDay(enrollments) {
         if (enrollments == null) {
             return [];
@@ -262,17 +287,21 @@ class Dashboard extends Component {
         var dayOfWeek = today.getDay();
         var dateRange = this.shift(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], dayOfWeek+1);
         var currActivities = this.currentActivityEnrollments(this.state.enrollments, this.state.activities)
+        var futureActivities = this.futureActivityEnrollments(this.state.enrollments, this.state.activities)
         console.log(this.filterConfirmedByDay(this.state.enrollments));
         console.log(this.filterPendingByDay(this.state.enrollments));
         confirmed.data.series = [this.shift(this.filterConfirmedByDay(this.state.enrollments), dayOfWeek+1)];
         pending.data.series = [this.shift(this.filterPendingByDay(this.state.enrollments), dayOfWeek+1)];
         byCurrentActivity.data.series = [Object.values(currActivities)];
+        byFutureActivity.data.series = [Object.values(futureActivities)];
         confirmed.data.labels = dateRange
         pending.data.labels = dateRange
         confirmed.options.high = Math.max(...confirmed.data.series[0]) + 10
         pending.options.high = Math.max(...pending.data.series[0]) + 10
         byCurrentActivity.options.high = Math.max(...byCurrentActivity.data.series[0]) + 10
         byCurrentActivity.data.labels = Object.keys(currActivities);
+        byFutureActivity.options.high = Math.max(...byFutureActivity.data.series[0]) + 10
+        byFutureActivity.data.labels = Object.keys(futureActivities);
         const { classes } = this.props;
         return (
             // <>
@@ -318,6 +347,21 @@ class Dashboard extends Component {
                                     type="Line"
                                     options={byCurrentActivity.options}
                                     listener={byCurrentActivity.animation}
+                                />
+                        </Paper>
+                    </GridItem>
+                    <GridItem xs={6}>
+                        <Paper className={classes.paper}>
+                                <Typography variant="h4" gutterBottom>
+                                    Enrollments by Future Activities
+                                </Typography>
+                                <ChartistGraph
+                                    fullWidth
+                                    className="ct-chart"
+                                    data={byFutureActivity.data}
+                                    type="Line"
+                                    options={byFutureActivity.options}
+                                    listener={byFutureActivity.animation}
                                 />
                         </Paper>
                     </GridItem>

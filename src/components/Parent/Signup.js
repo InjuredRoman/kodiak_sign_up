@@ -133,12 +133,13 @@ class Signup extends Component {
         console.log(this.state);
     }
 
+    // filters activities that appear to the user (rendered_activities) by the age requirements.
     filterActivities(age) {
-        // TODO: Filter the options list by the age depending on what age is put in
+        // Filter the options list by the age depending on what age is put in
         console.log(age);
         var filteredActivities = this.state.possible_activities.filter(
-        activity => activity.youngest_enrolled <= age && activity.oldest_enrolled >= age
-        );
+            activity => activity.youngest_enrolled <= age && activity.oldest_enrolled >= age
+            );
         this.setState ({ rendered_activities: filteredActivities }, this.print_state);
         // options = getOptions() <- get options from backend/database/???
         // iterate / map through options, get age ranges and filter options that fit the age criteria
@@ -266,6 +267,32 @@ class Signup extends Component {
                         errorLabel={<Label color="red" pointing />}
                         style={styles.formElement}
                     />
+
+                    <Divider />
+                <Paper className={classes.paper}>
+                    <Typography variant="h4" gutterBottom>
+                        Activity Descriptions
+
+                    </Typography>
+
+                    <Typography variant="p" gutterBottom>
+                        Activity Descriptions Here
+                    </Typography>
+                </Paper>
+
+                      {/*<Form.TextArea
+                          name="about"
+                          label="About"
+                          placeholder="Tell us more about you..."
+                          required
+                          errorLabel={ <Label color="red" pointing/> }
+                          validationErrors={{
+                            isDefaultRequiredValue: 'We need to know more about you',
+                          }}
+                        />
+                    */}
+
+
                     <Divider />
                     {/* <Dropdown
                         onChange={this.different}
