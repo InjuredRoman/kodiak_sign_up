@@ -120,6 +120,13 @@ class SessionsPage extends Component {
                         components={components}
                         // isLoading={!this.state.loaded}
                         data={activities}
+                        actions={[
+                            {
+                              icon: 'edit',
+                              tooltip: 'Edit Session',
+                              onClick: (event, session) => alert("You're editing " + session.title)
+                            },
+                          ]}
                     />
                 </GridItem>
                 <GridItem xs={5}>

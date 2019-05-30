@@ -32,6 +32,10 @@ code {
   /* stroke-linecap: square; */
 }
 
+.ct-chart {
+  height: 170px,
+}
+
 .ct-chart-bar, .ct-chart-line{
     overflow: visible;
 }

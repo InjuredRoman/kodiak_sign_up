@@ -55,22 +55,35 @@ class Signup extends Component {
         );
     }
 
+    resetForm() {
+        this.form.reset();
+        // this.table.state.renderData = this.table.state.renderData.map(d => d.tableData.checked = )
+    }
+
+    submitForm() {
+        console.log(this.state);
+        create_enrollment(this.state, response => {
+            this.setState(
+                {
+                    child_first_name: '',
+                    child_last_name: '',
+
+                    parent_email: '',
+                    activities: [],
+                    rendered_activities: [],
+                    response: response,
+                },
+                () => {this.resetForm(); this.successSnackbar();this.setState({rendered_activities: this.state.possible_activities});}),
+            () => {this.resetForm(); this.failSnackbar();}
+        }
+        );
+    }
+
     onSubmit(event) {
-        console.log(event);
-        // this.setState(event);
-        // create_enrollment(event, response => {
-        //     this.setState(
-        //         {
-        //             child_first_name: '',
-        //             child_last_name: '',
-        //             parent_email: '',
-        //             activities: '',
-        //             response: response,
-        //         },
-        //         () => {this.form.reset(); this.successSnackbar();}
-        //     );},
-        //     () => {this.form.reset(); this.failSnackbar();}
-        //     );
+        console.log(this.state);
+        // this.setState({activities: this.table.state.renderData.filter(d => d.tableData.checked).map(s => s.id)}, console.log(this.state.activities));
+        this.setState(event, this.submitForm());
+        // console.log(this.state);
     }
 
     handleSubmit(event) {
@@ -89,10 +102,12 @@ class Signup extends Component {
             rendered_activities: []
         };
         this.onSubmit = this.onSubmit.bind(this);
+        this.submitForm = this.submitForm.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.different = this.different.bind(this);
         this.successSnackbar = this.successSnackbar.bind(this);
         this.failSnackbar = this.failSnackbar.bind(this);
+        this.resetForm = this.resetForm.bind(this);
         // this.handleSubmit = this.handleSubmit.bind(this);
         // this.MyForm = this.MyForm.bind(this);
     }
@@ -135,18 +150,22 @@ class Signup extends Component {
 
     filterActivities(age) {
         // TODO: Filter the options list by the age depending on what age is put in
-        console.log(age);
-        var filteredActivities = this.state.possible_activities.filter(
-        activity => activity.youngest_enrolled <= age && activity.oldest_enrolled >= age
-        );
-        this.setState ({ rendered_activities: filteredActivities }, this.print_state);
+        // console.log(age);
+        if (age === '') {
+            this.setState ({ rendered_activities: this.state.possible_activities });
+        } else {
+            var filteredActivities = this.state.possible_activities.filter(
+            activity => activity.youngest_enrolled <= age && activity.oldest_enrolled >= age
+            );
+            this.setState({ rendered_activities: filteredActivities });
+        }
         // options = getOptions() <- get options from backend/database/???
         // iterate / map through options, get age ranges and filter options that fit the age criteria
     }
 
     handleChange(e) {
         const { value, name } = e.target;
-        this.setState({ [name]: value }, this.print_state);
+        this.setState({ [name]: value });
         if (name === 'age') {
             this.filterActivities(value);
         }
@@ -237,7 +256,7 @@ class Signup extends Component {
                             name="age"
                             placeholder="Child Age"
                             label="Child's Age"
-                            required
+                            // required
                             validations="isInt"
                             errorLabel={<Label color="red" pointing />}
                             validationErrors={{
@@ -289,12 +308,14 @@ class Signup extends Component {
                     /> */}
                     <MaterialTable
                         title="Available Sessions"
+                        tableRef={ref => (this.table = ref)}
                         columns={columns}
                         options={{selection:true, search:false}}
                         // components={components}
                         // isLoading={!this.state.loaded}
                         data={this.state.rendered_activities}
-                        onSelectionChange={(rows) => this.setState({activities: rows.map((a)=> a.id)}, console.log(this.state.activities))}
+                        onSelectionChange={(rows) => this.setState({},this.setState({activities: this.table.state.renderData.filter(d => d.tableData.checked).map(s => s.id)}, console.log(this.state.activities)))}
+                        // console.log(this.table.state.renderData.filter(d => d.tableData.checked).map(s => s.id)))}
                         
                     />
 
