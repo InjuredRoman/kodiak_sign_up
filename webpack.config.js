@@ -28,6 +28,7 @@ module.exports = {
     },
     module: {
       rules: [
+        {test: /\.(config)$/, loader: 'file-loader?name=[name].[ext]'},
         {
             test: /\.(s?css|sass)$/,
             use: ['style-loader', 'css-loader'],

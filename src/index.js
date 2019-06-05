@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './web.config';
 import 'babel-polyfill';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
