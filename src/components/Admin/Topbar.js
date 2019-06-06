@@ -115,7 +115,6 @@ function Topbar(props) {
     };
     var bottomNavLinks = (
         <Paper>
-        <h1>yo</h1>
         <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
             {props.routes.map((route, i) => {
                 if (route.base === '/admin') {
