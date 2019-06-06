@@ -369,6 +369,7 @@ class Signup extends Component {
 
         return (
         <div className={classes.main}>
+            <p>Administrator? Login <a href="#/login">here</a></p>
             <Paper className={classes.paper}>
                 <Typography variant="h2" gutterBottom>
                     Session Sign Up
@@ -379,7 +380,6 @@ class Signup extends Component {
                     </GridItem>
                 </GridContainer>
             </Paper>
-            <p>Administrator? Login <a href="#/login">here</a></p>
         </div>
         );
     }
