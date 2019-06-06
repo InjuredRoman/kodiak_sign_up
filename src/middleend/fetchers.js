@@ -2,8 +2,8 @@
 // const enrollment_list_endpoint = "http://127.0.0.1:8000/api/enrollments";
 // const endpoint = "http://127.0.0.1:8000/api/enrollments/";
 // const root = 'https://banana-tart-91724.herokuapp.com';
-// const root = 'https://kibsdcmu.kibsd.org';
-const root = 'http://localhost:81';
+const root = 'http://kibsdcmu.kibsd.org:81';
+// const root = 'http://localhost:81';
 const enrollment_list_endpoint = '/api/enrollments/';
 const parent_list_endpoint = '/api/parents/';
 const child_list_endpoint = '/api/children/';
