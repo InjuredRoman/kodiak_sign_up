@@ -89,8 +89,8 @@ class Dashboard extends Component {
         );
         fetch_all_activities(
             response => {
-                this.setState({ activities: response, loaded: true }, () =>
-                    console.log(this.state.activities)
+                this.setState({ activities: response, loaded: true }
+                    // , () =>  console.log(this.state.activities)
                 );
             },
             error => {
@@ -164,15 +164,15 @@ class Dashboard extends Component {
       for(var i = 0; i < currentActivities.length; i++){
         result[currentActivities[i].title] = 0
       }
-      console.log(currentActivities);
+    //   console.log(currentActivities);
       for(var i = 0; i < enrollments.length; i++){
-        console.log(currentActivityIDs.includes(enrollments[i].activity.id))
+        // console.log(currentActivityIDs.includes(enrollments[i].activity.id))
         if(currentActivityIDs.includes(enrollments[i].activity.id)){
           result[enrollments[i].activity.title] = result[enrollments[i].activity.title] + 1;
-          console.log(enrollments[i].activity.title)
+        //   console.log(enrollments[i].activity.title)
         }
       }
-      console.log(result);
+    //   console.log(result);
       return result
     }
 
@@ -288,8 +288,8 @@ class Dashboard extends Component {
         var dateRange = this.shift(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], dayOfWeek+1);
         var currActivities = this.currentActivityEnrollments(this.state.enrollments, this.state.activities)
         var futureActivities = this.futureActivityEnrollments(this.state.enrollments, this.state.activities)
-        console.log(this.filterConfirmedByDay(this.state.enrollments));
-        console.log(this.filterPendingByDay(this.state.enrollments));
+        // console.log(this.filterConfirmedByDay(this.state.enrollments));
+        // console.log(this.filterPendingByDay(this.state.enrollments));
         confirmed.data.series = [this.shift(this.filterConfirmedByDay(this.state.enrollments), dayOfWeek+1)];
         pending.data.series = [this.shift(this.filterPendingByDay(this.state.enrollments), dayOfWeek+1)];
         byCurrentActivity.data.series = [Object.values(currActivities)];

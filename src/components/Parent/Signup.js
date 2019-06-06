@@ -379,6 +379,7 @@ class Signup extends Component {
                     </GridItem>
                 </GridContainer>
             </Paper>
+            <p>Administrator? Login <a href="#/login">here</a></p>
         </div>
         );
     }

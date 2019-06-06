@@ -111,7 +111,7 @@ ReactDOM.render(
                     )}
                 />
                 <Route path="/signup" component={Signup} />
-                <Route component={NoMatch} />
+                <Route component={Signup} />
             </Switch>
         </Router>
     </SnackbarProvider>
